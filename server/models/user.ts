@@ -10,7 +10,8 @@ const UserSchema = new Schema({
     required: true,
   },
   sex: {
-    type: Sex,
+    type: String,
+    enum: Sex,
     required: true,
   },
   age: {

@@ -8,12 +8,16 @@ const Schema = mongoose.Schema
 const Range = new Schema({
   min: Number,
   max: Number,
-  unit: Unit,
+  unit: {
+    type: String,
+    enum: Unit,
+  },
 })
 
 const RangesListSchema = new Schema({
   sex: {
-    type: Sex,
+    type: String,
+    enum: Sex,
     required: true,
   },
   weight: Range,

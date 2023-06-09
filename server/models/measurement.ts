@@ -6,7 +6,10 @@ const Schema = mongoose.Schema
 
 const Record = new Schema({
   value: Number,
-  unit: Unit,
+  unit: {
+    type: String,
+    enum: Unit,
+  },
 })
 
 const MeasurementSchema = new Schema(
