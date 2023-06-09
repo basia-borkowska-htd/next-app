@@ -1,37 +1,52 @@
 import { Request, Response } from 'express'
 import { User } from '../models/user'
 
-const getUsers = (req: Request, res: Response) => {
-  User.find({})
-    .then((result) => res.status(200).json({ result }))
-    .catch((error) => res.status(500).json({ msg: error }))
+const getUsers = async (req: Request, res: Response) => {
+  try {
+    const users = await User.find({})
+    res.status(200).json({ users })
+  } catch (error) {
+    res.status(500).json({ msg: error })
+  }
 }
 
-const getUser = (req: Request, res: Response) => {
-  User.findOne({ _id: req.params.id })
-    .then((result) => res.status(200).json({ result }))
-    .catch(() => res.status(404).json({ msg: 'User not found' }))
+const getUser = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findOne({ _id: req.params.id })
+    res.status(200).json({ user })
+  } catch (error) {
+    res.status(404).json({ msg: 'User not found' })
+  }
 }
 
-const createUser = (req: Request, res: Response) => {
-  User.create(req.body)
-    .then((result) => res.status(200).json({ result }))
-    .catch((error) => res.status(500).json({ msg: error }))
+const createUser = async (req: Request, res: Response) => {
+  try {
+    const newUser = await User.create(req.body)
+    res.status(200).json({ newUser })
+  } catch (error) {
+    res.status(500).json({ msg: error })
+  }
 }
 
-const updateUser = (req: Request, res: Response) => {
-  User.findOneAndUpdate({ _id: req.params.id }, req.body, {
-    new: true,
-    runValidators: true,
-  })
-    .then((result) => res.status(200).json({ result }))
-    .catch(() => res.status(404).json({ msg: 'User not found' }))
+const updateUser = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findOneAndUpdate({ _id: req.params.id }, req.body, {
+      new: true,
+      runValidators: true,
+    })
+    res.status(200).json({ user })
+  } catch (error) {
+    res.status(404).json({ msg: 'User not found' })
+  }
 }
 
-const deleteUser = (req: Request, res: Response) => {
-  User.findOneAndDelete({ _id: req.params.id })
-    .then((result) => res.status(200).json({ result }))
-    .catch(() => res.status(404).json({ msg: 'User not found' }))
+const deleteUser = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findOneAndDelete({ _id: req.params.id })
+    res.status(200).json({ user })
+  } catch (error) {
+    res.status(404).json({ msg: 'User not found' })
+  }
 }
 
 export { getUsers, getUser, createUser, updateUser, deleteUser }
