@@ -1,13 +1,13 @@
-import { Unit } from "../enums/Unit.enum";
+import { Unit } from '../enums/Unit.enum'
 
-import mongoose from "mongoose";
+import mongoose from 'mongoose'
 
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 
 const Record = new Schema({
   value: Number,
   unit: Unit,
-});
+})
 
 const MeasurementSchema = new Schema(
   {
@@ -27,7 +27,7 @@ const MeasurementSchema = new Schema(
     metabolicAge: Record,
     bodyRating: Record,
   },
-  { timestamps: true }
-);
+  { timestamps: true },
+)
 
-export const Measurement = mongoose.model("Measurement", MeasurementSchema);
+export const Measurement = mongoose.model('Measurement', MeasurementSchema)

@@ -1,15 +1,15 @@
-import { Sex } from "../enums/Sex.enum";
-import { Unit } from "../enums/Unit.enum";
+import { Sex } from '../enums/Sex.enum'
+import { Unit } from '../enums/Unit.enum'
 
-import mongoose from "mongoose";
+import mongoose from 'mongoose'
 
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 
 const Range = new Schema({
   min: Number,
   max: Number,
   unit: Unit,
-});
+})
 
 const RangesListSchema = new Schema({
   sex: {
@@ -26,6 +26,6 @@ const RangesListSchema = new Schema({
   BMI: Range,
   BMR: Range,
   metabolicAge: Range,
-});
+})
 
-export const RangesList = mongoose.model("RangesList", RangesListSchema);
+export const RangesList = mongoose.model('RangesList', RangesListSchema)
