@@ -3,10 +3,15 @@ import { useUsers } from '@/hooks/useUsers'
 import { Pathnames } from '@/utils/pathnames'
 import { Container } from '@mantine/core'
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 const UsersPage = () => {
-  const { users } = useUsers()
+  const { users, getUsers } = useUsers()
   const router = useRouter()
+
+  useEffect(() => {
+    getUsers()
+  }, [])
 
   if (!users || users.length === 0) return <div>loading</div>
 

@@ -1,12 +1,8 @@
 import { UserType } from '@/types/User'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 export const useUsers = () => {
   const [users, setUsers] = useState<UserType[]>([])
-
-  useEffect(() => {
-    getUsers()
-  }, [])
 
   const getUsers = async (): Promise<boolean> => {
     try {
@@ -21,8 +17,22 @@ export const useUsers = () => {
     }
   }
 
+  const getUser = async (id: string): Promise<UserType | null> => {
+    console.log({ id })
+    try {
+      const res = await fetch(`http://localhost:3001/api/users/${id}`) // TODO find a better way
+      const data = await res.json()
+
+      return data.user
+    } catch (error) {
+      console.error(error)
+      return null
+    }
+  }
+
   return {
     users,
     getUsers,
+    getUser,
   }
 }
