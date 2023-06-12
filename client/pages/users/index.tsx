@@ -1,4 +1,4 @@
-import { CardComponent } from '@/components/Card'
+import { CardComponent } from '@/components/card'
 import { useUsers } from '@/hooks/useUsers'
 import { Pathnames } from '@/utils/pathnames'
 import { Container } from '@mantine/core'
