@@ -5,6 +5,7 @@ import { UserType } from '@/types/User'
 import { Pathnames } from '@/utils/pathnames'
 import { Container } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
+import { notifications } from '@mantine/notifications'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
@@ -28,9 +29,17 @@ const UsersPage = () => {
     if (result) {
       close()
       getUsers()
-      // view success toast
+      notifications.show({
+        title: 'Success',
+        message: 'User updated successfully',
+        color: 'green',
+      })
     } else {
-      // view fail toast
+      notifications.show({
+        title: 'Error',
+        message: 'Unable to update user',
+        color: 'red',
+      })
     }
   }
 

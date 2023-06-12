@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import { UserType } from '@/types/User'
 import { useDisclosure } from '@mantine/hooks'
 import { UserModalComponent } from '@/components/userModal'
-import { useNotification } from '@/hooks/useNotification'
+import { notifications } from '@mantine/notifications'
 
 const UserProfilePage = () => {
   const { getUser, updateUser } = useUsers()
@@ -15,7 +15,6 @@ const UserProfilePage = () => {
   const { user: userId } = router.query
   const [user, setUser] = useState<UserType | null>()
   const [opened, { open, close }] = useDisclosure(false)
-  const { showErrorNotification, showSuccessNotification } = useNotification()
 
   useEffect(() => {
     ;(async () => {
@@ -33,9 +32,17 @@ const UserProfilePage = () => {
     if (result) {
       close()
       setUser(result)
-      showSuccessNotification('User updated successfully')
+      notifications.show({
+        title: 'Success',
+        message: 'User updated successfully',
+        color: 'green',
+      })
     } else {
-      showErrorNotification('Unable to update user')
+      notifications.show({
+        title: 'Error',
+        message: 'Unable to update user',
+        color: 'red',
+      })
     }
   }
 
