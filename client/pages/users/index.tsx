@@ -22,6 +22,17 @@ const UsersPage = () => {
   const handleRedirect = (id: string) => {
     router.push(Pathnames.userProfile.replace(':id', id))
   }
+  const handleSubmit = async (user: UserType) => {
+    const result = await addUser(user)
+    console.log({ result })
+    if (result) {
+      close()
+      getUsers()
+      // view success toast
+    } else {
+      // view fail toast
+    }
+  }
 
   return (
     <Container size="xl" className="flex h-screen items-center">
@@ -32,7 +43,7 @@ const UsersPage = () => {
         <CardComponent onClick={open} title="+ Add new user" />
       </div>
 
-      <UserModalComponent opened={opened} onClose={close} onSubmit={addUser} />
+      <UserModalComponent opened={opened} onClose={close} onSubmit={handleSubmit} />
     </Container>
   )
 }

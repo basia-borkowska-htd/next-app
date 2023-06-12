@@ -2,16 +2,12 @@ import { AvatarComponent } from '@/components/avatar'
 import BasiaImg from '@/assets/images/basia.jpeg'
 import { Button, Container } from '@mantine/core'
 import { UserType } from '@/types/User'
-import { useDisclosure } from '@mantine/hooks'
-import { UserModalComponent } from '@/components/userModal'
 
 interface HeaderProps {
   user: UserType
-
-  onEdit: (user: UserType) => void
+  openModal: () => void
 }
-export const HeaderComponent = ({ user, onEdit }: HeaderProps) => {
-  const [opened, { open, close }] = useDisclosure(false)
+export const HeaderComponent = ({ user, openModal }: HeaderProps) => {
   const { name, age, sex, height, weight } = user
 
   return (
@@ -27,12 +23,10 @@ export const HeaderComponent = ({ user, onEdit }: HeaderProps) => {
         <p>Weight: {weight ? `${weight} kg` : '-'}</p>
       </div>
       <div className="basis-3/4 flex justify-end">
-        <Button variant="gradient" gradient={{ from: 'pink', to: 'peach', deg: 35 }} onClick={open}>
+        <Button variant="gradient" gradient={{ from: 'pink', to: 'peach', deg: 35 }} onClick={openModal}>
           Edit
         </Button>
       </div>
-
-      <UserModalComponent opened={opened} user={user} onClose={close} onSubmit={onEdit} />
     </Container>
   )
 }

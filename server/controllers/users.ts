@@ -21,8 +21,8 @@ const getUser = async (req: Request, res: Response) => {
 
 const createUser = async (req: Request, res: Response) => {
   try {
-    const newUser = await User.create(req.body)
-    res.status(200).json({ newUser })
+    const user = await User.create(req.body)
+    res.status(200).json({ user })
   } catch (error) {
     res.status(500).json({ msg: error })
   }
