@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import { UserType } from '@/types/User'
 
 const UserProfilePage = () => {
-  const { getUser } = useUsers()
+  const { getUser, updateUser } = useUsers()
   const router = useRouter()
   const { user: userId } = router.query
   const [user, setUser] = useState<UserType | null>()
@@ -27,7 +27,7 @@ const UserProfilePage = () => {
 
   return (
     <>
-      <HeaderComponent user={user} />
+      <HeaderComponent user={user} onEdit={updateUser} />
       <RangesComponent />
       <ChartComponent />
     </>

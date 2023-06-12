@@ -1,13 +1,17 @@
 import { CardComponent } from '@/components/card'
+import { UserModalComponent } from '@/components/userModal'
 import { useUsers } from '@/hooks/useUsers'
+import { UserType } from '@/types/User'
 import { Pathnames } from '@/utils/pathnames'
 import { Container } from '@mantine/core'
+import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
 const UsersPage = () => {
-  const { users, getUsers } = useUsers()
+  const { users, getUsers, addUser } = useUsers()
   const router = useRouter()
+  const [opened, { open, close }] = useDisclosure(false)
 
   useEffect(() => {
     getUsers()
@@ -25,8 +29,10 @@ const UsersPage = () => {
         {users.map(({ _id, name }) => (
           <CardComponent onClick={() => handleRedirect(_id)} key={_id} title={name} />
         ))}
-        <CardComponent onClick={() => alert('TODO: not yet implemented')} title="+ Add new user" />
+        <CardComponent onClick={open} title="+ Add new user" />
       </div>
+
+      <UserModalComponent opened={opened} onClose={close} onSubmit={addUser} />
     </Container>
   )
 }
