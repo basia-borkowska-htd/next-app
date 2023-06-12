@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import { router as userRoutes } from './routes/users'
 import { router as measurementsRoutes } from './routes/measurements'
 import { router as rangesRoutes } from './routes/rangesLists'
+import cors from 'cors'
 
 dotenv.config()
 
@@ -14,6 +15,7 @@ mongoose
   .then(() => app.listen(process.env.PORT))
   .catch((err) => console.log(err))
 
+app.use(cors())
 app.use(express.json())
 
 app.use('/api/users', userRoutes)
