@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { RangesList } from '../models/rangesList'
+import { Measurement } from '../models/measurement'
 
 const getRangesLists = async (req: Request, res: Response) => {
   try {
@@ -12,8 +13,11 @@ const getRangesLists = async (req: Request, res: Response) => {
 
 const getRangesList = async (req: Request, res: Response) => {
   try {
-    const rangesList = await RangesList.findOne({ _id: req.params.id })
-    res.status(200).json({ rangesList })
+    const latestMeasurement = await Measurement.findOne({ userId: req.params.id }, null, {
+      sort: { createdAt: 'desc' },
+    })
+    const rangesList = await RangesList.findOne({ sex: req.query.sex }) // TODO should sex be handled on the BE?
+    res.status(200).json({ latestMeasurement, rangesList })
   } catch (error) {
     res.status(404).json({ msg: 'RangesList not found' })
   }
@@ -21,8 +25,8 @@ const getRangesList = async (req: Request, res: Response) => {
 
 const createRangesList = async (req: Request, res: Response) => {
   try {
-    const newRangesList = await RangesList.create(req.body)
-    res.status(200).json({ newRangesList })
+    const rangesList = await RangesList.create(req.body)
+    res.status(200).json({ rangesList })
   } catch (error) {
     res.status(500).json({ msg: error })
   }
