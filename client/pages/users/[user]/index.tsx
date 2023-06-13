@@ -10,9 +10,10 @@ import { UserModalComponent } from '@/components/userModal'
 import { notifications } from '@mantine/notifications'
 import { ConfirmationModalComponent } from '@/components/confirmationModal'
 import { Pathnames } from '@/utils/pathnames'
+import { PageLoaderComponent } from '@/components/PageLoader'
 
 const UserProfilePage = () => {
-  const { getUser, updateUser, deleteUser } = useUsers()
+  const { getUser, updateUser, deleteUser, loading } = useUsers()
   const router = useRouter()
   const { user: userId } = router.query
   const [user, setUser] = useState<UserType | null>()
@@ -33,7 +34,7 @@ const UserProfilePage = () => {
   const handleEdit = async (user: UserType) => {
     const result = await updateUser(user)
     if (result) {
-      close()
+      closeEditModal()
       setUser(result)
       notifications.show({
         title: 'Success',
@@ -72,7 +73,7 @@ const UserProfilePage = () => {
     }
   }
 
-  if (!user) return <></>
+  if (!user) return <PageLoaderComponent />
 
   return (
     <>
@@ -80,9 +81,16 @@ const UserProfilePage = () => {
       <RangesComponent />
       <ChartComponent />
 
-      <UserModalComponent opened={editModalOpened} user={user} onClose={closeEditModal} onSubmit={handleEdit} />
+      <UserModalComponent
+        opened={editModalOpened}
+        user={user}
+        onClose={closeEditModal}
+        onSubmit={handleEdit}
+        loading={loading}
+      />
       <ConfirmationModalComponent
         opened={confirmationModalOpened}
+        loading={loading}
         title={`Delete ${user.name} User`}
         description="Are you sure you want to delete this user and all of their measurements? This action is irreversable."
         confirmButtonText="Delete"

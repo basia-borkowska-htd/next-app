@@ -21,6 +21,18 @@ export default function App({ Component, pageProps }: AppProps) {
             '#D9ED92',
             '#D9ED92',
           ],
+          'blue-100': [
+            '#52b69a',
+            '#52b69a',
+            '#52b69a',
+            '#52b69a',
+            '#52b69a',
+            '#52b69a',
+            '#52b69a',
+            '#52b69a',
+            '#52b69a',
+          ],
+
           'blue-200': [
             '#34A0A4',
             '#34A0A4',

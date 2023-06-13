@@ -1,4 +1,4 @@
-import { Input, useMantineTheme } from '@mantine/core'
+import { Input } from '@mantine/core'
 import { UserType } from '@/types/User'
 import { useForm } from '@mantine/form'
 import { NumberInput, TextInput, Button, SegmentedControl } from '@mantine/core'
@@ -8,13 +8,13 @@ import { ModalComponent } from '../Modal'
 interface UserModalProps {
   user?: UserType
   opened: boolean
+  loading: boolean
 
   onClose: () => void
   onSubmit: (user: UserType) => void
 }
 
-export const UserModalComponent = ({ user, opened, onClose, onSubmit }: UserModalProps) => {
-  const theme = useMantineTheme()
+export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }: UserModalProps) => {
   const isCreating = !user
 
   const form = useForm({
@@ -77,7 +77,13 @@ export const UserModalComponent = ({ user, opened, onClose, onSubmit }: UserModa
           rightSection={<p className="opacity-25 text-sm">kg</p>}
           {...form.getInputProps('weight')}
         />
-        <Button type="submit" mt="sm" variant="gradient" gradient={{ from: 'blue-200', to: 'green-100', deg: 35 }}>
+        <Button
+          loading={loading}
+          type="submit"
+          mt="sm"
+          variant="gradient"
+          gradient={{ from: 'blue-200', to: 'green-100', deg: 35 }}
+        >
           Submit
         </Button>
       </form>

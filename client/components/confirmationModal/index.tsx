@@ -8,6 +8,7 @@ interface ConfirmationModalProps {
   description?: string
   confirmButtonText?: string
   declineButtonText?: string
+  loading: boolean
 
   onClose: () => void
   onSubmit: () => void
@@ -17,6 +18,7 @@ export const ConfirmationModalComponent = ({
   opened,
   title,
   description,
+  loading,
   confirmButtonText,
   declineButtonText,
   onClose,
@@ -34,6 +36,7 @@ export const ConfirmationModalComponent = ({
             fullWidth
             variant="gradient"
             gradient={{ from: 'blue-200', to: 'green-100', deg: 35 }}
+            loading={loading}
             onClick={onSubmit}
           >
             {confirmButtonText || 'Yes'}

@@ -9,8 +9,10 @@ import { notifications } from '@mantine/notifications'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
+import { Loader } from '@mantine/core'
+import { PageLoaderComponent } from '@/components/PageLoader'
 const UsersPage = () => {
-  const { users, getUsers, addUser } = useUsers()
+  const { users, getUsers, addUser, loading } = useUsers()
   const router = useRouter()
   const [opened, { open, close }] = useDisclosure(false)
 
@@ -18,7 +20,7 @@ const UsersPage = () => {
     getUsers()
   }, [])
 
-  if (!users || users.length === 0) return <div>loading</div>
+  if (!users || users.length === 0) return <PageLoaderComponent />
 
   const handleRedirect = (id: string) => {
     router.push(Pathnames.userProfile.replace(':id', id))
@@ -45,14 +47,14 @@ const UsersPage = () => {
 
   return (
     <Container size="xl" className="flex h-screen items-center">
-      <div className="w-full flex flex-wrap gap-6 justify-between">
+      <div className="w-full flex flex-wrap gap-6 justify-center">
         {users.map(({ _id, name }) => (
           <CardComponent onClick={() => handleRedirect(_id)} key={_id} title={name} />
         ))}
-        <CardComponent onClick={open} title="+ Add new user" />
+        <CardComponent onClick={open} title="+ Add new user" bg="blue-100" />
       </div>
 
-      <UserModalComponent opened={opened} onClose={close} onSubmit={handleSubmit} />
+      <UserModalComponent opened={opened} onClose={close} onSubmit={handleSubmit} loading={loading} />
     </Container>
   )
 }
