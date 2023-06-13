@@ -21,8 +21,8 @@ const getMeasurement = async (req: Request, res: Response) => {
 
 const createMeasurement = async (req: Request, res: Response) => {
   try {
-    const newMeasurement = await Measurement.create(req.body)
-    res.status(200).json({ newMeasurement })
+    const measurement = await Measurement.create(req.body)
+    res.status(200).json({ measurement })
   } catch (error) {
     res.status(500).json({ msg: error })
   }

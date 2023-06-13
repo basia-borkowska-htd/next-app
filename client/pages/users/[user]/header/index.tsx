@@ -6,8 +6,9 @@ import { UserType } from '@/types/User'
 interface HeaderProps {
   user: UserType
   openModal: () => void
+  openConfirmationModal: () => void
 }
-export const HeaderComponent = ({ user, openModal }: HeaderProps) => {
+export const HeaderComponent = ({ user, openModal, openConfirmationModal }: HeaderProps) => {
   const { name, age, sex, height, weight } = user
 
   return (
@@ -36,12 +37,12 @@ export const HeaderComponent = ({ user, openModal }: HeaderProps) => {
           <Button
             fullWidth
             variant="gradient"
-            gradient={{ from: 'green-100', to: 'blue-200', deg: 35 }}
+            gradient={{ from: 'blue-200', to: 'green-100', deg: 35 }}
             onClick={openModal}
           >
             Edit
           </Button>
-          <Button fullWidth variant="outline" color="green-100" onClick={openModal}>
+          <Button fullWidth variant="outline" color="blue-200" onClick={openConfirmationModal}>
             Delete
           </Button>
         </div>

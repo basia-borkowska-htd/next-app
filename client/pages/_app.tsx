@@ -9,7 +9,7 @@ export default function App({ Component, pageProps }: AppProps) {
       theme={{
         colors: {
           // TODO figure out shades https://mantine.dev/theming/colors/
-          'blue-200': [
+          'green-100': [
             '#D9ED92',
             '#D9ED92',
             '#D9ED92',
@@ -21,7 +21,7 @@ export default function App({ Component, pageProps }: AppProps) {
             '#D9ED92',
             '#D9ED92',
           ],
-          'green-100': [
+          'blue-200': [
             '#34A0A4',
             '#34A0A4',
             '#34A0A4',

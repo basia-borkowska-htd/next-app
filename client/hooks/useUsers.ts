@@ -65,6 +65,21 @@ export const useUsers = () => {
       return null
     }
   }
+  const deleteUser = async (id: string): Promise<boolean> => {
+    try {
+      const res = await fetch(`http://localhost:3001/api/users/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      const data = await res.json()
+      return data.success
+    } catch (error) {
+      console.error(error)
+      return false
+    }
+  }
 
   return {
     users,
@@ -72,5 +87,6 @@ export const useUsers = () => {
     getUser,
     addUser,
     updateUser,
+    deleteUser,
   }
 }

@@ -8,13 +8,16 @@ import { UserType } from '@/types/User'
 import { useDisclosure } from '@mantine/hooks'
 import { UserModalComponent } from '@/components/userModal'
 import { notifications } from '@mantine/notifications'
+import { ConfirmationModalComponent } from '@/components/confirmationModal'
+import { Pathnames } from '@/utils/pathnames'
 
 const UserProfilePage = () => {
-  const { getUser, updateUser } = useUsers()
+  const { getUser, updateUser, deleteUser } = useUsers()
   const router = useRouter()
   const { user: userId } = router.query
   const [user, setUser] = useState<UserType | null>()
-  const [opened, { open, close }] = useDisclosure(false)
+  const [editModalOpened, { open: openEditModal, close: closeEditModal }] = useDisclosure(false)
+  const [confirmationModalOpened, { open: openConfirmationModal, close: closeConfirmationModal }] = useDisclosure(false)
 
   useEffect(() => {
     ;(async () => {
@@ -27,7 +30,7 @@ const UserProfilePage = () => {
     })()
   }, [userId])
 
-  const handleSubmit = async (user: UserType) => {
+  const handleEdit = async (user: UserType) => {
     const result = await updateUser(user)
     if (result) {
       close()
@@ -46,15 +49,47 @@ const UserProfilePage = () => {
     }
   }
 
+  const handleDelete = async () => {
+    const errorNotification = {
+      title: 'Error',
+      message: 'Unable to delete user',
+      color: 'red',
+    }
+    if (!user?._id) notifications.show(errorNotification)
+    else {
+      const result = await deleteUser(user?._id)
+      if (result) {
+        close()
+        notifications.show({
+          title: 'Success',
+          message: 'User deleted successfully',
+          color: 'green',
+        })
+        router.push(Pathnames.home)
+      } else {
+        notifications.show(errorNotification)
+      }
+    }
+  }
+
   if (!user) return <></>
 
   return (
     <>
-      <HeaderComponent user={user} openModal={open} />
+      <HeaderComponent user={user} openModal={openEditModal} openConfirmationModal={openConfirmationModal} />
       <RangesComponent />
       <ChartComponent />
 
-      <UserModalComponent opened={opened} user={user} onClose={close} onSubmit={handleSubmit} />
+      <UserModalComponent opened={editModalOpened} user={user} onClose={closeEditModal} onSubmit={handleEdit} />
+      <ConfirmationModalComponent
+        opened={confirmationModalOpened}
+        title={`Delete ${user.name} User`}
+        description="Are you sure you want to delete this user and all of their measurements? This action is irreversable."
+        confirmButtonText="Delete"
+        declineButtonText="Cancel"
+        onClose={closeConfirmationModal}
+        onSubmit={handleDelete}
+      />
     </>
   )
 }

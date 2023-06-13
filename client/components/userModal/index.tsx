@@ -1,8 +1,9 @@
-import { Input, Modal, useMantineTheme } from '@mantine/core'
+import { Input, useMantineTheme } from '@mantine/core'
 import { UserType } from '@/types/User'
 import { useForm } from '@mantine/form'
-import { NumberInput, TextInput, Button, Box, SegmentedControl } from '@mantine/core'
+import { NumberInput, TextInput, Button, SegmentedControl } from '@mantine/core'
 import { SexEnum } from '@/enums/Sex.enum'
+import { ModalComponent } from '../Modal'
 
 interface UserModalProps {
   user?: UserType
@@ -39,61 +40,47 @@ export const UserModalComponent = ({ user, opened, onClose, onSubmit }: UserModa
   })
 
   return (
-    <>
-      <Modal
-        opened={opened}
-        onClose={onClose}
-        title={isCreating ? 'Add New User' : 'Edit User'}
-        overlayProps={{
-          color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2],
-          opacity: 0.55,
-          blur: 3,
-        }}
-        centered
-      >
-        <Box maw={320} mx="auto">
-          <form onSubmit={form.onSubmit((values) => onSubmit({ _id: user?._id || '', ...values }))}>
-            <TextInput label="Name" placeholder="Name" withAsterisk {...form.getInputProps('name')} />
-            <NumberInput mt="sm" label="Age" placeholder="Age" min={18} max={99} {...form.getInputProps('age')} />
-            <Input.Wrapper
-              mt="sm"
-              withAsterisk
-              label="Sex"
-              className="flex flex-col"
-              error={form.getInputProps('sex').error}
-            >
-              <SegmentedControl
-                data={[
-                  { label: 'Woman', value: 'woman' },
-                  { label: 'Man', value: 'man' },
-                ]}
-                color="green-100"
-                transitionDuration={500}
-                transitionTimingFunction="linear"
-                {...form.getInputProps('sex')}
-              />
-            </Input.Wrapper>
-            <TextInput
-              mt="sm"
-              label="Height"
-              placeholder="Height"
-              withAsterisk
-              rightSection={<p className="opacity-25 text-sm">cm</p>}
-              {...form.getInputProps('height')}
-            />
-            <TextInput
-              mt="sm"
-              label="Weight"
-              placeholder="Weight"
-              rightSection={<p className="opacity-25 text-sm">kg</p>}
-              {...form.getInputProps('weight')}
-            />
-            <Button type="submit" mt="sm" variant="gradient" gradient={{ from: 'green-100', to: 'blue-200', deg: 35 }}>
-              Submit
-            </Button>
-          </form>
-        </Box>
-      </Modal>
-    </>
+    <ModalComponent opened={opened} onClose={onClose} title={isCreating ? 'Add New User' : 'Edit User'}>
+      <form onSubmit={form.onSubmit((values) => onSubmit({ _id: user?._id || '', ...values }))}>
+        <TextInput label="Name" placeholder="Name" withAsterisk {...form.getInputProps('name')} />
+        <NumberInput mt="sm" label="Age" placeholder="Age" min={18} max={99} {...form.getInputProps('age')} />
+        <Input.Wrapper
+          mt="sm"
+          withAsterisk
+          label="Sex"
+          className="flex flex-col"
+          error={form.getInputProps('sex').error}
+        >
+          <SegmentedControl
+            data={[
+              { label: 'Woman', value: 'woman' },
+              { label: 'Man', value: 'man' },
+            ]}
+            color="blue-200"
+            transitionDuration={500}
+            transitionTimingFunction="linear"
+            {...form.getInputProps('sex')}
+          />
+        </Input.Wrapper>
+        <TextInput
+          mt="sm"
+          label="Height"
+          placeholder="Height"
+          withAsterisk
+          rightSection={<p className="opacity-25 text-sm">cm</p>}
+          {...form.getInputProps('height')}
+        />
+        <TextInput
+          mt="sm"
+          label="Weight"
+          placeholder="Weight"
+          rightSection={<p className="opacity-25 text-sm">kg</p>}
+          {...form.getInputProps('weight')}
+        />
+        <Button type="submit" mt="sm" variant="gradient" gradient={{ from: 'blue-200', to: 'green-100', deg: 35 }}>
+          Submit
+        </Button>
+      </form>
+    </ModalComponent>
   )
 }
