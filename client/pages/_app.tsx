@@ -32,7 +32,6 @@ export default function App({ Component, pageProps }: AppProps) {
             '#52b69a',
             '#52b69a',
           ],
-
           'blue-200': [
             '#34A0A4',
             '#34A0A4',
@@ -44,6 +43,18 @@ export default function App({ Component, pageProps }: AppProps) {
             '#34A0A4',
             '#34A0A4',
             '#34A0A4',
+          ],
+          'blue-300': [
+            '#0E2C44',
+            '#0E2C44',
+            '#0E2C44',
+            '#0E2C44',
+            '#0E2C44',
+            '#0E2C44',
+            '#0E2C44',
+            '#0E2C44',
+            '#0E2C44',
+            '#0E2C44',
           ],
         },
       }}

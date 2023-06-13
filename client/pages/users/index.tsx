@@ -27,7 +27,6 @@ const UsersPage = () => {
   }
   const handleSubmit = async (user: UserType) => {
     const result = await addUser(user)
-    console.log({ result })
     if (result) {
       close()
       getUsers()

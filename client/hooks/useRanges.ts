@@ -4,7 +4,7 @@ import { RangesListType } from '@/types/RangesList'
 import { useState } from 'react'
 
 export const useRanges = () => {
-  const [rangesList, setRangesList] = useState<RangesListType>()
+  const [ranges, setRange] = useState<RangesListType>()
   const [latestMeasurement, setLatestMeasurement] = useState<MeasurementType>()
   const [loading, setLoading] = useState(false)
 
@@ -18,8 +18,7 @@ export const useRanges = () => {
           }),
       )
       const data = await res.json()
-      console.log({ data })
-      setRangesList(data.rangesList)
+      setRange(data.rangesList)
       setLatestMeasurement(data.latestMeasurement)
 
       return true
@@ -34,7 +33,7 @@ export const useRanges = () => {
   return {
     loading,
     latestMeasurement,
-    rangesList,
+    ranges,
     getRanges,
   }
 }
