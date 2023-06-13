@@ -67,7 +67,7 @@ export const UserModalComponent = ({ user, opened, onClose, onSubmit }: UserModa
                   { label: 'Woman', value: 'woman' },
                   { label: 'Man', value: 'man' },
                 ]}
-                color="peach"
+                color="green-100"
                 transitionDuration={500}
                 transitionTimingFunction="linear"
                 {...form.getInputProps('sex')}
@@ -88,7 +88,7 @@ export const UserModalComponent = ({ user, opened, onClose, onSubmit }: UserModa
               rightSection={<p className="opacity-25 text-sm">kg</p>}
               {...form.getInputProps('weight')}
             />
-            <Button type="submit" mt="sm" variant="gradient" gradient={{ from: 'pink', to: 'peach', deg: 35 }}>
+            <Button type="submit" mt="sm" variant="gradient" gradient={{ from: 'green-100', to: 'blue-200', deg: 35 }}>
               Submit
             </Button>
           </form>
