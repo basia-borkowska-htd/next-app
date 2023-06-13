@@ -1,6 +1,7 @@
 import { UserType } from '@/types/User'
 import { NumberInput, TextInput, Button, Box } from '@mantine/core'
 import { ModalComponent } from '../Modal'
+import { ButtonComponent } from '../button'
 
 interface ConfirmationModalProps {
   opened: boolean
@@ -29,18 +30,12 @@ export const ConfirmationModalComponent = ({
       <ModalComponent opened={opened} onClose={onClose} title={title || 'Are you sure?'}>
         {description || 'Are you sure you want to confirm this action? It is irreversable!'}
         <div className="basis-1/4 flex gap-2 mt-5">
-          <Button fullWidth variant="outline" color="blue-200" onClick={onClose}>
+          <ButtonComponent variant="outline" onClick={onClose}>
             {declineButtonText || 'No'}
-          </Button>
-          <Button
-            fullWidth
-            variant="gradient"
-            gradient={{ from: 'blue-200', to: 'green-100', deg: 35 }}
-            loading={loading}
-            onClick={onSubmit}
-          >
+          </ButtonComponent>
+          <ButtonComponent variant="gradient" loading={loading} onClick={onSubmit}>
             {confirmButtonText || 'Yes'}
-          </Button>
+          </ButtonComponent>
         </div>
       </ModalComponent>
     </>

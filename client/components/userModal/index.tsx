@@ -4,6 +4,7 @@ import { useForm } from '@mantine/form'
 import { NumberInput, TextInput, Button, SegmentedControl } from '@mantine/core'
 import { SexEnum } from '@/enums/Sex.enum'
 import { ModalComponent } from '../Modal'
+import { ButtonComponent } from '../button'
 
 interface UserModalProps {
   user?: UserType
@@ -72,20 +73,15 @@ export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }:
         />
         <TextInput
           mt="sm"
+          mb="xl"
           label="Weight"
           placeholder="Weight"
           rightSection={<p className="opacity-25 text-sm">kg</p>}
           {...form.getInputProps('weight')}
         />
-        <Button
-          loading={loading}
-          type="submit"
-          mt="sm"
-          variant="gradient"
-          gradient={{ from: 'blue-200', to: 'green-100', deg: 35 }}
-        >
+        <ButtonComponent loading={loading} type="submit" variant="gradient">
           Submit
-        </Button>
+        </ButtonComponent>
       </form>
     </ModalComponent>
   )

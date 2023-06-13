@@ -2,6 +2,7 @@ import { AvatarComponent } from '@/components/avatar'
 import BasiaImg from '@/assets/images/basia.jpeg'
 import { Button, Container, Divider } from '@mantine/core'
 import { UserType } from '@/types/User'
+import { ButtonComponent } from '@/components/button'
 
 interface HeaderProps {
   user: UserType
@@ -34,17 +35,10 @@ export const HeaderComponent = ({ user, openModal, openConfirmationModal }: Head
           </div>
         </div>
         <div className="basis-1/4 flex justify-end flex-col items-end gap-2">
-          <Button
-            fullWidth
-            variant="gradient"
-            gradient={{ from: 'blue-200', to: 'green-100', deg: 35 }}
-            onClick={openModal}
-          >
-            Edit
-          </Button>
-          <Button fullWidth variant="outline" color="blue-200" onClick={openConfirmationModal}>
+          <ButtonComponent onClick={openModal}>Edit</ButtonComponent>
+          <ButtonComponent variant="outline" onClick={openConfirmationModal}>
             Delete
-          </Button>
+          </ButtonComponent>
         </div>
       </Container>
     </div>
