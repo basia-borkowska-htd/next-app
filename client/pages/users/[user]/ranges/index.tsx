@@ -2,7 +2,9 @@ import { PageLoaderComponent } from '@/components/PageLoader'
 import { ButtonComponent } from '@/components/button'
 import { SexEnum } from '@/enums/Sex.enum'
 import { useRanges } from '@/hooks/useRanges'
+import { Pathnames } from '@/utils/pathnames'
 import { Container, Table } from '@mantine/core'
+import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
 interface RangesProps {
@@ -12,18 +14,24 @@ interface RangesProps {
 
 export const RangesComponent = ({ userId, userSex }: RangesProps) => {
   const { loading, latestMeasurement, ranges, getRanges } = useRanges()
+  const router = useRouter()
 
   useEffect(() => {
     getRanges(userId, userSex)
   }, [userId, userSex])
 
-  if (!ranges) return <PageLoaderComponent />
+  const redirectToMeasurementHistory = () => {
+    router.push(Pathnames.dashboard.replace(':id', userId))
+  }
+
+  if (loading || !ranges) return <PageLoaderComponent />
+
   return (
     <Container>
       <div className="flex justify-between my-5 items-center">
         <h2>Ranges</h2>
         <div className="flex gap-2">
-          <ButtonComponent variant="outline" onClick={() => alert('TODO not yet implemented')}>
+          <ButtonComponent variant="outline" onClick={redirectToMeasurementHistory}>
             See measurement history
           </ButtonComponent>
           <ButtonComponent variant="outline" onClick={() => alert('TODO not yet implemented')}>
