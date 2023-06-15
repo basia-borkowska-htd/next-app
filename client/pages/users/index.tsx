@@ -6,10 +6,11 @@ import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 
 import { useQuery, useMutation } from 'react-query'
-import { PageLoaderComponent } from '@/components/PageLoader'
+import { PageLoaderComponent } from '@/components/pageLoader'
 
 import { notify } from '@/utils/notifications'
 import { api } from '@/api/users'
+import { ErrorComponent } from '@/components/error'
 
 const UsersPage = () => {
   const router = useRouter()
@@ -32,7 +33,7 @@ const UsersPage = () => {
   })
 
   if (isLoading) return <PageLoaderComponent />
-  if (error) return <>{error}</> // TODO create error page
+  if (error) return <ErrorComponent />
 
   const handleRedirect = (id: string) => {
     router.push(Pathnames.userProfile.replace(':id', id))

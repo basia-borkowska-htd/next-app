@@ -9,7 +9,7 @@ import { UserModalComponent } from '@/components/userModal'
 import { notifications } from '@mantine/notifications'
 import { ConfirmationModalComponent } from '@/components/confirmationModal'
 import { Pathnames } from '@/utils/pathnames'
-import { PageLoaderComponent } from '@/components/PageLoader'
+import { PageLoaderComponent } from '@/components/pageLoader'
 
 const UserProfilePage = () => {
   // const { getUser, updateUser, deleteUser, loading } = useUsers()

@@ -1,4 +1,4 @@
-import { PageLoaderComponent } from '@/components/PageLoader'
+import { PageLoaderComponent } from '@/components/pageLoader'
 import { ButtonComponent } from '@/components/button'
 import { SexEnum } from '@/enums/Sex.enum'
 import { useRanges } from '@/hooks/useRanges'
