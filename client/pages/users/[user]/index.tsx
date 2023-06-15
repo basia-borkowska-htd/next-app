@@ -16,8 +16,11 @@ import { RangesComponent } from './ranges'
 
 const UserProfilePage = () => {
   const router = useRouter()
+
   const { user: userId } = router.query
+
   const queryClient = useQueryClient()
+
   const {
     data: user,
     error,
@@ -25,6 +28,7 @@ const UserProfilePage = () => {
   } = useQuery({
     queryKey: ['user'],
     queryFn: () => api.getUser(userId?.toString() || ''),
+    enabled: router.isReady,
   })
 
   const [editModalOpened, { open: openEditModal, close: closeEditModal }] = useDisclosure(false)
