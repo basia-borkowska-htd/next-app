@@ -1,4 +1,3 @@
-import { useUsers } from '@/hooks/useUsers'
 import { ChartComponent } from './chart'
 import { HeaderComponent } from './header'
 import { RangesComponent } from './ranges'
@@ -13,7 +12,7 @@ import { Pathnames } from '@/utils/pathnames'
 import { PageLoaderComponent } from '@/components/PageLoader'
 
 const UserProfilePage = () => {
-  const { getUser, updateUser, deleteUser, loading } = useUsers()
+  // const { getUser, updateUser, deleteUser, loading } = useUsers()
   const router = useRouter()
   const { user: userId } = router.query
   const [user, setUser] = useState<UserType | null>()
@@ -23,8 +22,8 @@ const UserProfilePage = () => {
   useEffect(() => {
     ;(async () => {
       try {
-        const fetchedUser = await getUser(userId?.toString() || '')
-        setUser(fetchedUser)
+        // const fetchedUser = await getUser(userId?.toString() || '')
+        // setUser(fetchedUser)
       } catch (e) {
         console.log(e)
       }
@@ -32,22 +31,22 @@ const UserProfilePage = () => {
   }, [userId])
 
   const handleEdit = async (user: UserType) => {
-    const result = await updateUser(user)
-    if (result) {
-      closeEditModal()
-      setUser(result)
-      notifications.show({
-        title: 'Success',
-        message: 'User updated successfully',
-        color: 'green',
-      })
-    } else {
-      notifications.show({
-        title: 'Error',
-        message: 'Unable to update user',
-        color: 'red',
-      })
-    }
+    // const result = await updateUser(user)
+    // if (result) {
+    //   closeEditModal()
+    //   setUser(result)
+    //   notifications.show({
+    //     title: 'Success',
+    //     message: 'User updated successfully',
+    //     color: 'green',
+    //   })
+    // } else {
+    //   notifications.show({
+    //     title: 'Error',
+    //     message: 'Unable to update user',
+    //     color: 'red',
+    //   })
+    // }
   }
 
   const handleDelete = async () => {
@@ -58,18 +57,18 @@ const UserProfilePage = () => {
     }
     if (!user?._id) notifications.show(errorNotification)
     else {
-      const result = await deleteUser(user?._id)
-      if (result) {
-        close()
-        notifications.show({
-          title: 'Success',
-          message: 'User deleted successfully',
-          color: 'green',
-        })
-        router.push(Pathnames.home)
-      } else {
-        notifications.show(errorNotification)
-      }
+      // const result = await deleteUser(user?._id)
+      // if (result) {
+      //   close()
+      //   notifications.show({
+      //     title: 'Success',
+      //     message: 'User deleted successfully',
+      //     color: 'green',
+      //   })
+      //   router.push(Pathnames.home)
+      // } else {
+      //   notifications.show(errorNotification)
+      // }
     }
   }
 
@@ -86,11 +85,11 @@ const UserProfilePage = () => {
         user={user}
         onClose={closeEditModal}
         onSubmit={handleEdit}
-        loading={loading}
+        loading={false}
       />
       <ConfirmationModalComponent
         opened={confirmationModalOpened}
-        loading={loading}
+        loading={false}
         title={`Delete ${user.name} User`}
         description="Are you sure you want to delete this user and all of their measurements? This action is irreversable."
         confirmButtonText="Delete"

@@ -1,45 +1,31 @@
 import { UserType } from '@/types/User'
-import { useState } from 'react'
 
-export const useUsers = () => {
-  const [users, setUsers] = useState<UserType[]>([])
-  const [loading, setLoading] = useState(false)
-
-  const getUsers = async (): Promise<boolean> => {
+export const api = {
+  getUsers: async (): Promise<UserType[] | undefined> => {
     try {
-      setLoading(true)
-      const res = await fetch('http://localhost:3001/api/users') // TODO find a better way
+      const res = await fetch('http://localhost:3001/api/users')
       const data = await res.json()
 
-      setUsers(data.users)
-      return true
+      return data.users
     } catch (error) {
       console.error(error)
-      return false
-    } finally {
-      setLoading(false)
+      return
     }
-  }
-
-  const getUser = async (id: string): Promise<UserType | null> => {
+  },
+  getUser: async (id: string): Promise<UserType | undefined> => {
     try {
-      setLoading(true)
-      const res = await fetch(`http://localhost:3001/api/users/${id}`) // TODO find a better way
+      const res = await fetch(`http://localhost:3001/api/users/${id}`)
       const data = await res.json()
 
       return data.user
     } catch (error) {
       console.error(error)
-      return null
-    } finally {
-      setLoading(false)
+      return
     }
-  }
-
-  const addUser = async (user: UserType): Promise<UserType | null> => {
+  },
+  addUser: async (user: UserType): Promise<UserType | undefined> => {
     const newUser = { ...user, _id: undefined }
     try {
-      setLoading(true)
       const res = await fetch('http://localhost:3001/api/users', {
         method: 'POST',
         headers: {
@@ -52,15 +38,11 @@ export const useUsers = () => {
       return data.user
     } catch (error) {
       console.error(error)
-      return null
-    } finally {
-      setLoading(false)
+      return undefined
     }
-  }
-
-  const updateUser = async (user: UserType): Promise<UserType | null> => {
+  },
+  updateUser: async (user: UserType): Promise<UserType | undefined> => {
     try {
-      setLoading(true)
       const res = await fetch(`http://localhost:3001/api/users/${user._id}`, {
         method: 'PUT',
         headers: {
@@ -73,14 +55,11 @@ export const useUsers = () => {
       return data.user
     } catch (error) {
       console.error(error)
-      return null
-    } finally {
-      setLoading(false)
+      return
     }
-  }
-  const deleteUser = async (id: string): Promise<boolean> => {
+  },
+  deleteUser: async (id: string): Promise<boolean> => {
     try {
-      setLoading(true)
       const res = await fetch(`http://localhost:3001/api/users/${id}`, {
         method: 'DELETE',
         headers: {
@@ -92,18 +71,6 @@ export const useUsers = () => {
     } catch (error) {
       console.error(error)
       return false
-    } finally {
-      setLoading(false)
     }
-  }
-
-  return {
-    users,
-    loading,
-    getUsers,
-    getUser,
-    addUser,
-    updateUser,
-    deleteUser,
-  }
+  },
 }
