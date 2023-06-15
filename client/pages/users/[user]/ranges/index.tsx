@@ -1,11 +1,12 @@
+import { PageLoaderComponent } from '@/components/pageLoader'
 import { api } from '@/api/ranges'
-import { PageLoaderComponent } from '@/components/PageLoader'
 import { ButtonComponent } from '@/components/button'
 import { SexEnum } from '@/enums/Sex.enum'
 import { Pathnames } from '@/utils/pathnames'
 import { Container, Table } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { useQuery } from 'react-query'
+import { ErrorComponent } from '@/components/error'
 
 interface RangesProps {
   userId: string
@@ -13,7 +14,7 @@ interface RangesProps {
 }
 
 export const RangesComponent = ({ userId, userSex }: RangesProps) => {
-  const { data, error, isLoading, refetch } = useQuery({
+  const { data, error, isLoading } = useQuery({
     queryKey: ['ranges'],
     queryFn: () => api.getRanges(userId, userSex),
   })
@@ -24,7 +25,7 @@ export const RangesComponent = ({ userId, userSex }: RangesProps) => {
   }
 
   if (isLoading) return <PageLoaderComponent />
-  if (error || !data) return <>{error}</>
+  if (error || !data) return <ErrorComponent />
 
   const { latestMeasurement: measurement, rangesList: ranges } = data
 

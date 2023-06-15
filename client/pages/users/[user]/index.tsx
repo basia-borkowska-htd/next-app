@@ -5,7 +5,6 @@ import { useDisclosure } from '@mantine/hooks'
 import { api } from '@/api/users'
 import { UserModalComponent } from '@/components/userModal'
 import { ConfirmationModalComponent } from '@/components/confirmationModal'
-import { PageLoaderComponent } from '@/components/PageLoader'
 import { notify } from '@/utils/notifications'
 import { Pathnames } from '@/utils/pathnames'
 import { UserType } from '@/types/User'
@@ -13,6 +12,8 @@ import { UserType } from '@/types/User'
 import { ChartComponent } from './chart'
 import { HeaderComponent } from './header'
 import { RangesComponent } from './ranges'
+import { PageLoaderComponent } from '@/components/pageLoader'
+import { ErrorComponent } from '@/components/error'
 
 const UserProfilePage = () => {
   const router = useRouter()
@@ -59,7 +60,7 @@ const UserProfilePage = () => {
   })
 
   if (!user || isLoading) return <PageLoaderComponent />
-  if (error) return <>{error}</>
+  if (error) return <ErrorComponent />
 
   return (
     <>
