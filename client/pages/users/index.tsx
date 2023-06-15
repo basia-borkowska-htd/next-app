@@ -21,6 +21,8 @@ const UsersPage = () => {
     mutationFn: api.addUser,
     onSuccess: async () => {
       close()
+      // TODO: think about this function in case of refetching --> await queryClient.refetchQueries({ queryKey: ['posts'], type: 'active' })
+
       await refetch({
         queryKey: ['users'],
       })
@@ -37,7 +39,6 @@ const UsersPage = () => {
   const handleRedirect = (id: string) => {
     router.push(Pathnames.userProfile.replace(':id', id))
   }
-
   return (
     <Container size="xl" className="flex h-screen items-center">
       <div className="w-full flex flex-wrap gap-6 justify-center">

@@ -1,8 +1,9 @@
-import { Input } from '@mantine/core'
-import { UserType } from '@/types/User'
+import { NumberInput, TextInput, Input, SegmentedControl } from '@mantine/core'
 import { useForm } from '@mantine/form'
-import { NumberInput, TextInput, Button, SegmentedControl } from '@mantine/core'
+
+import { UserType } from '@/types/User'
 import { SexEnum } from '@/enums/Sex.enum'
+
 import { ModalComponent } from '../Modal'
 import { ButtonComponent } from '../button'
 
