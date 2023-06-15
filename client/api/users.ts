@@ -14,7 +14,7 @@ export const api = {
     }
   },
   getUser: async (id: string): Promise<UserType | undefined> => {
-    console.log({id})
+    
     try {
       const res = await fetch(`http://localhost:3001/api/users/${id}`)
       const data = await res.json()
