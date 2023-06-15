@@ -41,7 +41,8 @@ export const api = {
       return undefined
     }
   },
-  updateUser: async (user: UserType): Promise<UserType | undefined> => {
+  updateUser: async (user?: UserType): Promise<UserType | undefined> => {
+    if (!user) return
     try {
       const res = await fetch(`http://localhost:3001/api/users/${user._id}`, {
         method: 'PUT',
