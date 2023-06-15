@@ -7,7 +7,7 @@ type RangeType = {
   unit: UnitEnum
 }
 
-export type RangesListType = {
+export type RangesType = {
   _id: string
   sex: SexEnum
   weight: RangeType

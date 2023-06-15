@@ -1,11 +1,12 @@
 import { PageLoaderComponent } from '@/components/pageLoader'
+import { api } from '@/api/ranges'
 import { ButtonComponent } from '@/components/button'
 import { SexEnum } from '@/enums/Sex.enum'
-import { useRanges } from '@/hooks/useRanges'
 import { Pathnames } from '@/utils/pathnames'
 import { Container, Table } from '@mantine/core'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { useQuery } from 'react-query'
+import { ErrorComponent } from '@/components/error'
 
 interface RangesProps {
   userId: string
@@ -13,18 +14,20 @@ interface RangesProps {
 }
 
 export const RangesComponent = ({ userId, userSex }: RangesProps) => {
-  const { loading, latestMeasurement, ranges, getRanges } = useRanges()
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['ranges'],
+    queryFn: () => api.getRanges(userId, userSex),
+  })
   const router = useRouter()
-
-  useEffect(() => {
-    getRanges(userId, userSex)
-  }, [userId, userSex])
 
   const redirectToMeasurementHistory = () => {
     router.push(Pathnames.dashboard.replace(':id', userId))
   }
 
-  if (loading || !ranges) return <PageLoaderComponent />
+  if (isLoading) return <PageLoaderComponent />
+  if (error || !data) return <ErrorComponent />
+
+  const { latestMeasurement: measurement, rangesList: ranges } = data
 
   return (
     <Container>
@@ -54,61 +57,61 @@ export const RangesComponent = ({ userId, userSex }: RangesProps) => {
             <td>Weight</td>
             <td>{convert(ranges.weight.unit, ranges.weight.min)}</td>
             <td>{convert(ranges.weight.unit, ranges.weight.max)}</td>
-            <td>{convert(ranges.weight.unit, latestMeasurement?.weight?.value)}</td>
+            <td>{convert(ranges.weight.unit, measurement?.weight?.value)}</td>
           </tr>
           <tr>
             <td>Body Fat</td>
             <td>{convert(ranges.bodyFat.unit, ranges.bodyFat.min)}</td>
             <td>{convert(ranges.bodyFat.unit, ranges.bodyFat.max)}</td>
-            <td>{convert(ranges.bodyFat.unit, latestMeasurement?.bodyFat?.value)}</td>
+            <td>{convert(ranges.bodyFat.unit, measurement?.bodyFat?.value)}</td>
           </tr>
           <tr>
             <td>Visceral Fat</td>
             <td>{convert(ranges.visceralFat.unit, ranges.visceralFat.min)}</td>
             <td>{convert(ranges.visceralFat.unit, ranges.visceralFat.max)}</td>
-            <td>{convert(ranges.visceralFat.unit, latestMeasurement?.visceralFat?.value)}</td>
+            <td>{convert(ranges.visceralFat.unit, measurement?.visceralFat?.value)}</td>
           </tr>
           <tr>
             <td>Muscles</td>
             <td>{convert(ranges.muscles.unit, ranges.muscles.min)}</td>
             <td>{convert(ranges.muscles.unit, ranges.muscles.max)}</td>
-            <td>{convert(ranges.muscles.unit, latestMeasurement?.muscles?.value)}</td>
+            <td>{convert(ranges.muscles.unit, measurement?.muscles?.value)}</td>
           </tr>
           <tr>
             <td>Protein</td>
             <td>{convert(ranges.protein.unit, ranges.protein.min)}</td>
             <td>{convert(ranges.protein.unit, ranges.protein.max)}</td>
-            <td>{convert(ranges.protein.unit, latestMeasurement?.protein?.value)}</td>
+            <td>{convert(ranges.protein.unit, measurement?.protein?.value)}</td>
           </tr>
           <tr>
             <td>Water</td>
             <td>{convert(ranges.water.unit, ranges.water.min)}</td>
             <td>{convert(ranges.water.unit, ranges.water.max)}</td>
-            <td>{convert(ranges.water.unit, latestMeasurement?.water?.value)}</td>
+            <td>{convert(ranges.water.unit, measurement?.water?.value)}</td>
           </tr>
           <tr>
             <td>Bone Tissue</td>
             <td>{convert(ranges.boneTissue.unit, ranges.boneTissue.min)}</td>
             <td>{convert(ranges.boneTissue.unit, ranges.boneTissue.max)}</td>
-            <td>{convert(ranges.boneTissue.unit, latestMeasurement?.boneTissue?.value)}</td>
+            <td>{convert(ranges.boneTissue.unit, measurement?.boneTissue?.value)}</td>
           </tr>
           <tr>
             <td>BMI</td>
             <td>{convert(ranges.BMI.unit, ranges.BMI.min)}</td>
             <td>{convert(ranges.BMI.unit, ranges.BMI.max)}</td>
-            <td>{convert(ranges.BMI.unit, latestMeasurement?.BMI?.value)}</td>
+            <td>{convert(ranges.BMI.unit, measurement?.BMI?.value)}</td>
           </tr>
           <tr>
             <td>BMR</td>
             <td>{convert(ranges.BMR.unit, ranges.BMR.min)}</td>
             <td>{convert(ranges.BMR.unit, ranges.BMR.max)}</td>
-            <td>{convert(ranges.BMR.unit, latestMeasurement?.BMR?.value)}</td>
+            <td>{convert(ranges.BMR.unit, measurement?.BMR?.value)}</td>
           </tr>
           <tr>
             <td>Metabolic Age</td>
             <td>{convert(ranges.metabolicAge.unit, ranges.metabolicAge.min)}</td>
             <td>{convert(ranges.metabolicAge.unit, ranges.metabolicAge.max)}</td>
-            <td>{convert(ranges.metabolicAge.unit, latestMeasurement?.metabolicAge?.value)}</td>
+            <td>{convert(ranges.metabolicAge.unit, measurement?.metabolicAge?.value)}</td>
           </tr>
         </tbody>
       </Table>

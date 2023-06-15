@@ -1,78 +1,66 @@
+import { useRouter } from 'next/router'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { useDisclosure } from '@mantine/hooks'
+
+import { api } from '@/api/users'
+import { UserModalComponent } from '@/components/userModal'
+import { ConfirmationModalComponent } from '@/components/confirmationModal'
+import { notify } from '@/utils/notifications'
+import { Pathnames } from '@/utils/pathnames'
+import { UserType } from '@/types/User'
+
 import { ChartComponent } from './chart'
 import { HeaderComponent } from './header'
 import { RangesComponent } from './ranges'
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
-import { UserType } from '@/types/User'
-import { useDisclosure } from '@mantine/hooks'
-import { UserModalComponent } from '@/components/userModal'
-import { notifications } from '@mantine/notifications'
-import { ConfirmationModalComponent } from '@/components/confirmationModal'
-import { Pathnames } from '@/utils/pathnames'
 import { PageLoaderComponent } from '@/components/pageLoader'
+import { ErrorComponent } from '@/components/error'
 
 const UserProfilePage = () => {
-  // const { getUser, updateUser, deleteUser, loading } = useUsers()
   const router = useRouter()
+
   const { user: userId } = router.query
-  const [user, setUser] = useState<UserType | null>()
+
+  const queryClient = useQueryClient()
+
+  const {
+    data: user,
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: ['user'],
+    queryFn: () => api.getUser(userId?.toString() || ''),
+    enabled: router.isReady,
+  })
+
   const [editModalOpened, { open: openEditModal, close: closeEditModal }] = useDisclosure(false)
   const [confirmationModalOpened, { open: openConfirmationModal, close: closeConfirmationModal }] = useDisclosure(false)
 
-  useEffect(() => {
-    ;(async () => {
-      try {
-        // const fetchedUser = await getUser(userId?.toString() || '')
-        // setUser(fetchedUser)
-      } catch (e) {
-        console.log(e)
-      }
-    })()
-  }, [userId])
+  const editUserMutation = useMutation({
+    mutationFn: (user: UserType) => api.updateUser(user),
+    onSuccess: async () => {
+      await queryClient.refetchQueries({ queryKey: ['user'] })
+      closeEditModal()
+      notify({ type: 'success', message: 'User updated successfully' })
+    },
+    onError: () => {
+      notify({ type: 'error', message: 'Unable to update user' })
+    },
+  })
 
-  const handleEdit = async (user: UserType) => {
-    // const result = await updateUser(user)
-    // if (result) {
-    //   closeEditModal()
-    //   setUser(result)
-    //   notifications.show({
-    //     title: 'Success',
-    //     message: 'User updated successfully',
-    //     color: 'green',
-    //   })
-    // } else {
-    //   notifications.show({
-    //     title: 'Error',
-    //     message: 'Unable to update user',
-    //     color: 'red',
-    //   })
-    // }
-  }
+  const deleteUserMutation = useMutation({
+    mutationFn: () => api.deleteUser(userId?.toString() || ''),
+    onSuccess: async () => {
+      closeConfirmationModal()
+      notify({ type: 'success', message: 'User deleted successfully' })
+      router.push(Pathnames.home)
+    },
+    onError: () => {
+      notify({ type: 'error', message: 'Unable to delete user' })
+    },
+  })
 
-  const handleDelete = async () => {
-    const errorNotification = {
-      title: 'Error',
-      message: 'Unable to delete user',
-      color: 'red',
-    }
-    if (!user?._id) notifications.show(errorNotification)
-    else {
-      // const result = await deleteUser(user?._id)
-      // if (result) {
-      //   close()
-      //   notifications.show({
-      //     title: 'Success',
-      //     message: 'User deleted successfully',
-      //     color: 'green',
-      //   })
-      //   router.push(Pathnames.home)
-      // } else {
-      //   notifications.show(errorNotification)
-      // }
-    }
-  }
-
-  if (!user) return <PageLoaderComponent />
+  if (!user || isLoading) return <PageLoaderComponent />
+  if (error) return <ErrorComponent />
 
   return (
     <>
@@ -84,18 +72,18 @@ const UserProfilePage = () => {
         opened={editModalOpened}
         user={user}
         onClose={closeEditModal}
-        onSubmit={handleEdit}
-        loading={false}
+        onSubmit={editUserMutation.mutate}
+        loading={editUserMutation.isLoading}
       />
       <ConfirmationModalComponent
         opened={confirmationModalOpened}
-        loading={false}
+        loading={deleteUserMutation.isLoading}
         title={`Delete ${user.name} User`}
-        description="Are you sure you want to delete this user and all of their measurements? This action is irreversable."
+        description="Are you sure you want to delete this user and all of their measurements? This action is irreversible."
         confirmButtonText="Delete"
         declineButtonText="Cancel"
         onClose={closeConfirmationModal}
-        onSubmit={handleDelete}
+        onSubmit={deleteUserMutation.mutate}
       />
     </>
   )
