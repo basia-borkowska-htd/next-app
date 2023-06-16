@@ -24,8 +24,9 @@ export const RangesComponent = ({ userId, userSex }: RangesProps) => {
     router.push(Pathnames.dashboard.replace(':id', userId))
   }
 
-  if (error || !data) return <ErrorComponent />
+  if (error) return <ErrorComponent title={error.toString()} />
   if (isLoading) return <PageLoaderComponent />
+  if (!data) return <div>no data</div> // TODO create component
 
   const { latestMeasurement: measurement, rangesList: ranges } = data
 

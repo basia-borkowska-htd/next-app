@@ -4,7 +4,6 @@ export const api = {
   getUsers: async (): Promise<UserType[]> => {
     const res = await fetch('http://localhost:3001/api/users')
     const data = await res.json()
-    console.log({ data })
     if (!data?.users) throw new Error(data.error)
     return data.users
   },

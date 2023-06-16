@@ -11,14 +11,11 @@ export const ErrorComponent = ({
   message = 'Oh no! Something went wrong.',
   secondaryMessage = 'Please try reloading the page and repeating this action.',
   compact = false,
-}: ErrorProps) => {
-  const n = compact ? 2 : 3
-  return (
-    <div className={`h-screen flex flex-col items-center justify-center gap-${n + 2}`}>
-      <Image height={compact ? 280 : 580} src={ErrorRobot} alt="Random image" />
-      <strong className={`text-${n + 4}xl`}>{title}</strong>
-      <strong className={`text-${n + 2}xl`}>{message}</strong>
-      <strong className={`text-${n}xl`}>{secondaryMessage}</strong>
-    </div>
-  )
-}
+}: ErrorProps) => (
+  <div className={`h-screen flex flex-col items-center justify-center ${compact ? 'gap-4' : 'gap-5'}`}>
+    <Image height={compact ? 280 : 580} src={ErrorRobot} alt="Random image" />
+    <strong className={`${compact ? 'text-5xl' : 'text-6xl'}`}>{title}</strong>
+    <strong className={`${compact ? 'text-3xl' : 'text-4xl'}`}>{message}</strong>
+    <strong className={`${compact ? 'text-xl' : 'text-2xl'}`}>{secondaryMessage}</strong>
+  </div>
+)
