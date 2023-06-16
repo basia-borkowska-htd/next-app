@@ -24,8 +24,8 @@ export const RangesComponent = ({ userId, userSex }: RangesProps) => {
     router.push(Pathnames.dashboard.replace(':id', userId))
   }
 
-  if (isLoading) return <PageLoaderComponent />
   if (error || !data) return <ErrorComponent />
+  if (isLoading) return <PageLoaderComponent />
 
   const { latestMeasurement: measurement, rangesList: ranges } = data
 

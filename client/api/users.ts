@@ -1,79 +1,57 @@
 import { UserType } from '@/types/User'
 
 export const api = {
-  getUsers: async (): Promise<UserType[] | undefined> => {
-
-    try {
-      const res = await fetch('http://localhost:3001/api/users')
-      const data = await res.json()
-
-      return data.users
-    } catch (error) {
-      console.error(error)
-      return
-    }
+  getUsers: async (): Promise<UserType[]> => {
+    const res = await fetch('http://localhost:3001/api/users')
+    const data = await res.json()
+    console.log({ data })
+    if (!data?.users) throw new Error(data.error)
+    return data.users
   },
-  getUser: async (id: string): Promise<UserType | undefined> => {
-    
-    try {
-      const res = await fetch(`http://localhost:3001/api/users/${id}`)
-      const data = await res.json()
-
-      return data.user
-    } catch (error) {
-      console.error(error)
-      return
-    }
+  getUser: async (id: string): Promise<UserType> => {
+    const res = await fetch(`http://localhost:3001/api/users/${id}`)
+    const data = await res.json()
+    if (!data?.user) throw new Error(data.error)
+    return data.user
   },
-  addUser: async (user: UserType): Promise<UserType | undefined> => {
+  addUser: async (user: UserType): Promise<UserType> => {
     const newUser = { ...user, _id: undefined }
-    try {
-      const res = await fetch('http://localhost:3001/api/users', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newUser),
-      })
-      const data = await res.json()
+    const res = await fetch('http://localhost:3001/api/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newUser),
+    })
+    const data = await res.json()
 
-      return data.user
-    } catch (error) {
-      console.error(error)
-      return undefined
-    }
+    if (!data?.user) throw new Error(data.error)
+    return data.user
   },
-  updateUser: async (user?: UserType): Promise<UserType | undefined> => {
-    if (!user) return
-    try {
-      const res = await fetch(`http://localhost:3001/api/users/${user._id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(user),
-      })
-      const data = await res.json()
+  updateUser: async (user?: UserType): Promise<UserType> => {
+    if (!user) throw new Error('User does not exist')
+    const res = await fetch(`http://localhost:3001/api/users/${user._id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(user),
+    })
+    const data = await res.json()
 
-      return data.user
-    } catch (error) {
-      console.error(error)
-      return
-    }
+    if (!data?.user) throw new Error(data.error)
+    return data.user
   },
   deleteUser: async (id: string): Promise<boolean> => {
-    try {
-      const res = await fetch(`http://localhost:3001/api/users/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      const data = await res.json()
-      return data.success
-    } catch (error) {
-      console.error(error)
-      return false
-    }
+    const res = await fetch(`http://localhost:3001/api/users/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    const data = await res.json()
+
+    if (!data?.success) throw new Error(data.error)
+    return data.success
   },
 }
