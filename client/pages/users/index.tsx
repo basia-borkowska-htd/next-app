@@ -16,7 +16,7 @@ const UsersPage = () => {
   const router = useRouter()
   const [opened, { open, close }] = useDisclosure(false)
 
-  const { data, error, isLoading, refetch } = useQuery({ queryKey: ['users'], queryFn: usersApi.getUsers })
+  const { data, error, isLoading, refetch } = useQuery({ queryKey: ['users'], queryFn: api.user.getUsers })
 
   const addUserMutation = useMutation({
     mutationFn: api.user.addUser,

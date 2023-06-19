@@ -1,16 +1,7 @@
-import { Unit } from '../enums/Unit.enum'
-
 import mongoose from 'mongoose'
+import { Record } from './helpers'
 
 const Schema = mongoose.Schema
-
-const Record = new Schema({
-  value: Number,
-  unit: {
-    type: String,
-    enum: Unit,
-  },
-})
 
 const MeasurementSchema = new Schema(
   {

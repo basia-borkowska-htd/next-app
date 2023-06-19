@@ -30,8 +30,8 @@ export const HeaderComponent = ({ user, openModal, openConfirmationModal }: Head
           <div className="flex flex-col ms-5">
             <div>{age}</div>
             <div>{sex}</div>
-            <div>{height / 100} m</div>
-            <div>{weight ? `${weight} kg` : '-'}</div>
+            <div>{height.value / 100} m</div>
+            <div>{weight?.value ? `${weight.value} ${weight.unit}` : '-'}</div>
           </div>
         </div>
         <div className="basis-1/4 flex justify-end flex-col items-end gap-2">

@@ -6,6 +6,7 @@ import { SexEnum } from '@/enums/Sex.enum'
 
 import { ModalComponent } from '../modal'
 import { ButtonComponent } from '../button'
+import { UnitEnum } from '@/enums/Unit.enum'
 
 interface UserModalProps {
   user?: UserType
@@ -24,19 +25,20 @@ export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }:
       name: user?.name || '',
       age: user?.age || 0,
       sex: user?.sex || SexEnum.WOMAN,
-      height: user?.height || 0,
-      weight: user?.weight,
+      height: user?.height || { value: 0, unit: UnitEnum.CENTIMITERS },
+      weight: user?.weight || { value: 0, unit: UnitEnum.KILOS },
     },
 
     validate: {
-      name: (value) => (value.length < 2 ? 'Name must be at least 2 characters' : null),
-      age: (value) => (value > 17 && value < 100 ? null : 'Invalid age: acceptable values are from 18 to 99 years-old'),
-      sex: (value) => (!value ? 'Sex is required' : null),
-      height: (value) =>
+      name: ({ length }) => (length < 2 ? 'Name must be at least 2 characters' : null),
+      age: (age) => (age > 17 && age < 100 ? null : 'Invalid age: acceptable values are from 18 to 99 years-old'),
+      sex: (sex) => (!sex ? 'Sex is required' : null),
+      height: ({ value }) =>
         value > 99 && value < 301 ? null : 'Invalid height: acceptable values are from 100 cm to 300 cm',
-      weight: (value) => {
-        if (!value) return null
-        return value > 29 && value < 301 ? null : 'Invalid weight: acceptable values are from 30 kg to 300 kg'
+      weight: (weight) => {
+        if (!weight) return null
+        // TODO add lower boundary (submit does not work on empty field)
+        return weight.value < 301 ? null : 'Invalid weight: acceptable values are from 30 kg to 300 kg'
       },
     },
   })
@@ -70,7 +72,7 @@ export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }:
           placeholder="Height"
           withAsterisk
           rightSection={<p className="opacity-25 text-sm">cm</p>}
-          {...form.getInputProps('height')}
+          {...form.getInputProps('height.value')}
         />
         <TextInput
           mt="sm"
@@ -78,7 +80,7 @@ export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }:
           label="Weight"
           placeholder="Weight"
           rightSection={<p className="opacity-25 text-sm">kg</p>}
-          {...form.getInputProps('weight')}
+          {...form.getInputProps('weight.value')}
         />
         <ButtonComponent loading={loading} type="submit" variant="gradient">
           Submit

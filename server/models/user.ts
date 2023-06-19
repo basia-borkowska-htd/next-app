@@ -1,6 +1,7 @@
 import { Sex } from '../enums/Sex.enum'
 
 import mongoose from 'mongoose'
+import { Record } from './helpers'
 
 const Schema = mongoose.Schema
 
@@ -18,11 +19,8 @@ const UserSchema = new Schema({
     type: Number,
     required: true,
   },
-  height: {
-    type: Number,
-    required: true,
-  },
-  weight: Number,
+  height: Record,
+  weight: Record,
 })
 
 export const User = mongoose.model('User', UserSchema)
