@@ -59,8 +59,8 @@ const UserProfilePage = () => {
     },
   })
 
+  if (error) return <ErrorComponent title={error.toString()} />
   if (!user || isLoading) return <PageLoaderComponent />
-  if (error) return <ErrorComponent />
 
   return (
     <>

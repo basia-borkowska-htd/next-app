@@ -16,7 +16,10 @@ const UsersPage = () => {
   const router = useRouter()
   const [opened, { open, close }] = useDisclosure(false)
 
-  const { data, error, isLoading, refetch } = useQuery({ queryKey: ['users'], queryFn: api.getUsers })
+  const { data, error, isLoading, refetch } = useQuery({
+    queryKey: ['users'],
+    queryFn: api.getUsers,
+  })
 
   const addUserMutation = useMutation({
     mutationFn: api.addUser,
@@ -34,8 +37,8 @@ const UsersPage = () => {
     },
   })
 
+  if (error) return <ErrorComponent title={error.toString()} />
   if (isLoading) return <PageLoaderComponent />
-  if (error) return <ErrorComponent />
 
   const handleRedirect = (id: string) => {
     router.push(Pathnames.userProfile.replace(':id', id))
