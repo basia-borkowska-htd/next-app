@@ -34,8 +34,8 @@ const UsersPage = () => {
     },
   })
 
+  if (error) return <ErrorComponent title={error.toString()} />
   if (isLoading) return <PageLoaderComponent />
-  if (error) return <ErrorComponent />
 
   const handleRedirect = (id: string) => {
     router.push(Pathnames.userProfile.replace(':id', id))

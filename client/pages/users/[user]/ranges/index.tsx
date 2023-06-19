@@ -43,8 +43,9 @@ export const RangesComponent = ({ userId, userSex }: RangesProps) => {
     },
   })
 
+  if (error) return <ErrorComponent title={error.toString()} />
   if (isLoading) return <PageLoaderComponent />
-  if (error || !data) return <ErrorComponent />
+  if (!data) return <div>no data</div> // TODO create component
 
   const { latestMeasurement: measurement, rangesList: ranges } = data
 
