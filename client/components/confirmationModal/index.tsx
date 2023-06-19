@@ -1,6 +1,6 @@
 import { UserType } from '@/types/User'
 import { NumberInput, TextInput, Button, Box } from '@mantine/core'
-import { ModalComponent } from '../Modal'
+import { ModalComponent } from '../modal'
 import { ButtonComponent } from '../button'
 
 interface ConfirmationModalProps {

@@ -4,7 +4,7 @@ import { useForm } from '@mantine/form'
 import { UserType } from '@/types/User'
 import { SexEnum } from '@/enums/Sex.enum'
 
-import { ModalComponent } from '../Modal'
+import { ModalComponent } from '../modal'
 import { ButtonComponent } from '../button'
 
 interface UserModalProps {
