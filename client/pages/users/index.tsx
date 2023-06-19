@@ -9,17 +9,17 @@ import { useQuery, useMutation } from 'react-query'
 import { PageLoaderComponent } from '@/components/pageLoader'
 
 import { notify } from '@/utils/notifications'
-import { api } from '@/api/users'
 import { ErrorComponent } from '@/components/error'
+import { api } from '@/api'
 
 const UsersPage = () => {
   const router = useRouter()
   const [opened, { open, close }] = useDisclosure(false)
 
-  const { data, error, isLoading, refetch } = useQuery({ queryKey: ['users'], queryFn: api.getUsers })
+  const { data, error, isLoading, refetch } = useQuery({ queryKey: ['users'], queryFn: usersApi.getUsers })
 
   const addUserMutation = useMutation({
-    mutationFn: api.addUser,
+    mutationFn: api.user.addUser,
     onSuccess: async () => {
       close()
       // TODO: think about this function in case of refetching --> await queryClient.refetchQueries({ queryKey: ['posts'], type: 'active' })

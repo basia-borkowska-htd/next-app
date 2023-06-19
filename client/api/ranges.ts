@@ -1,7 +1,7 @@
 import { SexEnum } from '@/enums/Sex.enum'
 import { RangesTable } from '@/types/RangesTable'
 
-export const api = {
+export const rangesApi = {
   getRanges: async (userId: string, userSex: SexEnum): Promise<RangesTable | undefined> => {
     try {
       const res = await fetch(

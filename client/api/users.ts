@@ -1,8 +1,7 @@
 import { UserType } from '@/types/User'
 
-export const api = {
+export const usersApi = {
   getUsers: async (): Promise<UserType[] | undefined> => {
-
     try {
       const res = await fetch('http://localhost:3001/api/users')
       const data = await res.json()
@@ -14,7 +13,6 @@ export const api = {
     }
   },
   getUser: async (id: string): Promise<UserType | undefined> => {
-    
     try {
       const res = await fetch(`http://localhost:3001/api/users/${id}`)
       const data = await res.json()

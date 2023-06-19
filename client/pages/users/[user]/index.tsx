@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { useDisclosure } from '@mantine/hooks'
 
-import { api } from '@/api/users'
+import { api } from '@/api'
 import { UserModalComponent } from '@/components/userModal'
 import { ConfirmationModalComponent } from '@/components/confirmationModal'
 import { notify } from '@/utils/notifications'
@@ -28,7 +28,7 @@ const UserProfilePage = () => {
     isLoading,
   } = useQuery({
     queryKey: ['user'],
-    queryFn: () => api.getUser(userId?.toString() || ''),
+    queryFn: () => api.user.getUser(userId?.toString() || ''),
     enabled: router.isReady,
   })
 
@@ -36,7 +36,7 @@ const UserProfilePage = () => {
   const [confirmationModalOpened, { open: openConfirmationModal, close: closeConfirmationModal }] = useDisclosure(false)
 
   const editUserMutation = useMutation({
-    mutationFn: (user: UserType) => api.updateUser(user),
+    mutationFn: (user: UserType) => api.user.updateUser(user),
     onSuccess: async () => {
       await queryClient.refetchQueries({ queryKey: ['user'] })
       closeEditModal()
@@ -48,7 +48,7 @@ const UserProfilePage = () => {
   })
 
   const deleteUserMutation = useMutation({
-    mutationFn: () => api.deleteUser(userId?.toString() || ''),
+    mutationFn: () => api.user.deleteUser(userId?.toString() || ''),
     onSuccess: async () => {
       closeConfirmationModal()
       notify({ type: 'success', message: 'User deleted successfully' })

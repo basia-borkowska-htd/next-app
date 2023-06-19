@@ -1,12 +1,16 @@
 import { PageLoaderComponent } from '@/components/pageLoader'
-import { api } from '@/api/ranges'
 import { ButtonComponent } from '@/components/button'
 import { SexEnum } from '@/enums/Sex.enum'
 import { Pathnames } from '@/utils/pathnames'
 import { Container, Table } from '@mantine/core'
 import { useRouter } from 'next/router'
-import { useQuery } from 'react-query'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { ErrorComponent } from '@/components/error'
+import { AddMeasurementModalComponent } from '@/components/addMeasurementModal'
+import { useDisclosure } from '@mantine/hooks'
+import { MeasurementType } from '@/types/Measurement'
+import { notify } from '@/utils/notifications'
+import { api } from '@/api'
 
 interface RangesProps {
   userId: string
@@ -16,13 +20,28 @@ interface RangesProps {
 export const RangesComponent = ({ userId, userSex }: RangesProps) => {
   const { data, error, isLoading } = useQuery({
     queryKey: ['ranges'],
-    queryFn: () => api.getRanges(userId, userSex),
+    queryFn: () => api.range.getRanges(userId, userSex),
   })
   const router = useRouter()
+  const [opened, { open, close }] = useDisclosure(false)
+  const queryClient = useQueryClient()
 
   const redirectToMeasurementHistory = () => {
     router.push(Pathnames.dashboard.replace(':id', userId))
   }
+
+  const addMeasurementMutation = useMutation({
+    mutationFn: (measurement: MeasurementType) => api.measurement.addMeasurement(measurement),
+    onSuccess: async () => {
+      // TODO fix refetch
+      await queryClient.refetchQueries({ queryKey: ['user', 'ranges'] })
+      close()
+      notify({ type: 'success', message: 'Measurement added successfully' })
+    },
+    onError: () => {
+      notify({ type: 'error', message: 'Unable to add measurement' })
+    },
+  })
 
   if (isLoading) return <PageLoaderComponent />
   if (error || !data) return <ErrorComponent />
@@ -37,7 +56,7 @@ export const RangesComponent = ({ userId, userSex }: RangesProps) => {
           <ButtonComponent variant="outline" onClick={redirectToMeasurementHistory}>
             See measurement history
           </ButtonComponent>
-          <ButtonComponent variant="outline" onClick={() => alert('TODO not yet implemented')}>
+          <ButtonComponent variant="outline" onClick={open}>
             Add new measurement
           </ButtonComponent>
         </div>
@@ -115,6 +134,14 @@ export const RangesComponent = ({ userId, userSex }: RangesProps) => {
           </tr>
         </tbody>
       </Table>
+
+      <AddMeasurementModalComponent
+        opened={opened}
+        userId={userId}
+        onClose={close}
+        onSubmit={addMeasurementMutation.mutate}
+        loading={addMeasurementMutation.isLoading}
+      />
     </Container>
   )
 }
