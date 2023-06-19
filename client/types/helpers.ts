@@ -1,7 +1,7 @@
 import { UnitEnum } from '@/enums/Unit.enum'
 
 export type RecordType = {
-  value: number
+  value: number | null
   unit: UnitEnum
 }
 

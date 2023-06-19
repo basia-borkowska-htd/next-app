@@ -2,6 +2,6 @@ export enum Unit {
   PERCENTAGE = '%',
   KILOS = 'kg',
   KCAL = 'kcal',
-  CENTIMITERS = 'cm',
+  CENTIMETERS = 'cm',
   NO_UNIT = '',
 }

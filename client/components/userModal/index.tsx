@@ -25,19 +25,22 @@ export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }:
       name: user?.name || '',
       age: user?.age || 0,
       sex: user?.sex || SexEnum.WOMAN,
-      height: user?.height || { value: 0, unit: UnitEnum.CENTIMITERS },
-      weight: user?.weight || { value: 0, unit: UnitEnum.KILOS },
+      height: user?.height || { value: null, unit: UnitEnum.CENTIMETERS },
+      weight: user?.weight || { value: null, unit: UnitEnum.KILOS },
     },
 
     validate: {
       name: ({ length }) => (length < 2 ? 'Name must be at least 2 characters' : null),
       age: (age) => (age > 17 && age < 100 ? null : 'Invalid age: acceptable values are from 18 to 99 years-old'),
       sex: (sex) => (!sex ? 'Sex is required' : null),
-      height: ({ value }) =>
-        value > 99 && value < 301 ? null : 'Invalid height: acceptable values are from 100 cm to 300 cm',
+      height: (height) => {
+        if (!height || !height?.value) return null
+        return height.value > 99 && height.value < 301
+          ? null
+          : 'Invalid height: acceptable values are from 100 cm to 300 cm'
+      },
       weight: (weight) => {
-        if (!weight) return null
-        // TODO add lower boundary (submit does not work on empty field)
+        if (!weight || !weight?.value) return null
         return weight.value < 301 ? null : 'Invalid weight: acceptable values are from 30 kg to 300 kg'
       },
     },

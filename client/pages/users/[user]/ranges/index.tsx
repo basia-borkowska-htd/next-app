@@ -146,7 +146,7 @@ export const RangesComponent = ({ userId, userSex }: RangesProps) => {
   )
 }
 
-const convert = (unit: string, value?: number) => {
+const convert = (unit: string, value?: number | null) => {
   if (!value) return '-'
   return `${value} ${unit}`
 }
