@@ -5,9 +5,7 @@ import { Measurement } from '../models/measurement'
 const getUsers = async (req: Request, res: Response) => {
   try {
     const users = await User.find({})
-    res.status(500).json({ error: 'Planned error' })
-
-    // res.status(200).json({ users })
+    res.status(200).json({ users })
   } catch (error) {
     res.status(500).json({ msg: error })
   }
