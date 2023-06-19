@@ -3,6 +3,7 @@ import BasiaImg from '@/assets/images/basia.jpeg'
 import { Button, Container, Divider } from '@mantine/core'
 import { UserType } from '@/types/User'
 import { ButtonComponent } from '@/components/button'
+import { units } from '@/utils/units'
 
 interface HeaderProps {
   user: UserType
@@ -30,8 +31,8 @@ export const HeaderComponent = ({ user, openModal, openConfirmationModal }: Head
           <div className="flex flex-col ms-5">
             <div>{age}</div>
             <div>{sex}</div>
-            <div>{height.value / 100} m</div>
-            <div>{weight?.value ? `${weight.value} ${weight.unit}` : '-'}</div>
+            <div>{units.display(height.unit, height.value)}</div>
+            <div>{weight ? units.display(weight.unit, weight.value) : '-'}</div>
           </div>
         </div>
         <div className="basis-1/4 flex justify-end flex-col items-end gap-2">

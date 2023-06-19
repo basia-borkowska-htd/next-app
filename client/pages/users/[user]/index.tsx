@@ -65,7 +65,7 @@ const UserProfilePage = () => {
   return (
     <>
       <HeaderComponent user={user} openModal={openEditModal} openConfirmationModal={openConfirmationModal} />
-      <RangesComponent userId={user._id} userSex={user.sex} />
+      <RangesComponent userId={user._id} />
       <ChartComponent />
 
       <UserModalComponent
