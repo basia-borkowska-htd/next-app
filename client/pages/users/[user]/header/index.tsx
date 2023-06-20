@@ -31,7 +31,7 @@ export const HeaderComponent = ({ user, openModal, openConfirmationModal }: Head
           <div className="flex flex-col ms-5">
             <div>{age}</div>
             <div>{sex}</div>
-            <div>{units.display(height.unit, height.value)}</div>
+            <div>{units.display(height?.unit, height?.value)}</div>
             <div>{weight ? units.display(weight.unit, weight.value) : '-'}</div>
           </div>
         </div>

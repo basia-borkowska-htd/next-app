@@ -6,7 +6,7 @@ import { Container } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 
-import { useQuery, useMutation } from 'react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { PageLoaderComponent } from '@/components/pageLoader'
 
 import { notify } from '@/utils/notifications'
@@ -15,6 +15,7 @@ import { api } from '@/api'
 import { LineChartComponent } from '@/components/lineChart'
 
 const UsersPage = () => {
+  const queryClient = useQueryClient()
   const router = useRouter()
   const [opened, { open, close }] = useDisclosure(false)
 

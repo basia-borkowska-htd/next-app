@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useMutation, useQuery } from 'react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { useDisclosure } from '@mantine/hooks'
 
 import { api } from '@/api'
