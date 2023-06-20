@@ -64,7 +64,6 @@ export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }:
 
   return (
     <ModalComponent opened={opened} onClose={resetAndClose} title={isCreating ? 'Add New User' : 'Edit User'}>
-      <div>{user?.weight?.value || 'no value'}</div>
       <form
         onSubmit={onSubmitForm((values) => {
           onSubmit(
