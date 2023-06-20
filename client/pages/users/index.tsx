@@ -21,16 +21,11 @@ const UsersPage = () => {
   const addUserMutation = useMutation({
     mutationFn: api.user.addUser,
     onSuccess: async () => {
-      close()
-      // TODO: think about this function in case of refetching --> await queryClient.refetchQueries({ queryKey: ['posts'], type: 'active' })
-
-      await refetch({
-        queryKey: ['users'],
-      })
-      notify({ type: 'success', message: 'User updated successfully' })
+      await refetch()
+      notify({ type: 'success', message: 'User added successfully' })
     },
     onError: () => {
-      notify({ type: 'error', message: 'Unable to update user' })
+      notify({ type: 'error', message: 'Unable to add user' })
     },
   })
 
