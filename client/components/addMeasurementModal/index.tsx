@@ -58,15 +58,15 @@ export const AddMeasurementModalComponent = ({
           )
         })}
       >
-        {Object.keys(inputValues).map((key: string, idx) => (
+        {inputValues.map(({ value, label, placeholder, rightSection }, idx) => (
           <TextInput
-            key={`modal-input-${inputValues[key].value}-${idx}`}
+            key={`modal-input-${value}-${idx}`}
             mt="sm"
             mb="xl"
-            label={inputValues[key].label}
-            placeholder={inputValues[key].placeholder}
-            rightSection={inputValues[key].rightSection}
-            {...getInputProps(`${inputValues[key].value}.value`)}
+            label={label}
+            placeholder={placeholder}
+            rightSection={rightSection}
+            {...getInputProps(`${value}.value`)}
           />
         ))}
         <ButtonComponent loading={loading} type="submit" variant="gradient">
