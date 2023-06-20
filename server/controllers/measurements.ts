@@ -4,7 +4,7 @@ import { User } from '../models/user'
 
 const getMeasurements = async (req: Request, res: Response) => {
   try {
-    const measurements = await Measurement.find({})
+    const measurements = await Measurement.find({ userId: req.query.userId })
     res.status(200).json({ measurements })
   } catch (error) {
     res.status(500).json({ msg: error })
