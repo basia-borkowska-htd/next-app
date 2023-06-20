@@ -6,6 +6,7 @@ import { ButtonComponent } from '@/components/button'
 import { MeasurementType } from '@/types/Measurement'
 
 import { initialValues, inputValues } from './helpers'
+import { MutateOptions, MutationOptions } from 'react-query'
 
 interface AddMeasurementModalProps {
   userId: string
@@ -13,7 +14,10 @@ interface AddMeasurementModalProps {
   loading: boolean
 
   onClose: () => void
-  onSubmit: (measurement: MeasurementType) => void
+  onSubmit: (
+    measurement: MeasurementType,
+    options?: MutateOptions<MeasurementType, unknown, MeasurementType, unknown>,
+  ) => void
 }
 
 export const AddMeasurementModalComponent = ({
@@ -33,11 +37,25 @@ export const AddMeasurementModalComponent = ({
     },
   })
 
+  const handleSubmit = () => {
+    form.onSubmit((values) => {
+      onSubmit(
+        { _id: '', userId, ...values },
+        {
+          onSuccess: () => {
+            form.reset()
+          },
+        },
+      )
+    })
+  }
+
   return (
     <ModalComponent opened={opened} onClose={onClose} title="Add New Measurement">
-      <form onSubmit={form.onSubmit((values) => onSubmit({ _id: '', userId, ...values }))}>
-        {Object.keys(inputValues).map((key: string) => (
+      <form onSubmit={handleSubmit}>
+        {Object.keys(inputValues).map((key: string, idx) => (
           <TextInput
+            key={`modal-input-${inputValues[key].value}-${idx}`}
             mt="sm"
             mb="xl"
             label={inputValues[key].label}

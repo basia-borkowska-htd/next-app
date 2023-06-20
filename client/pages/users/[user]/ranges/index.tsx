@@ -33,9 +33,7 @@ export const RangesComponent = ({ userId }: RangesProps) => {
   const addMeasurementMutation = useMutation({
     mutationFn: (measurement: MeasurementType) => api.measurement.addMeasurement(measurement),
     onSuccess: async () => {
-      // TODO fix refetch
-      await queryClient.refetchQueries({ queryKey: ['user', 'ranges'] })
-      close()
+      await queryClient.refetchQueries({ queryKey: ['ranges'] })
       notify({ type: 'success', message: 'Measurement added successfully' })
     },
     onError: () => {
