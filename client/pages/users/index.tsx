@@ -1,3 +1,4 @@
+import React from 'react'
 import { CardComponent } from '@/components/card'
 import { UserModalComponent } from '@/components/userModal'
 import { Pathnames } from '@/utils/pathnames'
@@ -11,6 +12,7 @@ import { PageLoaderComponent } from '@/components/pageLoader'
 import { notify } from '@/utils/notifications'
 import { ErrorComponent } from '@/components/error'
 import { api } from '@/api'
+import { LineChartComponent } from '@/components/lineChart'
 
 const UsersPage = () => {
   const router = useRouter()
@@ -50,6 +52,7 @@ const UsersPage = () => {
         onSubmit={addUserMutation.mutate}
         loading={addUserMutation.isLoading}
       />
+      <LineChartComponent />
     </Container>
   )
 }
