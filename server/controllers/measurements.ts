@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { Measurement } from '../models/measurement'
+import { User } from '../models/user'
 
 const getMeasurements = async (req: Request, res: Response) => {
   try {
@@ -22,6 +23,9 @@ const getMeasurement = async (req: Request, res: Response) => {
 const createMeasurement = async (req: Request, res: Response) => {
   try {
     const measurement = await Measurement.create(req.body)
+    const weight = measurement.get('weight')
+    await User.findOneAndUpdate({ _id: req.body.userId }, { weight })
+
     res.status(200).json({ measurement })
   } catch (error) {
     res.status(500).json({ msg: error })

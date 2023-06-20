@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router'
-import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 import { useDisclosure } from '@mantine/hooks'
 
-import { api } from '@/api/users'
+import { api } from '@/api'
 import { UserModalComponent } from '@/components/userModal'
 import { ConfirmationModalComponent } from '@/components/confirmationModal'
 import { notify } from '@/utils/notifications'
@@ -20,15 +20,14 @@ const UserProfilePage = () => {
 
   const { user: userId } = router.query
 
-  const queryClient = useQueryClient()
-
   const {
     data: user,
     error,
     isLoading,
+    refetch,
   } = useQuery({
     queryKey: ['user'],
-    queryFn: () => api.getUser(userId?.toString() || ''),
+    queryFn: () => api.user.getUser(userId?.toString() || ''),
     enabled: router.isReady,
   })
 
@@ -36,10 +35,9 @@ const UserProfilePage = () => {
   const [confirmationModalOpened, { open: openConfirmationModal, close: closeConfirmationModal }] = useDisclosure(false)
 
   const editUserMutation = useMutation({
-    mutationFn: (user: UserType) => api.updateUser(user),
+    mutationFn: (user: UserType) => api.user.updateUser(user),
     onSuccess: async () => {
-      await queryClient.refetchQueries({ queryKey: ['user'] })
-      closeEditModal()
+      await refetchUser()
       notify({ type: 'success', message: 'User updated successfully' })
     },
     onError: () => {
@@ -48,7 +46,7 @@ const UserProfilePage = () => {
   })
 
   const deleteUserMutation = useMutation({
-    mutationFn: () => api.deleteUser(userId?.toString() || ''),
+    mutationFn: () => api.user.deleteUser(userId?.toString() || ''),
     onSuccess: async () => {
       closeConfirmationModal()
       notify({ type: 'success', message: 'User deleted successfully' })
@@ -59,13 +57,17 @@ const UserProfilePage = () => {
     },
   })
 
+  const refetchUser = async () => {
+    await refetch()
+  }
+
   if (error) return <ErrorComponent title={error.toString()} />
   if (!user || isLoading) return <PageLoaderComponent />
 
   return (
     <>
       <HeaderComponent user={user} openModal={openEditModal} openConfirmationModal={openConfirmationModal} />
-      <RangesComponent userId={user._id} userSex={user.sex} />
+      <RangesComponent userId={user._id} refetchUser={refetchUser} />
       <ChartComponent />
 
       <UserModalComponent

@@ -1,9 +1,5 @@
 import { UnitEnum } from '@/enums/Unit.enum'
-
-type RecordType = {
-  value: number
-  unit: UnitEnum
-}
+import { RecordType } from './helpers'
 
 export type MeasurementType = {
   _id: string

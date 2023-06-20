@@ -16,7 +16,7 @@ export const ModalComponent = ({ opened, title, onClose, children }: ModalProps)
     <Modal
       opened={opened}
       onClose={onClose}
-      title={<h3 className="m-0">{title}</h3>}
+      title={<strong className="m-0 text-xl">{title}</strong>}
       overlayProps={{
         color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2],
         opacity: 0.55,

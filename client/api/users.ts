@@ -1,6 +1,6 @@
 import { UserType } from '@/types/User'
 
-export const api = {
+export const usersApi = {
   getUsers: async (): Promise<UserType[]> => {
     const res = await fetch('http://localhost:3001/api/users')
     const data = await res.json()
