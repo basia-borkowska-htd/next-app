@@ -6,7 +6,7 @@ import { ButtonComponent } from '@/components/button'
 import { MeasurementType } from '@/types/Measurement'
 
 import { initialValues, inputValues } from './helpers'
-import { MutateOptions, MutationOptions } from 'react-query'
+import { MutateOptions } from 'react-query'
 
 interface AddMeasurementModalProps {
   userId: string
@@ -27,7 +27,11 @@ export const AddMeasurementModalComponent = ({
   onClose,
   onSubmit,
 }: AddMeasurementModalProps) => {
-  const form = useForm({
+  const {
+    onSubmit: onSubmitForm,
+    getInputProps,
+    reset,
+  } = useForm({
     initialValues,
     validate: {
       weight: ({ value }) => {
@@ -37,22 +41,23 @@ export const AddMeasurementModalComponent = ({
     },
   })
 
-  const handleSubmit = () => {
-    form.onSubmit((values) => {
-      onSubmit(
-        { _id: '', userId, ...values },
-        {
-          onSuccess: () => {
-            form.reset()
-          },
-        },
-      )
-    })
+  const resetAndClose = () => {
+    reset()
+    onClose()
   }
 
   return (
-    <ModalComponent opened={opened} onClose={onClose} title="Add New Measurement">
-      <form onSubmit={handleSubmit}>
+    <ModalComponent opened={opened} onClose={resetAndClose} title="Add New Measurement">
+      <form
+        onSubmit={onSubmitForm((values) => {
+          onSubmit(
+            { _id: '', userId, ...values },
+            {
+              onSuccess: resetAndClose,
+            },
+          )
+        })}
+      >
         {Object.keys(inputValues).map((key: string, idx) => (
           <TextInput
             key={`modal-input-${inputValues[key].value}-${idx}`}
@@ -61,7 +66,7 @@ export const AddMeasurementModalComponent = ({
             label={inputValues[key].label}
             placeholder={inputValues[key].placeholder}
             rightSection={inputValues[key].rightSection}
-            {...form.getInputProps(`${inputValues[key].value}.value`)}
+            {...getInputProps(`${inputValues[key].value}.value`)}
           />
         ))}
         <ButtonComponent loading={loading} type="submit" variant="gradient">

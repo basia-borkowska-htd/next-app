@@ -20,7 +20,11 @@ interface UserModalProps {
 export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }: UserModalProps) => {
   const isCreating = !user
 
-  const form = useForm({
+  const {
+    onSubmit: onSubmitForm,
+    reset,
+    getInputProps,
+  } = useForm({
     initialValues: {
       name: user?.name || '',
       age: user?.age || 0,
@@ -46,18 +50,17 @@ export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }:
     },
   })
 
+  const resetAndClose = () => {
+    reset()
+    onClose()
+  }
+
   return (
-    <ModalComponent opened={opened} onClose={onClose} title={isCreating ? 'Add New User' : 'Edit User'}>
-      <form onSubmit={form.onSubmit((values) => onSubmit({ _id: user?._id || '', ...values }))}>
-        <TextInput label="Name" placeholder="Name" withAsterisk {...form.getInputProps('name')} />
-        <NumberInput mt="sm" label="Age" placeholder="Age" min={18} max={99} {...form.getInputProps('age')} />
-        <Input.Wrapper
-          mt="sm"
-          withAsterisk
-          label="Sex"
-          className="flex flex-col"
-          error={form.getInputProps('sex').error}
-        >
+    <ModalComponent opened={opened} onClose={resetAndClose} title={isCreating ? 'Add New User' : 'Edit User'}>
+      <form onSubmit={onSubmitForm((values) => onSubmit({ _id: user?._id || '', ...values }))}>
+        <TextInput label="Name" placeholder="Name" withAsterisk {...getInputProps('name')} />
+        <NumberInput mt="sm" label="Age" placeholder="Age" min={18} max={99} {...getInputProps('age')} />
+        <Input.Wrapper mt="sm" withAsterisk label="Sex" className="flex flex-col" error={getInputProps('sex').error}>
           <SegmentedControl
             data={[
               { label: 'Woman', value: 'woman' },
@@ -66,7 +69,7 @@ export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }:
             color="blue-200"
             transitionDuration={500}
             transitionTimingFunction="linear"
-            {...form.getInputProps('sex')}
+            {...getInputProps('sex')}
           />
         </Input.Wrapper>
         <TextInput
@@ -74,16 +77,16 @@ export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }:
           label="Height"
           placeholder="Height"
           withAsterisk
-          rightSection={<p className="opacity-25 text-sm">cm</p>}
-          {...form.getInputProps('height.value')}
+          rightSection={<p className="opacity-25 text-sm">{UnitEnum.CENTIMETERS}</p>}
+          {...getInputProps('height.value')}
         />
         <TextInput
           mt="sm"
           mb="xl"
           label="Weight"
           placeholder="Weight"
-          rightSection={<p className="opacity-25 text-sm">kg</p>}
-          {...form.getInputProps('weight.value')}
+          rightSection={<p className="opacity-25 text-sm">{UnitEnum.KILOS}</p>}
+          {...getInputProps('weight.value')}
         />
         <ButtonComponent loading={loading} type="submit" variant="gradient">
           Submit

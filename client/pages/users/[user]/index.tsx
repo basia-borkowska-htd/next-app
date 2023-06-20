@@ -26,6 +26,7 @@ const UserProfilePage = () => {
     data: user,
     error,
     isLoading,
+    refetch,
   } = useQuery({
     queryKey: ['user'],
     queryFn: () => api.user.getUser(userId?.toString() || ''),
@@ -59,13 +60,17 @@ const UserProfilePage = () => {
     },
   })
 
+  const refetchUser = async () => {
+    await refetch()
+  }
+
   if (error) return <ErrorComponent title={error.toString()} />
   if (!user || isLoading) return <PageLoaderComponent />
 
   return (
     <>
       <HeaderComponent user={user} openModal={openEditModal} openConfirmationModal={openConfirmationModal} />
-      <RangesComponent userId={user._id} />
+      <RangesComponent userId={user._id} refetchUser={refetchUser} />
       <ChartComponent />
 
       <UserModalComponent

@@ -1,6 +1,5 @@
 import { PageLoaderComponent } from '@/components/pageLoader'
 import { ButtonComponent } from '@/components/button'
-import { SexEnum } from '@/enums/Sex.enum'
 import { Pathnames } from '@/utils/pathnames'
 import { Container, Table } from '@mantine/core'
 import { useRouter } from 'next/router'
@@ -15,9 +14,11 @@ import { units } from '@/utils/units'
 
 interface RangesProps {
   userId: string
+
+  refetchUser: () => Promise<void>
 }
 
-export const RangesComponent = ({ userId }: RangesProps) => {
+export const RangesComponent = ({ userId, refetchUser }: RangesProps) => {
   const { data, error, isLoading } = useQuery({
     queryKey: ['ranges'],
     queryFn: () => api.range.getRanges(userId),
@@ -34,6 +35,7 @@ export const RangesComponent = ({ userId }: RangesProps) => {
     mutationFn: (measurement: MeasurementType) => api.measurement.addMeasurement(measurement),
     onSuccess: async () => {
       await queryClient.refetchQueries({ queryKey: ['ranges'] })
+      await refetchUser()
       notify({ type: 'success', message: 'Measurement added successfully' })
     },
     onError: () => {
