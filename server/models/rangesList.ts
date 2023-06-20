@@ -1,18 +1,9 @@
 import { Sex } from '../enums/Sex.enum'
-import { Unit } from '../enums/Unit.enum'
 
 import mongoose from 'mongoose'
+import { Range } from './helpers'
 
 const Schema = mongoose.Schema
-
-const Range = new Schema({
-  min: Number,
-  max: Number,
-  unit: {
-    type: String,
-    enum: Unit,
-  },
-})
 
 const RangesListSchema = new Schema({
   sex: {

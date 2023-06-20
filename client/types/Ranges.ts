@@ -1,11 +1,6 @@
 import { SexEnum } from '@/enums/Sex.enum'
 import { UnitEnum } from '@/enums/Unit.enum'
-
-type RangeType = {
-  min?: number
-  max?: number
-  unit: UnitEnum
-}
+import { RangeType } from './helpers'
 
 export type RangesType = {
   _id: string

@@ -9,31 +9,23 @@ import { useQuery, useMutation } from 'react-query'
 import { PageLoaderComponent } from '@/components/pageLoader'
 
 import { notify } from '@/utils/notifications'
-import { api } from '@/api/users'
 import { ErrorComponent } from '@/components/error'
+import { api } from '@/api'
 
 const UsersPage = () => {
   const router = useRouter()
   const [opened, { open, close }] = useDisclosure(false)
 
-  const { data, error, isLoading, refetch } = useQuery({
-    queryKey: ['users'],
-    queryFn: api.getUsers,
-  })
+  const { data, error, isLoading, refetch } = useQuery({ queryKey: ['users'], queryFn: api.user.getUsers })
 
   const addUserMutation = useMutation({
-    mutationFn: api.addUser,
+    mutationFn: api.user.addUser,
     onSuccess: async () => {
-      close()
-      // TODO: think about this function in case of refetching --> await queryClient.refetchQueries({ queryKey: ['posts'], type: 'active' })
-
-      await refetch({
-        queryKey: ['users'],
-      })
-      notify({ type: 'success', message: 'User updated successfully' })
+      await refetch()
+      notify({ type: 'success', message: 'User added successfully' })
     },
     onError: () => {
-      notify({ type: 'error', message: 'Unable to update user' })
+      notify({ type: 'error', message: 'Unable to add user' })
     },
   })
 

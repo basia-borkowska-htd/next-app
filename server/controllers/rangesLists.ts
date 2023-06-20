@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { RangesList } from '../models/rangesList'
 import { Measurement } from '../models/measurement'
+import { User } from '../models/user'
 
 const getRangesLists = async (req: Request, res: Response) => {
   try {
@@ -12,11 +13,16 @@ const getRangesLists = async (req: Request, res: Response) => {
 }
 
 const getRangesList = async (req: Request, res: Response) => {
+  const userId = req.params.id
   try {
-    const latestMeasurement = await Measurement.findOne({ userId: req.params.id }, null, {
+    const latestMeasurement = await Measurement.findOne({ userId }, null, {
       sort: { createdAt: 'desc' },
     })
-    const rangesList = await RangesList.findOne({ sex: req.query.sex }) // TODO should sex be handled on the BE?
+
+    const user = await User.findOne({ _id: userId })
+    const sex = user?.get('sex')
+
+    const rangesList = await RangesList.findOne({ sex })
     res.status(200).json({ latestMeasurement, rangesList })
   } catch (error) {
     res.status(404).json({ msg: 'RangesList not found' })
