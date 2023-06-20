@@ -10,17 +10,17 @@ import { HistoryTabComponent } from './historyTab'
 import { ChartsTabComponent } from './chartsTab'
 import { DashboardTabEnum } from '@/enums/DashboardTab.enum'
 import { useDisclosure } from '@mantine/hooks'
-import HeaderComponent from './header'
 import { AddMeasurementModalComponent } from '@/components/addMeasurementModal'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { MeasurementType } from '@/types/Measurement'
 import { api } from '@/api'
 import { notify } from '@/utils/notifications'
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
+import { HeaderComponent } from './header'
 
 const DashboardPage = () => {
   const router = useRouter()
-  const { userId } = router.query
+  const { userId, activeTab } = router.query
 
   const {
     data: user,
@@ -46,7 +46,7 @@ const DashboardPage = () => {
   })
 
   if (!router.isReady || isLoading) return <PageLoaderComponent />
-  if (!userId || error || !user) return <ErrorComponent />
+  if (!userId || error || !user || !activeTab) return <ErrorComponent />
 
   return (
     <Container className="flex flex-col justify-between py-8" size="xl">
@@ -60,7 +60,7 @@ const DashboardPage = () => {
       />
 
       <Tabs
-        value={router.query.activeTab as string}
+        value={activeTab.toString()}
         onTabChange={(value) =>
           router.push(
             Pathnames.dashboard
