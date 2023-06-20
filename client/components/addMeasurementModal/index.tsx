@@ -35,8 +35,8 @@ export const AddMeasurementModalComponent = ({
     initialValues,
     validate: {
       weight: ({ value }) => {
-        if (!value) return null
-        return value > 29 && value < 301 ? null : 'Invalid weight: acceptable values are from 30 kg to 300 kg'
+        if (!value) return undefined
+        return value > 29 && value < 301 ? undefined : 'Invalid weight: acceptable values are from 30 kg to 300 kg'
       },
     },
   })

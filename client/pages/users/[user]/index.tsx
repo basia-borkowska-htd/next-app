@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 import { useDisclosure } from '@mantine/hooks'
 
 import { api } from '@/api'
@@ -20,8 +20,6 @@ const UserProfilePage = () => {
 
   const { user: userId } = router.query
 
-  const queryClient = useQueryClient()
-
   const {
     data: user,
     error,
@@ -39,8 +37,7 @@ const UserProfilePage = () => {
   const editUserMutation = useMutation({
     mutationFn: (user: UserType) => api.user.updateUser(user),
     onSuccess: async () => {
-      await queryClient.refetchQueries({ queryKey: ['user'] })
-      closeEditModal()
+      await refetchUser()
       notify({ type: 'success', message: 'User updated successfully' })
     },
     onError: () => {

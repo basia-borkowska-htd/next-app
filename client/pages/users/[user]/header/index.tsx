@@ -1,6 +1,6 @@
 import { AvatarComponent } from '@/components/avatar'
 import BasiaImg from '@/assets/images/basia.jpeg'
-import { Button, Container, Divider } from '@mantine/core'
+import { Container, Divider } from '@mantine/core'
 import { UserType } from '@/types/User'
 import { ButtonComponent } from '@/components/button'
 import { units } from '@/utils/units'
