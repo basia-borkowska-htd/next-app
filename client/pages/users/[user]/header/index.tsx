@@ -1,6 +1,6 @@
 import { AvatarComponent } from '@/components/avatar'
 import BasiaImg from '@/assets/images/basia.jpeg'
-import { Button, Container, Divider } from '@mantine/core'
+import { Container, Divider } from '@mantine/core'
 import { UserType } from '@/types/User'
 import { ButtonComponent } from '@/components/button'
 
@@ -15,10 +15,7 @@ export const HeaderComponent = ({ user, openModal, openConfirmationModal }: Head
   return (
     <div>
       <Container className="flex justify-between items-center py-8">
-        <div className="basis-1/8 flex flex-col items-center gap-2">
-          <AvatarComponent src={BasiaImg.src} />
-          <strong className="text-xl">{name}</strong>
-        </div>
+        <AvatarComponent src={BasiaImg.src} name={name} />
         <div className="basis-1/2 flex ms-10">
           <div className="flex flex-col me-5">
             <strong>Age</strong>

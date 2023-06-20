@@ -5,6 +5,7 @@ export type ButtonVariant = 'gradient' | 'outline'
 export type ButtonType = 'button' | 'submit' | 'reset'
 
 interface ButtonProps {
+  className?: string
   children: ReactNode
   variant?: ButtonVariant
   type?: ButtonType
@@ -14,6 +15,7 @@ interface ButtonProps {
   onClick?: (e?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => void
 }
 export const ButtonComponent = ({
+  className,
   children,
   variant = 'gradient',
   type = 'button',
@@ -23,13 +25,14 @@ export const ButtonComponent = ({
 }: ButtonProps) => {
   return (
     <Button
-      fullWidth
+      className={className}
       variant={variant}
       gradient={variant === 'gradient' ? { from: 'blue-200', to: 'green-100', deg: 35 } : undefined}
       color={color}
       type={type}
       loading={loading}
       onClick={onClick}
+      fullWidth
     >
       {children}
     </Button>

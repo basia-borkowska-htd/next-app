@@ -21,7 +21,7 @@ export const RangesComponent = ({ userId, userSex }: RangesProps) => {
   const router = useRouter()
 
   const redirectToMeasurementHistory = () => {
-    router.push(Pathnames.dashboard.replace(':id', userId))
+    router.push(Pathnames.dashboard.replace(':id', userId).replace(':activeTab', 'list'))
   }
 
   if (error) return <ErrorComponent title={error.toString()} />
