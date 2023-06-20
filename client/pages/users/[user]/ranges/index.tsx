@@ -11,6 +11,7 @@ import { MeasurementType } from '@/types/Measurement'
 import { notify } from '@/utils/notifications'
 import { api } from '@/api'
 import { units } from '@/utils/units'
+import { DashboardTabEnum } from '@/enums/DashboardTab.enum'
 
 interface RangesProps {
   userId: string
@@ -28,7 +29,7 @@ export const RangesComponent = ({ userId, refetchUser }: RangesProps) => {
   const queryClient = useQueryClient()
 
   const redirectToMeasurementHistory = () => {
-    router.push(Pathnames.dashboard.replace(':id', userId).replace(':activeTab', 'list'))
+    router.push(Pathnames.dashboard.replace(':id', userId).replace(':activeTab', DashboardTabEnum.HISTORY))
   }
 
   const addMeasurementMutation = useMutation({
