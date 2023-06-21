@@ -12,7 +12,6 @@ import { PageLoaderComponent } from '@/components/pageLoader'
 import { notify } from '@/utils/notifications'
 import { ErrorComponent } from '@/components/error'
 import { api } from '@/api'
-import { LineChartComponent } from '@/components/lineChart'
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 import { queryClient } from '@/pages/_app'
 
@@ -55,7 +54,6 @@ const UsersPage = () => {
         onSubmit={addUserMutation.mutate}
         loading={addUserMutation.isLoading}
       />
-      {/* <LineChartComponent /> */}
     </Container>
   )
 }

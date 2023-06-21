@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts'
-import { CustomizedLabel } from './label'
+import { CurveType } from 'recharts/types/shape/Curve'
+// TODO remove mocked data
 const data = [
   {
     name: 'Page A',
@@ -46,24 +47,32 @@ const data = [
   },
 ]
 interface LineChartProps {
-  type: string
-  color: string
-  dataKey: string
+  type?: CurveType
+  lineStroke?: string
+  dataKeyX?: string
   withGrid?: boolean
   customTooltip?: ReactNode
   activeDot?: boolean
   withLegend?: boolean
 }
 
-export const LineChartComponent = ({ withGrid = true, customTooltip = null, activeDot = true, withLegend = true }) => {
+export const LineChartComponent = ({
+  withGrid = true,
+  customTooltip,
+  activeDot = true,
+  withLegend = true,
+  dataKeyX = 'name',
+  type = 'monotone',
+  lineStroke = 'blue',
+}: LineChartProps) => {
   return (
-    <ResponsiveContainer width="100%" height="40%">
+    <ResponsiveContainer width={600} height={300}>
       <LineChart width={600} height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-        <Line type="monotone" dataKey="uv" stroke="#8884d8" />
+        <Line type={type} dataKey="uv" stroke={lineStroke} dot={activeDot} />
         {withGrid && <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />}
-        <XAxis dataKey="name" />
+        <XAxis dataKey={dataKeyX} />
         <YAxis />
-        {customTooltip ? customTooltip : <Tooltip />}
+        {customTooltip || <Tooltip />}
         {withLegend && <Legend />}
       </LineChart>
     </ResponsiveContainer>

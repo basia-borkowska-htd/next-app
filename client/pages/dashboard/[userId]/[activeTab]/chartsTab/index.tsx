@@ -1,5 +1,11 @@
-import React from 'react'
+import { LineChartComponent } from '@/components/lineChart'
+import { Container } from '@mantine/core'
 
 export const ChartsTabComponent = () => {
-  return <div>ChartsComponent</div>
+  return (
+    <Container>
+      test
+      <LineChartComponent />
+    </Container>
+  )
 }
