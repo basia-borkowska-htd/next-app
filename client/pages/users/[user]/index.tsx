@@ -15,6 +15,7 @@ import { RangesComponent } from './ranges'
 import { PageLoaderComponent } from '@/components/pageLoader'
 import { ErrorComponent } from '@/components/error'
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
+import { EmptyStateComponent } from '@/components/emptyState'
 
 const UserProfilePage = () => {
   const router = useRouter()
@@ -63,7 +64,8 @@ const UserProfilePage = () => {
   }
 
   if (error) return <ErrorComponent title={error.toString()} />
-  if (!user || isLoading) return <PageLoaderComponent />
+  if (isLoading) return <PageLoaderComponent />
+  if (!user) return <EmptyStateComponent compact />
 
   return (
     <>
