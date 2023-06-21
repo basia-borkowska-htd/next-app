@@ -23,7 +23,7 @@ export const HistoryTabComponent = ({ userId }: HistoryTabProps) => {
     queryFn: () => api.measurement.getMeasurements(userId),
   })
 
-  if (isLoading) return <PageLoaderComponent />
+  if (isLoading) return <PageLoaderComponent compact />
   if (error) return <ErrorComponent />
   if (!measurements?.length) return <EmptyStateComponent title="No measurements" compact />
 

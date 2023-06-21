@@ -44,8 +44,8 @@ export const RangesComponent = ({ userId }: RangesProps) => {
     },
   })
 
-  if (error) return <ErrorComponent title={error.toString()} />
-  if (isLoading) return <PageLoaderComponent />
+  if (error) return <ErrorComponent title={error.toString()} compact />
+  if (isLoading) return <PageLoaderComponent compact />
   if (!data) return <EmptyStateComponent title="No ranges available" compact />
 
   const { latestMeasurement: measurement, rangesList: ranges } = data
