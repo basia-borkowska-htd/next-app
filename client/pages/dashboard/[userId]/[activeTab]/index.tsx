@@ -50,7 +50,7 @@ const DashboardPage = () => {
 
   return (
     <Container className="flex flex-col justify-between py-8" size="xl">
-      <HeaderComponent userName={user.name} userAvatar={BasiaImg.src} openModal={open} />
+      <HeaderComponent userId={user._id} userName={user.name} userAvatar={BasiaImg.src} openModal={open} />
       <AddMeasurementModalComponent
         opened={opened}
         userId={userId.toString()}

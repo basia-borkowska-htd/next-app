@@ -1,7 +1,7 @@
 import { Button } from '@mantine/core'
 import { ReactNode } from 'react'
 
-export type ButtonVariant = 'gradient' | 'outline'
+export type ButtonVariant = 'gradient' | 'outline' | 'icon'
 export type ButtonType = 'button' | 'submit' | 'reset'
 
 interface ButtonProps {
@@ -11,6 +11,7 @@ interface ButtonProps {
   type?: ButtonType
   loading?: boolean
   color?: string
+  fullWidth?: boolean
 
   onClick?: (e?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => void
 }
@@ -20,6 +21,7 @@ export const ButtonComponent = ({
   variant = 'gradient',
   type = 'button',
   loading = false,
+  fullWidth = true,
   color = 'blue-200',
   onClick,
 }: ButtonProps) => {
@@ -32,7 +34,7 @@ export const ButtonComponent = ({
       type={type}
       loading={loading}
       onClick={onClick}
-      fullWidth
+      fullWidth={fullWidth}
     >
       {children}
     </Button>
