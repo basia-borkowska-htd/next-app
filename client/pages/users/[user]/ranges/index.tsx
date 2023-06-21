@@ -54,7 +54,7 @@ export const RangesComponent = ({ userId, refetchUser }: RangesProps) => {
   const { latestMeasurement: measurement, rangesList: ranges } = data
 
   return (
-    <Container>
+    <Container size="xl">
       <div className="flex justify-between my-5 items-center">
         <h2>Ranges</h2>
         <div className="flex gap-2">
