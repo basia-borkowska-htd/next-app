@@ -1,7 +1,6 @@
 import { PageLoaderComponent } from '@/components/pageLoader'
 import { ButtonComponent } from '@/components/button'
 import { Pathnames } from '@/utils/pathnames'
-import { Container } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { ErrorComponent } from '@/components/error'
@@ -16,6 +15,7 @@ import { TableComponent } from '@/components/table'
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 import { queryClient } from '@/pages/_app'
 import { EmptyStateComponent } from '@/components/emptyState'
+import { ContainerComponent } from '@/components/container'
 
 interface RangesProps {
   userId: string
@@ -51,9 +51,9 @@ export const RangesComponent = ({ userId }: RangesProps) => {
   const { latestMeasurement: measurement, rangesList: ranges } = data
 
   return (
-    <Container size="xl">
+    <ContainerComponent>
       <div className="flex justify-between my-5 items-center">
-        <h2>Ranges</h2>
+        <div className="font-bold text-xl">Ranges</div>
         <div className="flex gap-2">
           <ButtonComponent variant="outline" onClick={redirectToMeasurementHistory}>
             See measurement history
@@ -134,6 +134,6 @@ export const RangesComponent = ({ userId }: RangesProps) => {
         onSubmit={addMeasurementMutation.mutate}
         loading={addMeasurementMutation.isLoading}
       />
-    </Container>
+    </ContainerComponent>
   )
 }

@@ -9,7 +9,7 @@ import { notify } from '@/utils/notifications'
 import { Pathnames } from '@/utils/pathnames'
 import { UserType } from '@/types/User'
 
-import { ChartComponent } from './chart'
+import { ChartSectionComponent } from './chart'
 import { HeaderComponent } from './header'
 import { RangesComponent } from './ranges'
 import { PageLoaderComponent } from '@/components/pageLoader'
@@ -66,8 +66,9 @@ const UserProfilePage = () => {
   return (
     <>
       <HeaderComponent user={user} openModal={openEditModal} openConfirmationModal={openConfirmationModal} />
+
       <RangesComponent userId={user._id} />
-      <ChartComponent />
+      <ChartSectionComponent userId={user._id} />
 
       <UserModalComponent
         opened={editModalOpened}

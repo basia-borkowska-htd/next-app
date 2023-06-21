@@ -1,7 +1,6 @@
 import { Pathnames } from '@/utils/pathnames'
 import { Tabs } from '@mantine/core'
 import { useRouter } from 'next/router'
-import { Container } from '@mantine/core'
 import BasiaImg from '@/assets/images/basia.jpeg'
 
 import { PageLoaderComponent } from '@/components/pageLoader'
@@ -18,6 +17,7 @@ import { notify } from '@/utils/notifications'
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 import { HeaderComponent } from './header'
 import { queryClient } from '@/pages/_app'
+import { ContainerComponent } from '@/components/container'
 
 const DashboardPage = () => {
   const router = useRouter()
@@ -49,7 +49,7 @@ const DashboardPage = () => {
   if (!userId || error || !user || !activeTab) return <ErrorComponent />
 
   return (
-    <Container className="flex flex-col justify-between py-8" size="xl">
+    <ContainerComponent className="flex flex-col justify-between py-8">
       <HeaderComponent userId={user._id} userName={user.name} userAvatar={BasiaImg.src} openModal={open} />
       <AddMeasurementModalComponent
         opened={opened}
@@ -84,7 +84,7 @@ const DashboardPage = () => {
           <ChartsTabComponent />
         </Tabs.Panel>
       </Tabs>
-    </Container>
+    </ContainerComponent>
   )
 }
 
