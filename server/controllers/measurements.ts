@@ -60,7 +60,7 @@ const getChartMeasurements = async (req: Request, res: Response) => {
     const chart = await (
       await Measurement.find({ userId: req.params.id }).select(`${key}.value ${key}.unit createdAt`)
     ).map((res) => ({
-      xAxis: dayjs(res.get('createdAt')).format('DD/MM'),
+      xAxis: dayjs(res.get('createdAt')).format('MMM DD'),
       yAxis: res.get(key?.toString() || ''),
     }))
     res.status(200).json({ chart })
