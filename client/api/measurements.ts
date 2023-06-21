@@ -37,7 +37,6 @@ export const measurementsApi = {
     )
 
     const data = await res.json()
-    console.log({ data })
     if (!data?.chart) throw new Error(data.error)
     return data.chart
   },

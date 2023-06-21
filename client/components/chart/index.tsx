@@ -17,7 +17,7 @@ interface ChartProps {
 }
 
 export const ChartComponent = ({
-  data,
+  data = [],
   withGrid = true,
   customTooltip,
   activeDot = true,

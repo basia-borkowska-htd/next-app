@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import dayjs from 'dayjs'
 import { Measurement } from '../models/measurement'
 import { User } from '../models/user'
 
@@ -58,9 +59,10 @@ const getChartMeasurements = async (req: Request, res: Response) => {
     const key = req.query.key
     const chart = await (
       await Measurement.find({ userId: req.params.id }).select(`${key}.value ${key}.unit createdAt`)
-    ).map((res) => {
-      return { xAxis: res.get('createdAt'), yAxis: res.get(key?.toString() || '') }
-    })
+    ).map((res) => ({
+      xAxis: dayjs(res.get('createdAt')).format('DD/MM'),
+      yAxis: res.get(key?.toString() || ''),
+    }))
     res.status(200).json({ chart })
   } catch (error) {
     res.status(500).json({ msg: error })
