@@ -1,11 +1,12 @@
 import { AvatarComponent } from '@/components/avatar'
 import BasiaImg from '@/assets/images/basia.jpeg'
-import { Container, Divider } from '@mantine/core'
+import { Divider } from '@mantine/core'
 import { UserType } from '@/types/User'
 import { ButtonComponent } from '@/components/button'
 import { units } from '@/utils/units'
 import { GoBackComponent } from '@/components/goBack'
 import { Pathnames } from '@/utils/pathnames'
+import { ContainerComponent } from '@/components/container'
 
 interface HeaderProps {
   user: UserType
@@ -17,7 +18,7 @@ export const HeaderComponent = ({ user, openModal, openConfirmationModal }: Head
 
   return (
     <div>
-      <Container className="py-8" size="xl">
+      <ContainerComponent className="py-8">
         <GoBackComponent path={Pathnames.home} />
         <div className="flex justify-between items-center ">
           <AvatarComponent src={BasiaImg.src} name={name} />
@@ -43,7 +44,7 @@ export const HeaderComponent = ({ user, openModal, openConfirmationModal }: Head
             </ButtonComponent>
           </div>
         </div>
-      </Container>
+      </ContainerComponent>
     </div>
   )
 }

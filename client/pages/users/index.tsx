@@ -2,7 +2,6 @@ import React from 'react'
 import { CardComponent } from '@/components/card'
 import { UserModalComponent } from '@/components/userModal'
 import { Pathnames } from '@/utils/pathnames'
-import { Container } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 
@@ -14,6 +13,7 @@ import { ErrorComponent } from '@/components/error'
 import { api } from '@/api'
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 import { queryClient } from '@/pages/_app'
+import { ContainerComponent } from '@/components/container'
 
 const UsersPage = () => {
   const router = useRouter()
@@ -40,7 +40,7 @@ const UsersPage = () => {
     router.push(Pathnames.userProfile.replace(':id', id))
   }
   return (
-    <Container size="xl" className="flex h-screen items-center">
+    <ContainerComponent className="flex h-screen items-center">
       <div className="w-full flex flex-wrap gap-6 justify-center">
         {data?.map(({ _id, name }) => (
           <CardComponent onClick={() => handleRedirect(_id)} key={_id} title={name} />
@@ -54,7 +54,7 @@ const UsersPage = () => {
         onSubmit={addUserMutation.mutate}
         loading={addUserMutation.isLoading}
       />
-    </Container>
+    </ContainerComponent>
   )
 }
 
