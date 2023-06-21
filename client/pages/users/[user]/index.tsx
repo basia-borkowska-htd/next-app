@@ -14,6 +14,7 @@ import { HeaderComponent } from './header'
 import { RangesComponent } from './ranges'
 import { PageLoaderComponent } from '@/components/pageLoader'
 import { ErrorComponent } from '@/components/error'
+import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 
 const UserProfilePage = () => {
   const router = useRouter()
@@ -26,7 +27,7 @@ const UserProfilePage = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ['user'],
+    queryKey: [QueryKeyEnum.USER],
     queryFn: () => api.user.getUser(userId?.toString() || ''),
     enabled: router.isReady,
   })

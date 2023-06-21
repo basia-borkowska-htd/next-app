@@ -49,6 +49,10 @@ export const initialValues = {
     value: undefined,
     unit: UnitEnum.NO_UNIT,
   },
+  bodyRating: {
+    value: undefined,
+    unit: UnitEnum.NO_UNIT,
+  },
 }
 
 export const inputValues: InputValuesType = [
@@ -108,5 +112,10 @@ export const inputValues: InputValuesType = [
     value: 'metabolicAge',
     label: 'Metabolic Age',
     placeholder: '19',
+  },
+  {
+    value: 'bodyRating',
+    label: 'Body Rating',
+    placeholder: '95',
   },
 ]

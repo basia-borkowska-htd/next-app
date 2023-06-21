@@ -11,12 +11,13 @@ import { PageLoaderComponent } from '@/components/pageLoader'
 import { notify } from '@/utils/notifications'
 import { ErrorComponent } from '@/components/error'
 import { api } from '@/api'
+import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 
 const UsersPage = () => {
   const router = useRouter()
   const [opened, { open, close }] = useDisclosure(false)
 
-  const { data, error, isLoading, refetch } = useQuery({ queryKey: ['users'], queryFn: api.user.getUsers })
+  const { data, error, isLoading, refetch } = useQuery({ queryKey: [QueryKeyEnum.USERS], queryFn: api.user.getUsers })
 
   const addUserMutation = useMutation({
     mutationFn: api.user.addUser,
