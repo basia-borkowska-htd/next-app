@@ -6,7 +6,7 @@ import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 import { dates } from '@/utils/dates'
 import { units } from '@/utils/units'
 import React from 'react'
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 import { HEADERS } from './helpers'
 import { EmptyStateComponent } from '@/components/emptyState'
 

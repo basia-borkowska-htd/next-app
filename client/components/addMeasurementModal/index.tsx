@@ -6,7 +6,7 @@ import { ButtonComponent } from '@/components/button'
 import { MeasurementType } from '@/types/Measurement'
 
 import { initialValues, inputValues } from './helpers'
-import { MutateOptions } from 'react-query'
+import { MutateOptions } from '@tanstack/react-query'
 
 interface AddMeasurementModalProps {
   userId: string

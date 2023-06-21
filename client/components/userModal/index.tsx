@@ -7,7 +7,7 @@ import { SexEnum } from '@/enums/Sex.enum'
 import { ModalComponent } from '../modal'
 import { ButtonComponent } from '../button'
 import { UnitEnum } from '@/enums/Unit.enum'
-import { MutateOptions } from 'react-query'
+import { MutateOptions } from '@tanstack/react-query'
 import { useEffect } from 'react'
 
 interface UserModalProps {
@@ -42,7 +42,7 @@ export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }:
       sex: (sex) => (!sex ? 'Sex is required' : undefined),
       height: (height) => {
         if (!height || !height?.value) return undefined
-        return height.value > 99 && height.value < 301
+        return height?.value > 99 && height?.value < 301
           ? undefined
           : 'Invalid height: acceptable values are from 100 cm to 300 cm'
       },
