@@ -1,6 +1,7 @@
+import dayjs from 'dayjs'
+
 export const dates = {
   fromUTC: (date: string) => {
-    var dateFormat = new Date(date)
-    return dateFormat.toDateString() + ', ' + dateFormat.getHours() + ':' + dateFormat.getMinutes()
+    return dayjs(date).format('DD/MM/YYYY HH:MM')
   },
 }
