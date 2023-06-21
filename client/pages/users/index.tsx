@@ -6,7 +6,7 @@ import { Container } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { PageLoaderComponent } from '@/components/pageLoader'
 
 import { notify } from '@/utils/notifications'
@@ -14,18 +14,19 @@ import { ErrorComponent } from '@/components/error'
 import { api } from '@/api'
 import { LineChartComponent } from '@/components/lineChart'
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
+import { queryClient } from '@/pages/_app'
 
 const UsersPage = () => {
-  const queryClient = useQueryClient()
   const router = useRouter()
   const [opened, { open, close }] = useDisclosure(false)
 
-  const { data, error, isLoading, refetch } = useQuery({ queryKey: [QueryKeyEnum.USERS], queryFn: api.user.getUsers })
+  const { data, error, isLoading } = useQuery({ queryKey: [QueryKeyEnum.USERS], queryFn: api.user.getUsers })
 
   const addUserMutation = useMutation({
     mutationFn: api.user.addUser,
     onSuccess: async () => {
-      await refetch()
+      await queryClient.refetchQueries({ queryKey: [QueryKeyEnum.USERS] })
+
       notify({ type: 'success', message: 'User added successfully' })
     },
     onError: () => {
@@ -54,7 +55,7 @@ const UsersPage = () => {
         onSubmit={addUserMutation.mutate}
         loading={addUserMutation.isLoading}
       />
-      <LineChartComponent />
+      {/* <LineChartComponent /> */}
     </Container>
   )
 }

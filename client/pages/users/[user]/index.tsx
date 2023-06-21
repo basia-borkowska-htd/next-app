@@ -15,6 +15,7 @@ import { RangesComponent } from './ranges'
 import { PageLoaderComponent } from '@/components/pageLoader'
 import { ErrorComponent } from '@/components/error'
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
+import { queryClient } from '@/pages/_app'
 
 const UserProfilePage = () => {
   const router = useRouter()
@@ -25,7 +26,6 @@ const UserProfilePage = () => {
     data: user,
     error,
     isLoading,
-    refetch,
   } = useQuery({
     queryKey: [QueryKeyEnum.USER],
     queryFn: () => api.user.getUser(userId?.toString() || ''),
@@ -38,7 +38,7 @@ const UserProfilePage = () => {
   const editUserMutation = useMutation({
     mutationFn: (user: UserType) => api.user.updateUser(user),
     onSuccess: async () => {
-      await refetchUser()
+      await queryClient.refetchQueries({ queryKey: [QueryKeyEnum.USER] })
       notify({ type: 'success', message: 'User updated successfully' })
     },
     onError: () => {
@@ -58,17 +58,13 @@ const UserProfilePage = () => {
     },
   })
 
-  const refetchUser = async () => {
-    await refetch()
-  }
-
   if (error) return <ErrorComponent title={error.toString()} />
   if (!user || isLoading) return <PageLoaderComponent />
 
   return (
     <>
       <HeaderComponent user={user} openModal={openEditModal} openConfirmationModal={openConfirmationModal} />
-      <RangesComponent userId={user._id} refetchUser={refetchUser} />
+      <RangesComponent userId={user._id} />
       <ChartComponent />
 
       <UserModalComponent

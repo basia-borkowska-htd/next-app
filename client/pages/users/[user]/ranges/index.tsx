@@ -3,7 +3,7 @@ import { ButtonComponent } from '@/components/button'
 import { Pathnames } from '@/utils/pathnames'
 import { Container } from '@mantine/core'
 import { useRouter } from 'next/router'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { ErrorComponent } from '@/components/error'
 import { AddMeasurementModalComponent } from '@/components/addMeasurementModal'
 import { useDisclosure } from '@mantine/hooks'
@@ -14,21 +14,19 @@ import { units } from '@/utils/units'
 import { DashboardTabEnum } from '@/enums/DashboardTab.enum'
 import { TableComponent } from '@/components/table'
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
+import { queryClient } from '@/pages/_app'
 
 interface RangesProps {
   userId: string
-
-  refetchUser: () => Promise<void>
 }
 
-export const RangesComponent = ({ userId, refetchUser }: RangesProps) => {
+export const RangesComponent = ({ userId }: RangesProps) => {
   const { data, error, isLoading } = useQuery({
     queryKey: [QueryKeyEnum.RANGES],
     queryFn: () => api.range.getRanges(userId),
   })
   const router = useRouter()
   const [opened, { open, close }] = useDisclosure(false)
-  const queryClient = useQueryClient()
 
   const redirectToMeasurementHistory = () => {
     router.push(Pathnames.dashboard.replace(':id', userId).replace(':activeTab', DashboardTabEnum.HISTORY))
@@ -37,8 +35,7 @@ export const RangesComponent = ({ userId, refetchUser }: RangesProps) => {
   const addMeasurementMutation = useMutation({
     mutationFn: (measurement: MeasurementType) => api.measurement.addMeasurement(measurement),
     onSuccess: async () => {
-      await queryClient.refetchQueries({ queryKey: [QueryKeyEnum.RANGES] })
-      await refetchUser()
+      await queryClient.refetchQueries({ stale: true })
       notify({ type: 'success', message: 'Measurement added successfully' })
     },
     onError: () => {

@@ -11,12 +11,13 @@ import { ChartsTabComponent } from './chartsTab'
 import { DashboardTabEnum } from '@/enums/DashboardTab.enum'
 import { useDisclosure } from '@mantine/hooks'
 import { AddMeasurementModalComponent } from '@/components/addMeasurementModal'
-import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { MeasurementType } from '@/types/Measurement'
 import { api } from '@/api'
 import { notify } from '@/utils/notifications'
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 import { HeaderComponent } from './header'
+import { queryClient } from '@/pages/_app'
 
 const DashboardPage = () => {
   const router = useRouter()
@@ -31,7 +32,6 @@ const DashboardPage = () => {
     queryFn: () => api.user.getUser(userId?.toString() || ''),
     enabled: router.isReady,
   })
-  const queryClient = useQueryClient()
 
   const [opened, { open, close }] = useDisclosure(false)
   const addMeasurementMutation = useMutation({
