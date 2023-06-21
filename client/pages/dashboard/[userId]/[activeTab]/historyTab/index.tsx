@@ -7,21 +7,8 @@ import { dates } from '@/utils/dates'
 import { units } from '@/utils/units'
 import React from 'react'
 import { useQuery } from 'react-query'
+import { HEADERS } from './helpers'
 
-const HEADERS = [
-  'Date',
-  'Weight',
-  'Body Fat',
-  'Visceral Fat',
-  'Muscles',
-  'Protein',
-  'Water',
-  'Bone Tissue',
-  'BMI',
-  'BMR',
-  'Metabolic Age',
-  'Body Rating',
-]
 interface HistoryTabProps {
   userId: string
 }
