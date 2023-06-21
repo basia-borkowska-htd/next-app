@@ -13,13 +13,14 @@ import { notify } from '@/utils/notifications'
 import { ErrorComponent } from '@/components/error'
 import { api } from '@/api'
 import { LineChartComponent } from '@/components/lineChart'
+import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 
 const UsersPage = () => {
   const queryClient = useQueryClient()
   const router = useRouter()
   const [opened, { open, close }] = useDisclosure(false)
 
-  const { data, error, isLoading, refetch } = useQuery({ queryKey: ['users'], queryFn: api.user.getUsers })
+  const { data, error, isLoading, refetch } = useQuery({ queryKey: [QueryKeyEnum.USERS], queryFn: api.user.getUsers })
 
   const addUserMutation = useMutation({
     mutationFn: api.user.addUser,

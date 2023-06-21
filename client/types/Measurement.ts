@@ -1,9 +1,9 @@
-import { UnitEnum } from '@/enums/Unit.enum'
 import { RecordType } from './helpers'
 
 export type MeasurementType = {
   _id: string
   userId: string
+  createdAt: string
   weight: RecordType
   bodyFat: RecordType
   visceralFat: RecordType
@@ -14,4 +14,5 @@ export type MeasurementType = {
   BMI: RecordType
   BMR: RecordType
   metabolicAge: RecordType
+  bodyRating: RecordType
 }
