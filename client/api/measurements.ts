@@ -1,3 +1,4 @@
+import { ChartDataType } from '@/types/ChartData'
 import { MeasurementType } from '@/types/Measurement'
 
 export const measurementsApi = {
@@ -26,5 +27,18 @@ export const measurementsApi = {
     if (!data) throw new Error(data.error)
 
     return data.measurement
+  },
+  getChartMeasurements: async (userId: string, key: string): Promise<ChartDataType[]> => {
+    const res = await fetch(
+      `http://localhost:3001/api/measurements/${userId}/charts?` +
+        new URLSearchParams({
+          key,
+        }),
+    )
+
+    const data = await res.json()
+    console.log({ data })
+    if (!data?.chart) throw new Error(data.error)
+    return data.chart
   },
 }

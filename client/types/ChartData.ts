@@ -1,4 +1,6 @@
+import { RecordType } from './helpers'
+
 export type ChartDataType = {
-  name: string
-  value: number
+  xAxis: string
+  yAxis: RecordType
 }

@@ -4,4 +4,5 @@ export enum QueryKeyEnum {
   MEASUREMENTS = 'measurements',
   MEASUREMENT = 'measurement',
   RANGES = 'ranges',
+  WEIGHT_CHART = 'weight_chart',
 }

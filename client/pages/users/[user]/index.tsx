@@ -68,7 +68,7 @@ const UserProfilePage = () => {
       <HeaderComponent user={user} openModal={openEditModal} openConfirmationModal={openConfirmationModal} />
 
       <RangesComponent userId={user._id} />
-      <ChartSectionComponent />
+      <ChartSectionComponent userId={user._id} />
 
       <UserModalComponent
         opened={editModalOpened}

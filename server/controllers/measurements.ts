@@ -53,4 +53,25 @@ const deleteMeasurement = async (req: Request, res: Response) => {
   }
 }
 
-export { getMeasurements, getMeasurement, createMeasurement, updateMeasurement, deleteMeasurement }
+const getChartMeasurements = async (req: Request, res: Response) => {
+  try {
+    const key = req.query.key
+    const chart = await (
+      await Measurement.find({ userId: req.params.id }).select(`${key}.value ${key}.unit createdAt`)
+    ).map((res) => {
+      return { xAxis: res.get('createdAt'), yAxis: res.get(key?.toString() || '') }
+    })
+    res.status(200).json({ chart })
+  } catch (error) {
+    res.status(500).json({ msg: error })
+  }
+}
+
+export {
+  getMeasurements,
+  getMeasurement,
+  createMeasurement,
+  updateMeasurement,
+  deleteMeasurement,
+  getChartMeasurements,
+}
