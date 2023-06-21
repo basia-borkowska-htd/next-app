@@ -14,6 +14,7 @@ import { units } from '@/utils/units'
 import { DashboardTabEnum } from '@/enums/DashboardTab.enum'
 import { TableComponent } from '@/components/table'
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
+import { EmptyStateComponent } from '@/components/emptyState'
 
 interface RangesProps {
   userId: string
@@ -48,7 +49,7 @@ export const RangesComponent = ({ userId, refetchUser }: RangesProps) => {
 
   if (error) return <ErrorComponent title={error.toString()} />
   if (isLoading) return <PageLoaderComponent />
-  if (!data) return <div>no data</div> // TODO create component
+  if (!data) return <EmptyStateComponent title="No ranges available" compact />
 
   const { latestMeasurement: measurement, rangesList: ranges } = data
 

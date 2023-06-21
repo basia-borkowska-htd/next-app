@@ -8,6 +8,7 @@ import { units } from '@/utils/units'
 import React from 'react'
 import { useQuery } from 'react-query'
 import { HEADERS } from './helpers'
+import { EmptyStateComponent } from '@/components/emptyState'
 
 interface HistoryTabProps {
   userId: string
@@ -23,7 +24,8 @@ export const HistoryTabComponent = ({ userId }: HistoryTabProps) => {
   })
 
   if (isLoading) return <PageLoaderComponent />
-  if (error || !measurements) return <ErrorComponent />
+  if (error) return <ErrorComponent />
+  if (!measurements?.length) return <EmptyStateComponent title="No measurements" compact />
 
   return (
     <TableComponent headers={HEADERS}>
