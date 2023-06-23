@@ -3,13 +3,15 @@ import { useMantineTheme } from '@mantine/core'
 import { XAxis, YAxis, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts'
 import { TooltipComponent } from './tooltip'
 import { EmptyStateComponent } from '../emptyState'
+import { AxisDomain } from 'recharts/types/util/types'
 
 interface ChartProps {
   data: ChartDataType[]
+  yDomain?: AxisDomain
   color?: string
 }
 
-export const ChartComponent = ({ data, color }: ChartProps) => {
+export const ChartComponent = ({ data, yDomain = [], color }: ChartProps) => {
   const { colors } = useMantineTheme()
   const areaColor = color || colors['blue-100'][0]
 
@@ -32,7 +34,7 @@ export const ChartComponent = ({ data, color }: ChartProps) => {
           </linearGradient>
         </defs>
         <XAxis dataKey="xAxis" />
-        <YAxis />
+        <YAxis domain={yDomain} />
         <Tooltip labelFormatter={(value) => value} content={<TooltipComponent />} cursor />
         <Area
           type="monotone"
