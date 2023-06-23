@@ -34,7 +34,7 @@ export const MeasurementModalComponent = ({
 }: MeasurementModalProps) => {
   const isCreating = !measurement
   const initialValues = getInitialValues(measurement)
-  console.log({ onSubmit })
+
   const {
     onSubmit: onSubmitForm,
     getInputProps,
@@ -69,7 +69,6 @@ export const MeasurementModalComponent = ({
     >
       <form
         onSubmit={onSubmitForm((values) => {
-          console.log(values)
           onSubmit(
             { _id: measurement?._id || '', userId, ...values },
             {

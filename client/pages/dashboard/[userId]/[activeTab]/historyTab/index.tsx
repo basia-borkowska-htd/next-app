@@ -19,6 +19,7 @@ import { useDisclosure } from '@mantine/hooks'
 import { notify } from '@/utils/notifications'
 import { MeasurementType } from '@/types/Measurement'
 import { MeasurementModalComponent } from '@/components/measurementModal'
+import { queryClient } from '@/pages/_app'
 
 interface HistoryTabProps {
   userId: string
@@ -35,11 +36,16 @@ export const HistoryTabComponent = ({ userId }: HistoryTabProps) => {
     queryKey: [QueryKeyEnum.MEASUREMENTS],
     queryFn: () => api.measurement.getMeasurements(userId),
   })
+
   const deleteMeasurementMutation = useMutation({
     mutationFn: () => api.measurement.deleteMeasurement(currentMeasurement?._id || ''),
     onSuccess: async () => {
       closeDeleteModal()
-      // TODO: update cache
+      queryClient.setQueryData(
+        [QueryKeyEnum.MEASUREMENTS],
+        measurements?.filter((measurement) => measurement._id !== currentMeasurement?._id),
+      )
+      setCurrentMeasurement(undefined)
       notify({ type: 'success', message: 'Measurement deleted successfully' })
     },
     onError: () => {
@@ -49,8 +55,14 @@ export const HistoryTabComponent = ({ userId }: HistoryTabProps) => {
 
   const editMeasurementMutation = useMutation({
     mutationFn: (measurement: MeasurementType) => api.measurement.updateMeasurement(measurement),
-    onSuccess: async () => {
-      // TODO: update cache
+    onSuccess: async (editedMeasurement) => {
+      queryClient.setQueryData(
+        [QueryKeyEnum.MEASUREMENTS],
+        measurements?.map((measurement) =>
+          measurement._id === editedMeasurement?._id ? editedMeasurement : measurement,
+        ),
+      )
+      setCurrentMeasurement(undefined)
       notify({ type: 'success', message: 'Measurement edited successfully' })
     },
     onError: () => {
