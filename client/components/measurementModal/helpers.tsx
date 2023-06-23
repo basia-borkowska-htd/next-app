@@ -1,3 +1,4 @@
+import { MeasurementEnum, MeasurementLabels } from '@/enums/Measurement.enum'
 import { UnitEnum } from '@/enums/Unit.enum'
 import { MeasurementType } from '@/types/Measurement'
 import dayjs from 'dayjs'
@@ -5,8 +6,7 @@ import { omit } from 'lodash'
 import { ReactNode } from 'react'
 
 type InputValuesType = {
-  value: string
-  label: string
+  value: MeasurementEnum
   placeholder: string
   rightSection?: ReactNode
 }[]
@@ -65,65 +65,54 @@ export const getInitialValues = (measurement: MeasurementType | undefined) => {
 
 export const inputValues: InputValuesType = [
   {
-    value: 'weight',
-    label: 'Weight',
+    value: MeasurementEnum.WEIGHT,
     placeholder: '66',
     rightSection: <p className="opacity-25 text-sm">{UnitEnum.KILOS}</p>,
   },
   {
-    value: 'bodyFat',
-    label: 'Body Fat',
+    value: MeasurementEnum.BODY_FAT,
     placeholder: '30',
     rightSection: <p className="opacity-25 text-sm">{UnitEnum.PERCENTAGE}</p>,
   },
   {
-    value: 'visceralFat',
-    label: 'Visceral Fat',
+    value: MeasurementEnum.VISCERAL_FAT,
     placeholder: '5',
   },
   {
-    value: 'muscles',
-    label: 'Muscles',
+    value: MeasurementEnum.MUSCLES,
     placeholder: '20',
     rightSection: <p className="opacity-25 text-sm">{UnitEnum.KILOS}</p>,
   },
   {
-    value: 'protein',
-    label: 'Protein',
+    value: MeasurementEnum.PROTEIN,
     placeholder: '15',
     rightSection: <p className="opacity-25 text-sm">{UnitEnum.PERCENTAGE}</p>,
   },
   {
-    value: 'water',
-    label: 'Water',
+    value: MeasurementEnum.WATER,
     placeholder: '55',
     rightSection: <p className="opacity-25 text-sm">{UnitEnum.PERCENTAGE}</p>,
   },
   {
-    value: 'boneTissue',
-    label: 'Bone Tissue',
+    value: MeasurementEnum.BONE_TISSUE,
     placeholder: '3',
     rightSection: <p className="opacity-25 text-sm">{UnitEnum.KILOS}</p>,
   },
   {
-    value: 'BMI',
-    label: 'BMI',
+    value: MeasurementEnum.BMI,
     placeholder: '24.3',
   },
   {
-    value: 'BMR',
-    label: 'BMR',
+    value: MeasurementEnum.BMR,
     placeholder: '1770',
     rightSection: <p className="opacity-25 text-sm">{UnitEnum.KCAL}</p>,
   },
   {
-    value: 'metabolicAge',
-    label: 'Metabolic Age',
+    value: MeasurementEnum.METABOLIC_AGE,
     placeholder: '19',
   },
   {
-    value: 'bodyRating',
-    label: 'Body Rating',
+    value: MeasurementEnum.BODY_RATING,
     placeholder: '95',
   },
 ]

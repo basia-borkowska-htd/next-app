@@ -10,6 +10,7 @@ import { MutateOptions } from '@tanstack/react-query'
 import { DateTimePicker } from '@mantine/dates'
 import { DEFAULT_DATE_FORMAT, dates } from '@/utils/dates'
 import { useEffect } from 'react'
+import { MeasurementLabels } from '@/enums/Measurement.enum'
 
 interface MeasurementModalProps {
   userId: string
@@ -72,17 +73,15 @@ export const MeasurementModalComponent = ({
         })}
       >
         <div className="grid grid-cols-2 grid-flow-row gap-4">
-          {inputValues.map(({ value, label, placeholder, rightSection }, idx) => {
-            return (
-              <TextInput
-                key={`modal-input-${value}-${idx}`}
-                label={label}
-                placeholder={placeholder}
-                rightSection={rightSection}
-                {...getInputProps(`${value}.value`)}
-              />
-            )
-          })}
+          {inputValues.map(({ value, placeholder, rightSection }, idx) => (
+            <TextInput
+              key={`modal-input-${value}-${idx}`}
+              label={MeasurementLabels[value]}
+              placeholder={placeholder}
+              rightSection={rightSection}
+              {...getInputProps(`${value}.value`)}
+            />
+          ))}
           <DateTimePicker
             valueFormat={DEFAULT_DATE_FORMAT}
             label="Date and time"

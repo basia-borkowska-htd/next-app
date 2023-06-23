@@ -1,7 +1,5 @@
 import { Card } from '@mantine/core'
 
-import React from 'react'
-
 interface CardProps {
   title: string
   bg?: string

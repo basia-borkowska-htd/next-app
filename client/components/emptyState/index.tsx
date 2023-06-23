@@ -10,7 +10,7 @@ export const EmptyStateComponent = ({
   message = 'There is nothing here yet. Come back another time!',
   compact = false,
 }: EmptyStateProps) => (
-  <div className={`h-screen flex flex-col items-center ${compact ? 'gap-4' : 'gap-5 justify-center'}`}>
+  <div className={`flex flex-col items-center ${compact ? 'gap-4 mb-6' : 'h-screen gap-5 justify-center'}`}>
     <Image height={compact ? 280 : 580} src={EmptyStateCat} alt="Empty state cat" />
     <strong className={`${compact ? 'text-3xl' : 'text-6xl'}`}>{title}</strong>
     <strong className={`${compact ? 'text-xl' : 'text-4xl'}`}>{message}</strong>

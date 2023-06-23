@@ -37,7 +37,7 @@ const DashboardPage = () => {
   const addMeasurementMutation = useMutation({
     mutationFn: (measurement: MeasurementType) => api.measurement.addMeasurement(measurement),
     onSuccess: async () => {
-      await queryClient.refetchQueries({ queryKey: [QueryKeyEnum.MEASUREMENTS] })
+      await queryClient.refetchQueries({ stale: true })
       notify({ type: 'success', message: 'Measurement added successfully' })
     },
     onError: () => {
@@ -81,7 +81,7 @@ const DashboardPage = () => {
           <HistoryTabComponent userId={userId.toString()} />
         </Tabs.Panel>
         <Tabs.Panel value={DashboardTabEnum.CHARTS}>
-          <ChartsTabComponent />
+          <ChartsTabComponent userId={userId.toString()} />
         </Tabs.Panel>
       </Tabs>
     </ContainerComponent>

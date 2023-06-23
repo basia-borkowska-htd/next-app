@@ -12,8 +12,8 @@ import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 import { dates } from '@/utils/dates'
 import { units } from '@/utils/units'
 import { EmptyStateComponent } from '@/components/emptyState'
+import { MeasurementLabels } from '@/enums/Measurement.enum'
 
-import { HEADERS } from './helpers'
 import { ConfirmationModalComponent } from '@/components/confirmationModal'
 import { useDisclosure } from '@mantine/hooks'
 import { notify } from '@/utils/notifications'
@@ -83,30 +83,25 @@ export const HistoryTabComponent = ({ userId }: HistoryTabProps) => {
 
   return (
     <>
-      <TableComponent headers={HEADERS}>
+      <TableComponent headers={Object.values(MeasurementLabels)}>
         {measurements.map(
-          (
-            {
-              _id,
-              date,
-              weight,
-              bodyFat,
-              visceralFat,
-              muscles,
-              protein,
-              water,
-              boneTissue,
-              BMI,
-              BMR,
-              metabolicAge,
-              bodyRating,
-            },
-            idx,
-          ) => (
-            // TODO: maybe some mapping
+          ({
+            _id,
+            date,
+            weight,
+            bodyFat,
+            visceralFat,
+            muscles,
+            protein,
+            water,
+            boneTissue,
+            BMI,
+            BMR,
+            metabolicAge,
+            bodyRating,
+          }) => (
             <tr key={`table-row-${_id}`}>
               <th>{dates.format(date)}</th>
-
               <th>{units.display(weight.unit, weight.value)}</th>
               <th>{units.display(bodyFat.unit, bodyFat.value)}</th>
               <th>{units.display(visceralFat.unit, visceralFat.value)}</th>
