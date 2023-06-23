@@ -8,7 +8,7 @@ import { MeasurementType } from '@/types/Measurement'
 import { initialValues, inputValues } from './helpers'
 import { MutateOptions } from '@tanstack/react-query'
 import { DateTimePicker } from '@mantine/dates'
-import { dates } from '@/utils/dates'
+import { DEFAULT_DATE_FORMAT, dates } from '@/utils/dates'
 
 interface AddMeasurementModalProps {
   userId: string
@@ -72,7 +72,7 @@ export const AddMeasurementModalComponent = ({
             />
           ))}
           <DateTimePicker
-            valueFormat="DD MMM YYYY, HH:mm"
+            valueFormat={DEFAULT_DATE_FORMAT}
             label="Date and time"
             placeholder="09 Jun 2023, 16:30"
             value={dates.fromISOToDate(getInputProps('date').value)}
