@@ -29,6 +29,7 @@ export const measurementsApi = {
     return data.measurement
   },
   deleteMeasurement: async (id: string): Promise<boolean> => {
+    if (!id) throw new Error('Measurement does not exist')
     const res = await fetch(`http://localhost:3001/api/measurements/${id}`, {
       method: 'DELETE',
       headers: {
@@ -41,7 +42,6 @@ export const measurementsApi = {
     return data.success
   },
   updateMeasurement: async (measurement: MeasurementType): Promise<MeasurementType> => {
-    if (!measurement) throw new Error('User does not exist')
     const res = await fetch(`http://localhost:3001/api/measurements/${measurement._id}`, {
       method: 'PUT',
       headers: {

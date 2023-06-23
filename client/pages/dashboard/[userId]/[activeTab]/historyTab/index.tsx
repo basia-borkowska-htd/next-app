@@ -137,7 +137,7 @@ export const HistoryTabComponent = ({ userId }: HistoryTabProps) => {
         onClose={closeDeleteModal}
         loading={false}
         onSubmit={deleteMeasurementMutation.mutate}
-        description="Are you sure you want to delete this measurement"
+        description="Are you sure you want to delete this measurement?"
       />
       <MeasurementModalComponent
         opened={openedEditModal}

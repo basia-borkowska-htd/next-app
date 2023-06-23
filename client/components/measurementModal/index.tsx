@@ -42,13 +42,7 @@ export const MeasurementModalComponent = ({
     reset,
     setValues,
   } = useForm({
-    initialValues: measurement || initialValues,
-    validate: {
-      // weight: ({ value }: { value: number }) => {
-      //   if (!value) return undefined
-      //   return value > 29 && value < 301 ? undefined : 'Invalid weight: acceptable values are from 30 kg to 300 kg'
-      // },
-    },
+    initialValues,
   })
 
   useEffect(() => {
@@ -64,7 +58,7 @@ export const MeasurementModalComponent = ({
     <ModalComponent
       opened={opened}
       onClose={resetAndClose}
-      title={isCreating ? 'Add New Measurement' : 'Edit New Measurement'}
+      title={isCreating ? 'Add New Measurement' : 'Edit Measurement'}
       size="xl"
     >
       <form
