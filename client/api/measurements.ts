@@ -1,3 +1,4 @@
+import { MeasurementEnum } from '@/enums/Measurement.enum'
 import { ChartDataType } from '@/types/ChartData'
 import { MeasurementType } from '@/types/Measurement'
 
@@ -28,7 +29,7 @@ export const measurementsApi = {
 
     return data.measurement
   },
-  getChartMeasurements: async (userId: string, key: string): Promise<ChartDataType[]> => {
+  getChartMeasurements: async (userId: string, key: MeasurementEnum): Promise<ChartDataType[]> => {
     const res = await fetch(
       `http://localhost:3001/api/measurements/${userId}/charts?` +
         new URLSearchParams({
