@@ -83,7 +83,7 @@ export const HistoryTabComponent = ({ userId }: HistoryTabProps) => {
 
   return (
     <>
-      <TableComponent headers={Object.values(MeasurementLabels)}>
+      <TableComponent headers={['Date', ...Object.values(MeasurementLabels)]}>
         {measurements.map(
           ({
             _id,
