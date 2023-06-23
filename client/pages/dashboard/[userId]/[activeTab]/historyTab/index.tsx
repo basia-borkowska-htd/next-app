@@ -5,10 +5,9 @@ import { TableComponent } from '@/components/table'
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 import { dates } from '@/utils/dates'
 import { units } from '@/utils/units'
-import React from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { HEADERS } from './helpers'
 import { EmptyStateComponent } from '@/components/emptyState'
+import { MeasurementLabels } from '@/enums/Measurement.enum'
 
 interface HistoryTabProps {
   userId: string
@@ -28,26 +27,23 @@ export const HistoryTabComponent = ({ userId }: HistoryTabProps) => {
   if (!measurements?.length) return <EmptyStateComponent title="No measurements" compact />
 
   return (
-    <TableComponent headers={HEADERS}>
+    <TableComponent headers={Object.values(MeasurementLabels)}>
       {measurements.map(
-        (
-          {
-            _id,
-            date,
-            weight,
-            bodyFat,
-            visceralFat,
-            muscles,
-            protein,
-            water,
-            boneTissue,
-            BMI,
-            BMR,
-            metabolicAge,
-            bodyRating,
-          },
-          idx,
-        ) => (
+        ({
+          _id,
+          date,
+          weight,
+          bodyFat,
+          visceralFat,
+          muscles,
+          protein,
+          water,
+          boneTissue,
+          BMI,
+          BMR,
+          metabolicAge,
+          bodyRating,
+        }) => (
           <tr key={`table-row-${_id}`}>
             <th>{dates.format(date)}</th>
             <th>{units.display(weight.unit, weight.value)}</th>

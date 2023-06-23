@@ -4,8 +4,7 @@ import { ContainerComponent } from '@/components/container'
 import { EmptyStateComponent } from '@/components/emptyState'
 import { ErrorComponent } from '@/components/error'
 import { PageLoaderComponent } from '@/components/pageLoader'
-import { QueryKeyEnum } from '@/enums/QueryKey.enum'
-import { UnitEnum } from '@/enums/Unit.enum'
+import { MeasurementEnum } from '@/enums/Measurement.enum'
 import { useQuery } from '@tanstack/react-query'
 
 interface ChartSectionProps {
@@ -19,8 +18,8 @@ export const ChartSectionComponent = ({ userId }: ChartSectionProps) => {
     isLoading,
     isFetching,
   } = useQuery({
-    queryKey: [QueryKeyEnum.WEIGHT_CHART, userId],
-    queryFn: () => api.measurement.getChartMeasurements(userId, 'weight'),
+    queryKey: [MeasurementEnum.WEIGHT, userId],
+    queryFn: () => api.measurement.getChartMeasurements(userId, MeasurementEnum.WEIGHT),
   })
 
   if (error) return <ErrorComponent title={error.toString()} compact />

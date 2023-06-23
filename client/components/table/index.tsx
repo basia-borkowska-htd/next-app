@@ -1,5 +1,5 @@
 import { Table } from '@mantine/core'
-import React, { ReactNode } from 'react'
+import { ReactNode } from 'react'
 
 interface TableProps {
   headers: string[]
