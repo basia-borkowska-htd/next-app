@@ -47,8 +47,8 @@ const updateMeasurement = async (req: Request, res: Response) => {
 
 const deleteMeasurement = async (req: Request, res: Response) => {
   try {
-    const measurement = await Measurement.findOneAndDelete({ _id: req.params.id })
-    res.status(200).json({ measurement })
+    await Measurement.findOneAndDelete({ _id: req.params.id })
+    res.status(200).json({ success: true })
   } catch (error) {
     res.status(404).json({ msg: 'Measurement not found' })
   }
