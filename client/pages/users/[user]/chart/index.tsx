@@ -17,13 +17,14 @@ export const ChartSectionComponent = ({ userId }: ChartSectionProps) => {
     data: chart,
     error,
     isLoading,
+    isFetching,
   } = useQuery({
-    queryKey: [QueryKeyEnum.WEIGHT_CHART],
+    queryKey: [QueryKeyEnum.WEIGHT_CHART, userId],
     queryFn: () => api.measurement.getChartMeasurements(userId, 'weight'),
   })
 
   if (error) return <ErrorComponent title={error.toString()} compact />
-  if (isLoading) return <PageLoaderComponent compact />
+  if (isLoading || isFetching) return <PageLoaderComponent compact />
   if (!chart) return <EmptyStateComponent title="No weights data available" compact />
   return (
     <ContainerComponent className="mt-8">

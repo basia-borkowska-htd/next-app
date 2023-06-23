@@ -22,8 +22,8 @@ interface RangesProps {
 }
 
 export const RangesComponent = ({ userId }: RangesProps) => {
-  const { data, error, isLoading } = useQuery({
-    queryKey: [QueryKeyEnum.RANGES],
+  const { data, error, isLoading, isFetching } = useQuery({
+    queryKey: [QueryKeyEnum.RANGES, userId],
     queryFn: () => api.range.getRanges(userId),
   })
   const router = useRouter()
@@ -45,7 +45,7 @@ export const RangesComponent = ({ userId }: RangesProps) => {
   })
 
   if (error) return <ErrorComponent title={error.toString()} compact />
-  if (isLoading) return <PageLoaderComponent compact />
+  if (isLoading || isFetching) return <PageLoaderComponent compact />
   if (!data) return <EmptyStateComponent title="No ranges available" compact />
 
   const { latestMeasurement: measurement, rangesList: ranges } = data
