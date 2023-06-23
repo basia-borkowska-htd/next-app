@@ -40,6 +40,20 @@ export const measurementsApi = {
     if (!data?.success) throw new Error(data.error)
     return data.success
   },
+  updateMeasurement: async (measurement: MeasurementType): Promise<MeasurementType> => {
+    if (!measurement) throw new Error('User does not exist')
+    const res = await fetch(`http://localhost:3001/api/measurements/${measurement._id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(measurement),
+    })
+    const data = await res.json()
+
+    if (!data?.measurement) throw new Error(data.error)
+    return data.measurement
+  },
   getChartMeasurements: async (userId: string, key: string): Promise<ChartDataType[]> => {
     const res = await fetch(
       `http://localhost:3001/api/measurements/${userId}/charts?` +

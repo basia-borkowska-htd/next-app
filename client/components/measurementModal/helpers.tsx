@@ -1,5 +1,7 @@
 import { UnitEnum } from '@/enums/Unit.enum'
+import { MeasurementType } from '@/types/Measurement'
 import dayjs from 'dayjs'
+import { omit } from 'lodash'
 import { ReactNode } from 'react'
 
 type InputValuesType = {
@@ -9,52 +11,56 @@ type InputValuesType = {
   rightSection?: ReactNode
 }[]
 
-export const initialValues = {
-  weight: {
-    value: undefined,
-    unit: UnitEnum.KILOS,
-  },
-  bodyFat: {
-    value: undefined,
-    unit: UnitEnum.PERCENTAGE,
-  },
-  visceralFat: {
-    value: undefined,
-    unit: UnitEnum.NO_UNIT,
-  },
-  muscles: {
-    value: undefined,
-    unit: UnitEnum.KILOS,
-  },
-  protein: {
-    value: undefined,
-    unit: UnitEnum.PERCENTAGE,
-  },
-  water: {
-    value: undefined,
-    unit: UnitEnum.PERCENTAGE,
-  },
-  boneTissue: {
-    value: undefined,
-    unit: UnitEnum.KILOS,
-  },
-  BMI: {
-    value: undefined,
-    unit: UnitEnum.NO_UNIT,
-  },
-  BMR: {
-    value: undefined,
-    unit: UnitEnum.KCAL,
-  },
-  metabolicAge: {
-    value: undefined,
-    unit: UnitEnum.NO_UNIT,
-  },
-  bodyRating: {
-    value: undefined,
-    unit: UnitEnum.NO_UNIT,
-  },
-  date: dayjs().toISOString(),
+export const getInitialValues = (measurement: MeasurementType | undefined) => {
+  if (measurement) return omit(measurement, ['userId', '_id'])
+
+  return {
+    weight: {
+      value: undefined,
+      unit: UnitEnum.KILOS,
+    },
+    bodyFat: {
+      value: undefined,
+      unit: UnitEnum.PERCENTAGE,
+    },
+    visceralFat: {
+      value: undefined,
+      unit: UnitEnum.NO_UNIT,
+    },
+    muscles: {
+      value: undefined,
+      unit: UnitEnum.KILOS,
+    },
+    protein: {
+      value: undefined,
+      unit: UnitEnum.PERCENTAGE,
+    },
+    water: {
+      value: undefined,
+      unit: UnitEnum.PERCENTAGE,
+    },
+    boneTissue: {
+      value: undefined,
+      unit: UnitEnum.KILOS,
+    },
+    BMI: {
+      value: undefined,
+      unit: UnitEnum.NO_UNIT,
+    },
+    BMR: {
+      value: undefined,
+      unit: UnitEnum.KCAL,
+    },
+    metabolicAge: {
+      value: undefined,
+      unit: UnitEnum.NO_UNIT,
+    },
+    bodyRating: {
+      value: undefined,
+      unit: UnitEnum.NO_UNIT,
+    },
+    date: dayjs().toISOString(),
+  }
 }
 
 export const inputValues: InputValuesType = [

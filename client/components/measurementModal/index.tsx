@@ -5,15 +5,17 @@ import { ModalComponent } from '@/components/modal'
 import { ButtonComponent } from '@/components/button'
 import { MeasurementType } from '@/types/Measurement'
 
-import { initialValues, inputValues } from './helpers'
+import { getInitialValues, inputValues } from './helpers'
 import { MutateOptions } from '@tanstack/react-query'
 import { DateTimePicker } from '@mantine/dates'
 import { DEFAULT_DATE_FORMAT, dates } from '@/utils/dates'
+import { useEffect } from 'react'
 
-interface AddMeasurementModalProps {
+interface MeasurementModalProps {
   userId: string
   opened: boolean
   loading: boolean
+  measurement?: MeasurementType
 
   onClose: () => void
   onSubmit: (
@@ -22,27 +24,36 @@ interface AddMeasurementModalProps {
   ) => void
 }
 
-export const AddMeasurementModalComponent = ({
+export const MeasurementModalComponent = ({
   userId,
   opened,
   loading,
   onClose,
   onSubmit,
-}: AddMeasurementModalProps) => {
+  measurement,
+}: MeasurementModalProps) => {
+  const isCreating = !measurement
+  const initialValues = getInitialValues(measurement)
+  console.log({ onSubmit })
   const {
     onSubmit: onSubmitForm,
     getInputProps,
     setFieldValue,
     reset,
+    setValues,
   } = useForm({
-    initialValues,
+    initialValues: measurement || initialValues,
     validate: {
-      weight: ({ value }) => {
-        if (!value) return undefined
-        return value > 29 && value < 301 ? undefined : 'Invalid weight: acceptable values are from 30 kg to 300 kg'
-      },
+      // weight: ({ value }: { value: number }) => {
+      //   if (!value) return undefined
+      //   return value > 29 && value < 301 ? undefined : 'Invalid weight: acceptable values are from 30 kg to 300 kg'
+      // },
     },
   })
+
+  useEffect(() => {
+    setValues(getInitialValues(measurement))
+  }, [measurement])
 
   const resetAndClose = () => {
     reset()
@@ -50,11 +61,17 @@ export const AddMeasurementModalComponent = ({
   }
 
   return (
-    <ModalComponent opened={opened} onClose={resetAndClose} title="Add New Measurement" size="xl">
+    <ModalComponent
+      opened={opened}
+      onClose={resetAndClose}
+      title={isCreating ? 'Add New Measurement' : 'Edit New Measurement'}
+      size="xl"
+    >
       <form
         onSubmit={onSubmitForm((values) => {
+          console.log(values)
           onSubmit(
-            { _id: '', userId, ...values },
+            { _id: measurement?._id || '', userId, ...values },
             {
               onSuccess: resetAndClose,
             },
@@ -62,15 +79,17 @@ export const AddMeasurementModalComponent = ({
         })}
       >
         <div className="grid grid-cols-2 grid-flow-row gap-4">
-          {inputValues.map(({ value, label, placeholder, rightSection }, idx) => (
-            <TextInput
-              key={`modal-input-${value}-${idx}`}
-              label={label}
-              placeholder={placeholder}
-              rightSection={rightSection}
-              {...getInputProps(`${value}.value`)}
-            />
-          ))}
+          {inputValues.map(({ value, label, placeholder, rightSection }, idx) => {
+            return (
+              <TextInput
+                key={`modal-input-${value}-${idx}`}
+                label={label}
+                placeholder={placeholder}
+                rightSection={rightSection}
+                {...getInputProps(`${value}.value`)}
+              />
+            )
+          })}
           <DateTimePicker
             valueFormat={DEFAULT_DATE_FORMAT}
             label="Date and time"

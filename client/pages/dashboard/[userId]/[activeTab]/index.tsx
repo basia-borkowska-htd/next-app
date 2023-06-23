@@ -9,7 +9,7 @@ import { HistoryTabComponent } from './historyTab'
 import { ChartsTabComponent } from './chartsTab'
 import { DashboardTabEnum } from '@/enums/DashboardTab.enum'
 import { useDisclosure } from '@mantine/hooks'
-import { AddMeasurementModalComponent } from '@/components/addMeasurementModal'
+import { MeasurementModalComponent } from '@/components/measurementModal'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { MeasurementType } from '@/types/Measurement'
 import { api } from '@/api'
@@ -51,7 +51,7 @@ const DashboardPage = () => {
   return (
     <ContainerComponent className="flex flex-col justify-between py-8">
       <HeaderComponent userId={user._id} userName={user.name} userAvatar={BasiaImg.src} openModal={open} />
-      <AddMeasurementModalComponent
+      <MeasurementModalComponent
         opened={opened}
         userId={userId.toString()}
         onClose={close}
