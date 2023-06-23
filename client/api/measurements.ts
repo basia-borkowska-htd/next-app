@@ -28,6 +28,18 @@ export const measurementsApi = {
 
     return data.measurement
   },
+  deleteMeasurement: async (id: string): Promise<boolean> => {
+    const res = await fetch(`http://localhost:3001/api/measurements/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    const data = await res.json()
+
+    if (!data?.success) throw new Error(data.error)
+    return data.success
+  },
   getChartMeasurements: async (userId: string, key: string): Promise<ChartDataType[]> => {
     const res = await fetch(
       `http://localhost:3001/api/measurements/${userId}/charts?` +
