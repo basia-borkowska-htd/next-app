@@ -43,7 +43,7 @@ const UsersPage = () => {
     <ContainerComponent className="flex h-screen items-center">
       <div className="w-full flex flex-wrap gap-6 justify-center">
         {data?.map(({ _id, name }) => (
-          <CardComponent onClick={() => handleRedirect(_id)} key={_id} title={name} />
+          <CardComponent key={`card-${_id}`} onClick={() => handleRedirect(_id)} title={name} />
         ))}
         <CardComponent onClick={open} title="+ Add new user" bg="blue-100" />
       </div>

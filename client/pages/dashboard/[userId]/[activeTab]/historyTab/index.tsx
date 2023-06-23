@@ -32,6 +32,7 @@ export const HistoryTabComponent = ({ userId }: HistoryTabProps) => {
       {measurements.map(
         (
           {
+            _id,
             date,
             weight,
             bodyFat,
@@ -47,7 +48,7 @@ export const HistoryTabComponent = ({ userId }: HistoryTabProps) => {
           },
           idx,
         ) => (
-          <tr key={idx}>
+          <tr key={`table-row-${_id}`}>
             <th>{dates.format(date)}</th>
             <th>{units.display(weight.unit, weight.value)}</th>
             <th>{units.display(bodyFat.unit, bodyFat.value)}</th>

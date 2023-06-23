@@ -11,7 +11,7 @@ export const TableComponent = ({ headers, children }: TableProps) => (
     <thead>
       <tr>
         {headers.map((header, idx) => (
-          <th key={idx}>{header}</th>
+          <th key={`header-${header}-${idx}`}>{header}</th>
         ))}
       </tr>
     </thead>
