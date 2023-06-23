@@ -1,4 +1,3 @@
-import React from 'react'
 import { CardComponent } from '@/components/card'
 import { UserModalComponent } from '@/components/userModal'
 import { Pathnames } from '@/utils/pathnames'

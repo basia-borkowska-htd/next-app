@@ -6,7 +6,6 @@ import { PageLoaderComponent } from '@/components/pageLoader'
 import { MeasurementEnum, MeasurementLabels } from '@/enums/Measurement.enum'
 import { Accordion } from '@mantine/core'
 import { useQuery } from '@tanstack/react-query'
-import React from 'react'
 
 interface ChartItemProps {
   userId: string
