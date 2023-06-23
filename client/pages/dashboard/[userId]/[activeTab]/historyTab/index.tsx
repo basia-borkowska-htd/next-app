@@ -30,22 +30,26 @@ export const HistoryTabComponent = ({ userId }: HistoryTabProps) => {
   return (
     <TableComponent headers={HEADERS}>
       {measurements.map(
-        ({
-          createdAt,
-          weight,
-          bodyFat,
-          visceralFat,
-          muscles,
-          protein,
-          water,
-          boneTissue,
-          BMI,
-          BMR,
-          metabolicAge,
-          bodyRating,
-        }) => (
-          <tr>
-            <th>{dates.fromUTC(createdAt)}</th>
+        (
+          {
+            _id,
+            date,
+            weight,
+            bodyFat,
+            visceralFat,
+            muscles,
+            protein,
+            water,
+            boneTissue,
+            BMI,
+            BMR,
+            metabolicAge,
+            bodyRating,
+          },
+          idx,
+        ) => (
+          <tr key={`table-row-${_id}`}>
+            <th>{dates.format(date)}</th>
             <th>{units.display(weight.unit, weight.value)}</th>
             <th>{units.display(bodyFat.unit, bodyFat.value)}</th>
             <th>{units.display(visceralFat.unit, visceralFat.value)}</th>

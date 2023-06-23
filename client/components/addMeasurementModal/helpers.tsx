@@ -1,4 +1,5 @@
 import { UnitEnum } from '@/enums/Unit.enum'
+import dayjs from 'dayjs'
 import { ReactNode } from 'react'
 
 type InputValuesType = {
@@ -53,6 +54,7 @@ export const initialValues = {
     value: undefined,
     unit: UnitEnum.NO_UNIT,
   },
+  date: dayjs().toISOString(),
 }
 
 export const inputValues: InputValuesType = [
