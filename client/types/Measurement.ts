@@ -3,7 +3,7 @@ import { RecordType } from './helpers'
 export type MeasurementType = {
   _id: string
   userId: string
-  createdAt: string
+  date: string
   weight: RecordType
   bodyFat: RecordType
   visceralFat: RecordType

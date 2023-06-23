@@ -1,7 +1,13 @@
 import dayjs from 'dayjs'
 
 export const dates = {
-  fromUTC: (date: string) => {
-    return dayjs(date).format('DD/MM/YYYY HH:MM')
+  format: (iso: string, format: string = 'MMM DD YYYY, HH:mm') => {
+    return dayjs(iso).format(format)
+  },
+  fromISOToDate: (iso: string) => {
+    return new Date(iso)
+  },
+  fromDateToISO: (date: Date | null) => {
+    return dayjs(date).toISOString()
   },
 }

@@ -16,7 +16,7 @@ const getRangesList = async (req: Request, res: Response) => {
   const userId = req.params.id
   try {
     const latestMeasurement = await Measurement.findOne({ userId }, null, {
-      sort: { createdAt: 'desc' },
+      sort: { date: 'desc' },
     })
 
     const user = await User.findOne({ _id: userId })
