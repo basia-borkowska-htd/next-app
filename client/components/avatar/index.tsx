@@ -12,8 +12,8 @@ export const AvatarComponent = ({ src, name, compact = false }: AvatarProps) => 
     <Avatar
       src={src}
       alt="avatar"
-      className="bg-green-100/50"
-      variant=""
+      variant="filled"
+      color="green-300"
       radius={compact ? 'xl' : 'lg'}
       size={compact ? 'lg' : 'xl'}
     >
