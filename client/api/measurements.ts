@@ -5,10 +5,9 @@ import { MeasurementType } from '@/types/Measurement'
 export const measurementsApi = {
   getMeasurements: async (userId: string): Promise<MeasurementType[]> => {
     const res = await fetch(
-      `http://localhost:3001/api/measurements?` +
-        new URLSearchParams({
-          userId,
-        }),
+      `http://localhost:3001/api/measurements?${new URLSearchParams({
+        userId,
+      })}`,
     )
     const data = await res.json()
     if (!data?.measurements) throw new Error(data.error)
@@ -57,10 +56,9 @@ export const measurementsApi = {
   },
   getChartMeasurements: async (userId: string, key: MeasurementEnum): Promise<ChartDataType[]> => {
     const res = await fetch(
-      `http://localhost:3001/api/measurements/${userId}/charts?` +
-        new URLSearchParams({
-          key,
-        }),
+      `http://localhost:3001/api/measurements/${userId}/charts?${new URLSearchParams({
+        key,
+      })}`,
     )
 
     const data = await res.json()

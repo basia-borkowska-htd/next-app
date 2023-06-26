@@ -1,7 +1,8 @@
 import { AccordionComponent } from '@/components/accordion'
 import { ContainerComponent } from '@/components/container'
-import { ChartItemComponent } from './chartItem/index.tsx'
 import { MeasurementEnum } from '@/enums/Measurement.enum'
+
+import { ChartItemComponent } from './chartItem'
 
 interface ChartsTabProps {
   userId: string

@@ -1,14 +1,14 @@
+import { useEffect } from 'react'
 import { NumberInput, TextInput, Input, SegmentedControl } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { MutateOptions } from '@tanstack/react-query'
 
-import { useEffect } from 'react'
 import { UserType } from '@/types/User'
 import { SexEnum } from '@/enums/Sex.enum'
+import { UnitEnum } from '@/enums/Unit.enum'
 
 import { ModalComponent } from '../modal'
 import { ButtonComponent } from '../button'
-import { UnitEnum } from '@/enums/Unit.enum'
 
 interface UserModalProps {
   // eslint-disable-next-line react/require-default-props

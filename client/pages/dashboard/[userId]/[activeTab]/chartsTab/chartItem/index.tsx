@@ -2,10 +2,8 @@ import { Accordion } from '@mantine/core'
 import { useQuery } from '@tanstack/react-query'
 import { api } from '@/api'
 import { ChartComponent } from '@/components/chart'
-import { EmptyStateComponent } from '@/components/emptyState'
-import { ErrorComponent } from '@/components/error'
-import { PageLoaderComponent } from '@/components/pageLoader'
 import { MeasurementEnum, MeasurementLabels } from '@/enums/Measurement.enum'
+import { PanelComponent } from '@/components/panel'
 
 interface ChartItemProps {
   userId: string
@@ -15,21 +13,13 @@ export const ChartItemComponent = ({ userId, itemKey }: ChartItemProps) => {
   const title = MeasurementLabels[itemKey]
   const {
     data: chart,
-    error,
     isLoading,
     isFetching,
+    isError,
   } = useQuery({
     queryKey: [itemKey, userId],
     queryFn: () => api.measurement.getChartMeasurements(userId, itemKey),
   })
-
-  const PanelComponent = () => {
-    if (isFetching || isLoading) return <PageLoaderComponent compact />
-    if (error) return <ErrorComponent compact />
-    if (!chart?.length) return <EmptyStateComponent title={`No ${title} Measurements`} compact />
-
-    return <ChartComponent data={chart} />
-  }
 
   return (
     <Accordion.Item value={itemKey}>
@@ -38,7 +28,14 @@ export const ChartItemComponent = ({ userId, itemKey }: ChartItemProps) => {
       </Accordion.Control>
       <Accordion.Panel>
         <div className="flex justify-center">
-          <PanelComponent />
+          <PanelComponent
+            isLoading={isFetching || isLoading}
+            error={isError}
+            invalidData={!chart?.length}
+            invalidDataMessage={`No ${title} Measurements`}
+          >
+            <ChartComponent data={chart} />
+          </PanelComponent>
         </div>
       </Accordion.Panel>
     </Accordion.Item>

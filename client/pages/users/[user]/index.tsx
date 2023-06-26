@@ -3,20 +3,20 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import { useDisclosure } from '@mantine/hooks'
 
 import { api } from '@/api'
+import { queryClient } from '@/pages/_app'
+import { EmptyStateComponent } from '@/components/emptyState'
+import { PageLoaderComponent } from '@/components/pageLoader'
+import { ErrorComponent } from '@/components/error'
 import { UserModalComponent } from '@/components/userModal'
 import { ConfirmationModalComponent } from '@/components/confirmationModal'
 import { notify } from '@/utils/notifications'
 import { Pathnames } from '@/utils/pathnames'
 import { UserType } from '@/types/User'
+import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 
 import { ChartSectionComponent } from './chart'
 import { HeaderComponent } from './header'
 import { RangesComponent } from './ranges'
-import { PageLoaderComponent } from '@/components/pageLoader'
-import { ErrorComponent } from '@/components/error'
-import { QueryKeyEnum } from '@/enums/QueryKey.enum'
-import { queryClient } from '@/pages/_app'
-import { EmptyStateComponent } from '@/components/emptyState'
 
 const UserProfilePage = () => {
   const router = useRouter()

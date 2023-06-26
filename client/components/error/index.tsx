@@ -1,5 +1,6 @@
-import ErrorRobot from '@/assets/graphics/error-robot.svg'
 import Image from 'next/image'
+import ErrorRobot from '@/assets/graphics/error-robot.svg'
+
 interface ErrorProps {
   title?: string
   message?: string
