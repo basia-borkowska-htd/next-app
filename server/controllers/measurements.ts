@@ -5,7 +5,7 @@ import { User } from '../models/user'
 
 const getMeasurements = async (req: Request, res: Response) => {
   try {
-    const measurements = await Measurement.find({ userId: req.query.userId })
+    const measurements = await Measurement.find({ userId: req.query.userId }).sort({ date: 'desc' })
     res.status(200).json({ measurements })
   } catch (error) {
     res.status(500).json({ msg: error })
@@ -47,8 +47,8 @@ const updateMeasurement = async (req: Request, res: Response) => {
 
 const deleteMeasurement = async (req: Request, res: Response) => {
   try {
-    const measurement = await Measurement.findOneAndDelete({ _id: req.params.id })
-    res.status(200).json({ measurement })
+    await Measurement.findOneAndDelete({ _id: req.params.id })
+    res.status(200).json({ success: true })
   } catch (error) {
     res.status(404).json({ msg: 'Measurement not found' })
   }
@@ -57,8 +57,8 @@ const deleteMeasurement = async (req: Request, res: Response) => {
 const getChartMeasurements = async (req: Request, res: Response) => {
   try {
     const key = req.query.key
-    const chart = await (
-      await Measurement.find({ userId: req.params.id }).select(`${key}.value ${key}.unit date`)
+    const chart = (
+      await Measurement.find({ userId: req.params.id }).sort({ date: 'asc' }).select(`${key}.value ${key}.unit date`)
     ).map((res) => ({
       xAxis: dayjs(res.get('date')).format('MMM DD'),
       yAxis: res.get(key?.toString() || ''),

@@ -13,6 +13,7 @@ import { api } from '@/api'
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 import { queryClient } from '@/pages/_app'
 import { ContainerComponent } from '@/components/container'
+import { AvatarComponent } from '@/components/avatar'
 
 const UsersPage = () => {
   const router = useRouter()
@@ -39,12 +40,17 @@ const UsersPage = () => {
     router.push(Pathnames.userProfile.replace(':id', id))
   }
   return (
-    <ContainerComponent className="flex h-screen items-center">
+    <ContainerComponent className="flex h-screen items-center bg-green-100/10">
       <div className="w-full flex flex-wrap gap-6 justify-center">
-        {data?.map(({ _id, name }) => (
-          <CardComponent key={`card-${_id}`} onClick={() => handleRedirect(_id)} title={name} />
+        {data?.map(({ _id, name, avatarUrl }) => (
+          <CardComponent key={`card-${_id}`} onClick={() => handleRedirect(_id)}>
+            <AvatarComponent src={avatarUrl} compact />
+            <div className="text-2xl">{name}</div>
+          </CardComponent>
         ))}
-        <CardComponent onClick={open} title="+ Add new user" bg="blue-100" />
+        <CardComponent className="bg-green-300/25 hover:bg-green-300/30" onClick={open}>
+          <div className="text-2xl">+ Add new user</div>
+        </CardComponent>
       </div>
 
       <UserModalComponent

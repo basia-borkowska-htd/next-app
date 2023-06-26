@@ -1,7 +1,6 @@
 import { Pathnames } from '@/utils/pathnames'
 import { Tabs } from '@mantine/core'
 import { useRouter } from 'next/router'
-import BasiaImg from '@/assets/images/basia.jpeg'
 
 import { PageLoaderComponent } from '@/components/pageLoader'
 import { ErrorComponent } from '@/components/error'
@@ -9,7 +8,7 @@ import { HistoryTabComponent } from './historyTab'
 import { ChartsTabComponent } from './chartsTab'
 import { DashboardTabEnum } from '@/enums/DashboardTab.enum'
 import { useDisclosure } from '@mantine/hooks'
-import { AddMeasurementModalComponent } from '@/components/addMeasurementModal'
+import { MeasurementModalComponent } from '@/components/measurementModal'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { MeasurementType } from '@/types/Measurement'
 import { api } from '@/api'
@@ -28,8 +27,8 @@ const DashboardPage = () => {
     error,
     isLoading,
   } = useQuery({
-    queryKey: [QueryKeyEnum.USER],
-    queryFn: () => api.user.getUser(userId?.toString() || ''),
+    queryKey: [QueryKeyEnum.BASIC_USER],
+    queryFn: () => api.user.getBasicUser(userId?.toString() || ''),
     enabled: router.isReady,
   })
 
@@ -50,8 +49,8 @@ const DashboardPage = () => {
 
   return (
     <ContainerComponent className="flex flex-col justify-between py-8">
-      <HeaderComponent userId={user._id} userName={user.name} userAvatar={BasiaImg.src} openModal={open} />
-      <AddMeasurementModalComponent
+      <HeaderComponent userId={user._id} userName={user.name} userAvatar={user.avatarUrl} openModal={open} />
+      <MeasurementModalComponent
         opened={opened}
         userId={userId.toString()}
         onClose={close}

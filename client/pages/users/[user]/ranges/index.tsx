@@ -4,7 +4,7 @@ import { Pathnames } from '@/utils/pathnames'
 import { useRouter } from 'next/router'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { ErrorComponent } from '@/components/error'
-import { AddMeasurementModalComponent } from '@/components/addMeasurementModal'
+import { MeasurementModalComponent } from '@/components/measurementModal'
 import { useDisclosure } from '@mantine/hooks'
 import { MeasurementType } from '@/types/Measurement'
 import { notify } from '@/utils/notifications'
@@ -127,7 +127,7 @@ export const RangesComponent = ({ userId }: RangesProps) => {
         </tr>
       </TableComponent>
 
-      <AddMeasurementModalComponent
+      <MeasurementModalComponent
         opened={opened}
         userId={userId}
         onClose={close}
