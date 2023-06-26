@@ -1,20 +1,20 @@
 import { Card } from '@mantine/core'
+import { ReactNode } from 'react'
 
 interface CardProps {
-  title: string
-  bg?: string
+  children: ReactNode
+  className?: string
 
   onClick: () => void
 }
 
-export const CardComponent = ({ title, bg, onClick }: CardProps) => {
+export const CardComponent = ({ children, className, onClick }: CardProps) => {
   return (
     <Card
       onClick={onClick}
-      bg={bg || 'blue-200'}
-      className="w-1/5 h-28 flex items-center justify-center cursor-pointer"
+      className={`w-1/5 flex items-center flex-col gap-2 justify-center cursor-pointer shadow-md hover:shadow-xl ${className}`}
     >
-      <strong>{title}</strong>
+      {children}
     </Card>
   )
 }

@@ -1,7 +1,7 @@
 import { BasicUserType, UserType } from '@/types/User'
 
 export const usersApi = {
-  getUsers: async (): Promise<UserType[]> => {
+  getUsers: async (): Promise<BasicUserType[]> => {
     const res = await fetch('http://localhost:3001/api/users')
     const data = await res.json()
     if (!data?.users) throw new Error(data.error)

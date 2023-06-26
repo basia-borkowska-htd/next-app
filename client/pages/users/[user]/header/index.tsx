@@ -17,7 +17,7 @@ export const HeaderComponent = ({ user, openModal, openConfirmationModal }: Head
   const { name, age, sex, height, weight } = user
 
   return (
-    <div>
+    <div className="bg-green-100/10 shadow-md mb-8">
       <ContainerComponent className="py-8">
         <GoBackComponent path={Pathnames.home} />
         <div className="flex justify-between items-center ">

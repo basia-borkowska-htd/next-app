@@ -27,7 +27,7 @@ const DashboardPage = () => {
     error,
     isLoading,
   } = useQuery({
-    queryKey: [QueryKeyEnum.USER],
+    queryKey: [QueryKeyEnum.BASIC_USER],
     queryFn: () => api.user.getBasicUser(userId?.toString() || ''),
     enabled: router.isReady,
   })
