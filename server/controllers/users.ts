@@ -20,6 +20,15 @@ const getUser = async (req: Request, res: Response) => {
   }
 }
 
+const getBasicUser = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findOne({ _id: req.params.id }).select('name avatarUrl')
+    res.status(200).json({ user })
+  } catch (error) {
+    res.status(404).json({ msg: 'User not found' })
+  }
+}
+
 const createUser = async (req: Request, res: Response) => {
   try {
     const user = await User.create(req.body)
@@ -51,4 +60,4 @@ const deleteUser = async (req: Request, res: Response) => {
   }
 }
 
-export { getUsers, getUser, createUser, updateUser, deleteUser }
+export { getUsers, getUser, getBasicUser, createUser, updateUser, deleteUser }

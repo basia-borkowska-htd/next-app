@@ -1,7 +1,6 @@
 import { Pathnames } from '@/utils/pathnames'
 import { Tabs } from '@mantine/core'
 import { useRouter } from 'next/router'
-import BasiaImg from '@/assets/images/basia.jpeg'
 
 import { PageLoaderComponent } from '@/components/pageLoader'
 import { ErrorComponent } from '@/components/error'
@@ -29,7 +28,7 @@ const DashboardPage = () => {
     isLoading,
   } = useQuery({
     queryKey: [QueryKeyEnum.USER],
-    queryFn: () => api.user.getUser(userId?.toString() || ''),
+    queryFn: () => api.user.getBasicUser(userId?.toString() || ''),
     enabled: router.isReady,
   })
 
@@ -50,7 +49,7 @@ const DashboardPage = () => {
 
   return (
     <ContainerComponent className="flex flex-col justify-between py-8">
-      <HeaderComponent userId={user._id} userName={user.name} userAvatar={BasiaImg.src} openModal={open} />
+      <HeaderComponent userId={user._id} userName={user.name} userAvatar={user.avatarUrl} openModal={open} />
       <MeasurementModalComponent
         opened={opened}
         userId={userId.toString()}

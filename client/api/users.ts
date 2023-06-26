@@ -1,4 +1,4 @@
-import { UserType } from '@/types/User'
+import { BasicUserType, UserType } from '@/types/User'
 
 export const usersApi = {
   getUsers: async (): Promise<UserType[]> => {
@@ -8,7 +8,17 @@ export const usersApi = {
     return data.users
   },
   getUser: async (id: string): Promise<UserType> => {
+    if (!id) throw new Error('User does not exist')
+
     const res = await fetch(`http://localhost:3001/api/users/${id}`)
+    const data = await res.json()
+    if (!data?.user) throw new Error(data.error)
+    return data.user
+  },
+  getBasicUser: async (id: string): Promise<BasicUserType> => {
+    if (!id) throw new Error('User does not exist')
+
+    const res = await fetch(`http://localhost:3001/api/users/${id}/basic`)
     const data = await res.json()
     if (!data?.user) throw new Error(data.error)
     return data.user
@@ -42,6 +52,8 @@ export const usersApi = {
     return data.user
   },
   deleteUser: async (id: string): Promise<boolean> => {
+    if (!id) throw new Error('User does not exist')
+
     const res = await fetch(`http://localhost:3001/api/users/${id}`, {
       method: 'DELETE',
       headers: {
