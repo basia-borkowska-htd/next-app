@@ -48,7 +48,7 @@ const UsersPage = () => {
             <div className="text-2xl">{name}</div>
           </CardComponent>
         ))}
-        <CardComponent className="bg-green-100/25 hover:bg-green-100/30" onClick={open}>
+        <CardComponent className="bg-green-300/25 hover:bg-green-300/30" onClick={open}>
           <div className="text-2xl">+ Add new user</div>
         </CardComponent>
       </div>
