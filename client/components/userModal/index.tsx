@@ -1,16 +1,17 @@
 import { NumberInput, TextInput, Input, SegmentedControl } from '@mantine/core'
 import { useForm } from '@mantine/form'
+import { MutateOptions } from '@tanstack/react-query'
 
+import { useEffect } from 'react'
 import { UserType } from '@/types/User'
 import { SexEnum } from '@/enums/Sex.enum'
 
 import { ModalComponent } from '../modal'
 import { ButtonComponent } from '../button'
 import { UnitEnum } from '@/enums/Unit.enum'
-import { MutateOptions } from '@tanstack/react-query'
-import { useEffect } from 'react'
 
 interface UserModalProps {
+  // eslint-disable-next-line react/require-default-props
   user?: UserType
   opened: boolean
   loading: boolean
@@ -55,7 +56,7 @@ export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }:
 
   useEffect(() => {
     setValues({ ...user })
-  }, [user])
+  }, [setValues, user])
 
   const resetAndClose = () => {
     reset()
@@ -67,6 +68,7 @@ export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }:
       <form
         onSubmit={onSubmitForm((values) => {
           onSubmit(
+            // eslint-disable-next-line no-underscore-dangle
             { _id: user?._id || '', ...values },
             {
               onSuccess: resetAndClose,

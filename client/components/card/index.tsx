@@ -7,14 +7,8 @@ interface CardProps {
   onClick: () => void
 }
 
-export const CardComponent = ({ title, bg, onClick }: CardProps) => {
-  return (
-    <Card
-      onClick={onClick}
-      bg={bg || 'blue-200'}
-      className="w-1/5 h-28 flex items-center justify-center cursor-pointer"
-    >
-      <strong>{title}</strong>
-    </Card>
-  )
-}
+export const CardComponent = ({ title, bg, onClick }: CardProps) => (
+  <Card onClick={onClick} bg={bg || 'blue-200'} className="w-1/5 h-28 flex items-center justify-center cursor-pointer">
+    <strong>{title}</strong>
+  </Card>
+)

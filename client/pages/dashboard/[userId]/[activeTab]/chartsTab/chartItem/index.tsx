@@ -1,11 +1,11 @@
+import { Accordion } from '@mantine/core'
+import { useQuery } from '@tanstack/react-query'
 import { api } from '@/api'
 import { ChartComponent } from '@/components/chart'
 import { EmptyStateComponent } from '@/components/emptyState'
 import { ErrorComponent } from '@/components/error'
 import { PageLoaderComponent } from '@/components/pageLoader'
 import { MeasurementEnum, MeasurementLabels } from '@/enums/Measurement.enum'
-import { Accordion } from '@mantine/core'
-import { useQuery } from '@tanstack/react-query'
 
 interface ChartItemProps {
   userId: string

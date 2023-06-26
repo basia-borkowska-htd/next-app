@@ -24,19 +24,17 @@ export const ButtonComponent = ({
   fullWidth = true,
   color = 'blue-200',
   onClick,
-}: ButtonProps) => {
-  return (
-    <Button
-      className={className}
-      variant={variant}
-      gradient={variant === 'gradient' ? { from: 'blue-200', to: 'green-100', deg: 35 } : undefined}
-      color={color}
-      type={type}
-      loading={loading}
-      onClick={onClick}
-      fullWidth={fullWidth}
-    >
-      {children}
-    </Button>
-  )
-}
+}: ButtonProps) => (
+  <Button
+    className={className}
+    variant={variant}
+    gradient={variant === 'gradient' ? { from: 'blue-200', to: 'green-100', deg: 35 } : undefined}
+    color={color}
+    type={type}
+    loading={loading}
+    onClick={onClick}
+    fullWidth={fullWidth}
+  >
+    {children}
+  </Button>
+)

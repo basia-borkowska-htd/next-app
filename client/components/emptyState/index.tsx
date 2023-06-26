@@ -1,5 +1,7 @@
-import EmptyStateCat from '@/assets/graphics/empty-state-cat.svg'
 import Image from 'next/image'
+
+import EmptyStateCat from '@/assets/graphics/empty-state-cat.svg'
+
 interface EmptyStateProps {
   title?: string
   message?: string
