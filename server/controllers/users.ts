@@ -4,7 +4,7 @@ import { Measurement } from '../models/measurement'
 
 const getUsers = async (req: Request, res: Response) => {
   try {
-    const users = await User.find({})
+    const users = await User.find({}).select('name avatarUrl')
     res.status(200).json({ users })
   } catch (error) {
     res.status(500).json({ msg: error })
@@ -14,6 +14,15 @@ const getUsers = async (req: Request, res: Response) => {
 const getUser = async (req: Request, res: Response) => {
   try {
     const user = await User.findOne({ _id: req.params.id })
+    res.status(200).json({ user })
+  } catch (error) {
+    res.status(404).json({ msg: 'User not found' })
+  }
+}
+
+const getBasicUser = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findOne({ _id: req.params.id }).select('name avatarUrl')
     res.status(200).json({ user })
   } catch (error) {
     res.status(404).json({ msg: 'User not found' })
@@ -51,4 +60,4 @@ const deleteUser = async (req: Request, res: Response) => {
   }
 }
 
-export { getUsers, getUser, createUser, updateUser, deleteUser }
+export { getUsers, getUser, getBasicUser, createUser, updateUser, deleteUser }

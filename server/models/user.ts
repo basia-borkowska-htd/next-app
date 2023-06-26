@@ -21,6 +21,7 @@ const UserSchema = new Schema({
   },
   height: Record,
   weight: Record,
+  avatarUrl: String,
 })
 
 export const User = mongoose.model('User', UserSchema)
