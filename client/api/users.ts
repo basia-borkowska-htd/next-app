@@ -37,17 +37,26 @@ export const usersApi = {
     if (!data?.user) throw new Error(data.error)
     return data.user
   },
-  updateUser: async (user?: UserType): Promise<UserType> => {
-    if (!user) throw new Error('User does not exist')
+  updateUser: async (user: UserType, file?: File): Promise<UserType> => {
+    const formData = new FormData()
+    if (file) formData.append('avatar', file)
+
+    formData.append('age', user.age.toString())
+    formData.append('name', user.name)
+    formData.append('sex', user.sex)
+    formData.append('height[unit]', user.height.unit)
+    formData.append('height[value]', user.height.value?.toString() || '')
+    if (user?.weight) {
+      formData.append('weight[unit]', user.weight.unit)
+      formData.append('weight[value]', user.weight.value?.toString() || '')
+    }
+
     const res = await fetch(`http://localhost:3001/api/users/${user._id}`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(user),
+      body: formData,
     })
     const data = await res.json()
-
+    console.log({ data })
     if (!data?.user) throw new Error(data.error)
     return data.user
   },

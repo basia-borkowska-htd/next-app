@@ -37,7 +37,7 @@ const UserProfilePage = () => {
   const [confirmationModalOpened, { open: openConfirmationModal, close: closeConfirmationModal }] = useDisclosure(false)
 
   const editUserMutation = useMutation({
-    mutationFn: (user: UserType) => api.user.updateUser(user),
+    mutationFn: (user: UserType, file?: File) => api.user.updateUser(user, file),
     onSuccess: async () => {
       await queryClient.refetchQueries({ queryKey: [QueryKeyEnum.USER] })
       notify({ type: 'success', message: 'User updated successfully' })

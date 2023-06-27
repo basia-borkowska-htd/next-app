@@ -12,6 +12,7 @@ import { useEffect, useRef, useState } from 'react'
 import { AvatarComponent } from '../avatar'
 import { IconUpload } from '@tabler/icons-react'
 import { api } from '@/api'
+import { FileUploaderComponent } from '../fileUploader'
 
 interface UserModalProps {
   user?: UserType
@@ -19,18 +20,23 @@ interface UserModalProps {
   loading: boolean
 
   onClose: () => void
-  onSubmit: (user: UserType, options?: MutateOptions<UserType, unknown, UserType, unknown>) => void
+  onSubmit: (
+    user: UserType,
+    file: File | undefined,
+    options?: MutateOptions<UserType, unknown, UserType, unknown>,
+  ) => void
 }
 
 export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }: UserModalProps) => {
   const isCreating = !user
-  const hiddenFileInput = useRef<HTMLInputElement>(null)
+  const [userAvatar, setUserAvatar] = useState<File>()
 
   const {
     onSubmit: onSubmitForm,
     reset,
     getInputProps,
     setValues,
+    setFieldValue,
   } = useForm({
     initialValues: {
       name: user?.name || '',
@@ -38,6 +44,7 @@ export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }:
       sex: user?.sex || SexEnum.WOMAN,
       height: user?.height || { value: undefined, unit: UnitEnum.CENTIMETERS },
       weight: user?.weight || { value: undefined, unit: UnitEnum.KILOS },
+      avatarUrl: user?.avatarUrl || '',
     },
 
     validate: {
@@ -66,41 +73,30 @@ export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }:
     onClose()
   }
 
-  const handleClick = () => {
-    hiddenFileInput?.current?.click()
-  }
-
   const handleChange = async (file: File | undefined) => {
     if (!file) return
-    const data = new FormData()
-    data.append('avatar', file)
-    await api.user.updateAvatar(user?._id, data)
+
+    const url = URL.createObjectURL(file)
+    setFieldValue('avatarUrl', url)
+    console.log({ url })
+
+    // const data = new FormData()
+    // data.append('avatar', file)
+    // await api.user.updateAvatar(user?._id, data)
   }
 
   return (
     <ModalComponent opened={opened} onClose={resetAndClose} title={isCreating ? 'Add New User' : 'Edit User'}>
       <form
         onSubmit={onSubmitForm((values) => {
-          onSubmit(
-            { _id: user?._id || '', ...values },
-            {
-              onSuccess: resetAndClose,
-            },
-          )
+          onSubmit({ _id: user?._id || '', ...values }, userAvatar, {
+            onSuccess: resetAndClose,
+          })
         })}
       >
         <div className="flex items-end mb-4">
-          <AvatarComponent src={user?.avatarUrl} centered={false} />
-          <input
-            type="file"
-            className="hidden"
-            ref={hiddenFileInput}
-            onChange={(e) => handleChange(e.target.files?.[0])}
-          />
-          <ButtonComponent variant="icon" fullWidth={false} onClick={handleClick}>
-            <IconUpload className="mr-2" size={22} />
-            Upload image
-          </ButtonComponent>
+          <AvatarComponent src={getInputProps('avatarUrl').value} centered={false} />
+          <FileUploaderComponent message="Upload image" handleChange={handleChange} />
         </div>
         <TextInput label="Name" placeholder="Name" withAsterisk {...getInputProps('name')} />
         <NumberInput mt="sm" label="Age" placeholder="20" min={18} max={99} {...getInputProps('age')} />
