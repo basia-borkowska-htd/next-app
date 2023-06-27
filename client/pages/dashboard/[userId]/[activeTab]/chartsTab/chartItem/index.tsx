@@ -26,7 +26,7 @@ export const ChartItemComponent = ({ userId, itemKey }: ChartItemProps) => {
   const getPanelComponent = () => {
     if (isLoading || isFetching) return <PageLoaderComponent compact />
     if (isError) return <ErrorComponent compact />
-    if (!chart) return <EmptyStateComponent title={`No ${title} Measurements`} compact />
+    if (!chart.length) return <EmptyStateComponent title={`No ${title} Measurements`} compact />
 
     return <ChartComponent data={chart} />
   }
