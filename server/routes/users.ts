@@ -1,6 +1,6 @@
 import express from 'express'
 import { getUsers, getUser, getBasicUser, createUser, updateUser, deleteUser } from '../controllers/users'
-import { uploadImage } from '../controllers/aws'
+import { upload, uploadImage } from '../controllers/aws'
 
 export const router = express.Router()
 
@@ -11,4 +11,4 @@ router.post('/', createUser)
 router.put('/:id', updateUser)
 router.delete('/:id', deleteUser)
 
-router.put('/:id/avatar', uploadImage)
+router.put('/:id/avatar', upload.single('avatar'), uploadImage)
