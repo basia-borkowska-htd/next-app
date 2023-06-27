@@ -8,7 +8,10 @@ import { ModalComponent } from '../modal'
 import { ButtonComponent } from '../button'
 import { UnitEnum } from '@/enums/Unit.enum'
 import { MutateOptions } from '@tanstack/react-query'
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { AvatarComponent } from '../avatar'
+import { IconUpload } from '@tabler/icons-react'
+import { api } from '@/api'
 
 interface UserModalProps {
   user?: UserType
@@ -21,6 +24,7 @@ interface UserModalProps {
 
 export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }: UserModalProps) => {
   const isCreating = !user
+  const hiddenFileInput = useRef<HTMLInputElement>(null)
 
   const {
     onSubmit: onSubmitForm,
@@ -62,6 +66,19 @@ export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }:
     onClose()
   }
 
+  const handleClick = () => {
+    hiddenFileInput?.current?.click()
+  }
+
+  const handleChange = async (file: File | undefined) => {
+    if (!file) return
+    const data = new FormData()
+    data.append('file', file)
+    console.log({ file })
+    const res = await api.user.updateAvatar(user?._id, data)
+    console.log({ res })
+  }
+
   return (
     <ModalComponent opened={opened} onClose={resetAndClose} title={isCreating ? 'Add New User' : 'Edit User'}>
       <form
@@ -74,6 +91,19 @@ export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }:
           )
         })}
       >
+        <div className="flex items-end mb-4">
+          <AvatarComponent src={user?.avatarUrl} centered={false} />
+          <input
+            type="file"
+            className="hidden"
+            ref={hiddenFileInput}
+            onChange={(e) => handleChange(e.target.files?.[0])}
+          />
+          <ButtonComponent variant="icon" fullWidth={false} onClick={handleClick}>
+            <IconUpload className="mr-2" size={22} />
+            Upload image
+          </ButtonComponent>
+        </div>
         <TextInput label="Name" placeholder="Name" withAsterisk {...getInputProps('name')} />
         <NumberInput mt="sm" label="Age" placeholder="20" min={18} max={99} {...getInputProps('age')} />
         <Input.Wrapper mt="sm" withAsterisk label="Sex" className="flex flex-col" error={getInputProps('sex').error}>

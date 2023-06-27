@@ -39,6 +39,7 @@ const UsersPage = () => {
   const handleRedirect = (id: string) => {
     router.push(Pathnames.userProfile.replace(':id', id))
   }
+
   return (
     <div className="bg-green-100/10">
       <ContainerComponent className="flex h-screen items-center">
