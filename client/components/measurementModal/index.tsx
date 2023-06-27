@@ -1,14 +1,14 @@
-import { useEffect } from 'react'
 import { TextInput } from '@mantine/core'
-import { useForm } from '@mantine/form'
 import { DateTimePicker } from '@mantine/dates'
+import { useForm } from '@mantine/form'
 import { MutateOptions } from '@tanstack/react-query'
+import { useEffect } from 'react'
 
-import { ModalComponent } from '@/components/modal'
 import { ButtonComponent } from '@/components/button'
-import { MeasurementType } from '@/types/Measurement'
-import { DEFAULT_DATE_FORMAT, dates } from '@/utils/dates'
+import { ModalComponent } from '@/components/modal'
 import { MeasurementLabels } from '@/enums/Measurement.enum'
+import { MeasurementType } from '@/types/Measurement'
+import { dates, DEFAULT_DATE_FORMAT } from '@/utils/dates'
 
 import { getInitialValues, inputValues } from './helpers'
 
@@ -48,7 +48,7 @@ export const MeasurementModalComponent = ({
 
   useEffect(() => {
     setValues(getInitialValues(measurement))
-  }, [measurement, setValues])
+  }, [measurement])
 
   const resetAndClose = () => {
     reset()

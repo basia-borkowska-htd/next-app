@@ -1,3 +1,5 @@
+import { useQuery } from '@tanstack/react-query'
+
 import { api } from '@/api'
 import { ChartComponent } from '@/components/chart'
 import { ContainerComponent } from '@/components/container'
@@ -5,7 +7,6 @@ import { EmptyStateComponent } from '@/components/emptyState'
 import { ErrorComponent } from '@/components/error'
 import { PageLoaderComponent } from '@/components/pageLoader'
 import { MeasurementEnum } from '@/enums/Measurement.enum'
-import { useQuery } from '@tanstack/react-query'
 
 interface ChartSectionProps {
   userId: string

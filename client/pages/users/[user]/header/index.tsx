@@ -1,11 +1,12 @@
-import { AvatarComponent } from '@/components/avatar'
 import { Divider } from '@mantine/core'
-import { UserType } from '@/types/User'
+
+import { AvatarComponent } from '@/components/avatar'
 import { ButtonComponent } from '@/components/button'
-import { units } from '@/utils/units'
-import { GoBackComponent } from '@/components/goBack'
-import { Pathnames } from '@/utils/pathnames'
 import { ContainerComponent } from '@/components/container'
+import { GoBackComponent } from '@/components/goBack'
+import { UserType } from '@/types/User'
+import { Pathnames } from '@/utils/pathnames'
+import { units } from '@/utils/units'
 
 interface HeaderProps {
   user: UserType
