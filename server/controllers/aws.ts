@@ -26,7 +26,7 @@ const s3 = new Aws.S3({
 
 const uploadImage = (req: Request, res: Response) => {
   try {
-    console.log({ req })
+    console.log({ file: req.file })
     if (!req.file) throw res.status(500).send({ err: 'Unable to locate file' })
 
     const params: PutObjectRequest = {

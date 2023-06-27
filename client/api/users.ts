@@ -69,9 +69,6 @@ export const usersApi = {
     console.log({ data })
     const res = await fetch(`http://localhost:3001/api/users/${id}/avatar`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
       body: data,
     })
     const result = await res.json()
