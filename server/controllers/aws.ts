@@ -10,7 +10,7 @@ dotenv.config()
 const storage = multer.memoryStorage()
 
 const fileFilter = (req: Request, file: Express.Multer.File, callback: multer.FileFilterCallback) => {
-  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg') {
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg' || file.mimetype === 'image/png') {
     callback(null, true)
   } else {
     callback(null, false)
@@ -26,7 +26,6 @@ const s3 = new Aws.S3({
 
 const uploadImage = (req: Request, res: Response) => {
   try {
-    console.log({ file: req.file })
     if (!req.file) throw res.status(500).send({ err: 'Unable to locate file' })
 
     const params: PutObjectRequest = {

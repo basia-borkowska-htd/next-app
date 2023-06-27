@@ -74,9 +74,7 @@ export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }:
     if (!file) return
     const data = new FormData()
     data.append('avatar', file)
-    console.log({ file })
-    const res = await api.user.updateAvatar(user?._id, data)
-    console.log({ res })
+    await api.user.updateAvatar(user?._id, data)
   }
 
   return (

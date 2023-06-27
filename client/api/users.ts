@@ -66,13 +66,11 @@ export const usersApi = {
     return data.success
   },
   updateAvatar: async (id: string | undefined, data: FormData): Promise<UserType> => {
-    console.log({ data })
     const res = await fetch(`http://localhost:3001/api/users/${id}/avatar`, {
       method: 'PUT',
       body: data,
     })
     const result = await res.json()
-    console.log({ result })
 
     if (!result?.user) throw new Error(result.error)
     return result.user
