@@ -1,4 +1,4 @@
-import { BasicUserType, UserType } from '@/types/User'
+import { AddUserType, BasicUserType, UpdateUserType, UserType } from '@/types/User'
 
 export const usersApi = {
   getUsers: async (): Promise<BasicUserType[]> => {
@@ -23,40 +23,25 @@ export const usersApi = {
     if (!data?.user) throw new Error(data.error)
     return data.user
   },
-  addUser: async (user: UserType): Promise<UserType> => {
-    const newUser = { ...user, _id: undefined }
+  addUser: async (user: AddUserType): Promise<AddUserType> => {
+    const body = formatUser(user)
     const res = await fetch('http://localhost:3001/api/users', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newUser),
+      body,
     })
     const data = await res.json()
 
     if (!data?.user) throw new Error(data.error)
     return data.user
   },
-  updateUser: async (user: UserType, file?: File): Promise<UserType> => {
-    const formData = new FormData()
-    if (file) formData.append('avatar', file)
-
-    formData.append('age', user.age.toString())
-    formData.append('name', user.name)
-    formData.append('sex', user.sex)
-    formData.append('height[unit]', user.height.unit)
-    formData.append('height[value]', user.height.value?.toString() || '')
-    if (user?.weight) {
-      formData.append('weight[unit]', user.weight.unit)
-      formData.append('weight[value]', user.weight.value?.toString() || '')
-    }
-
+  updateUser: async (user: UpdateUserType): Promise<UpdateUserType> => {
+    const body = formatUser(user)
     const res = await fetch(`http://localhost:3001/api/users/${user._id}`, {
       method: 'PUT',
-      body: formData,
+      body,
     })
     const data = await res.json()
-    console.log({ data })
+
     if (!data?.user) throw new Error(data.error)
     return data.user
   },
@@ -84,4 +69,19 @@ export const usersApi = {
     if (!result?.user) throw new Error(result.error)
     return result.user
   },
+}
+
+const formatUser = ({ age, name, sex, height, weight, avatarFile }: UpdateUserType) => {
+  const formData = new FormData()
+  if (avatarFile) formData.append('avatar', avatarFile)
+  formData.append('age', age.toString())
+  formData.append('name', name)
+  formData.append('sex', sex)
+  formData.append('height[unit]', height.unit)
+  formData.append('height[value]', height.value?.toString() || '')
+  if (weight) {
+    formData.append('weight[unit]', weight.unit)
+    formData.append('weight[value]', weight.value?.toString() || '')
+  }
+  return formData
 }

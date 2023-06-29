@@ -1,17 +1,15 @@
 import { NumberInput, TextInput, Input, SegmentedControl } from '@mantine/core'
 import { useForm } from '@mantine/form'
 
-import { UserType } from '@/types/User'
+import { UpdateUserType, UserType } from '@/types/User'
 import { SexEnum } from '@/enums/Sex.enum'
 
 import { ModalComponent } from '../modal'
 import { ButtonComponent } from '../button'
 import { UnitEnum } from '@/enums/Unit.enum'
 import { MutateOptions } from '@tanstack/react-query'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AvatarComponent } from '../avatar'
-import { IconUpload } from '@tabler/icons-react'
-import { api } from '@/api'
 import { FileUploaderComponent } from '../fileUploader'
 
 interface UserModalProps {
@@ -20,16 +18,12 @@ interface UserModalProps {
   loading: boolean
 
   onClose: () => void
-  onSubmit: (
-    user: UserType,
-    file: File | undefined,
-    options?: MutateOptions<UserType, unknown, UserType, unknown>,
-  ) => void
+  onSubmit: (user: UpdateUserType, options?: MutateOptions<UpdateUserType, unknown, UpdateUserType, unknown>) => void
 }
 
 export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }: UserModalProps) => {
   const isCreating = !user
-  const [userAvatar, setUserAvatar] = useState<File>()
+  const [avatarFile, setAvatarFile] = useState<File>()
 
   const {
     onSubmit: onSubmitForm,
@@ -78,20 +72,19 @@ export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }:
 
     const url = URL.createObjectURL(file)
     setFieldValue('avatarUrl', url)
-    console.log({ url })
-
-    // const data = new FormData()
-    // data.append('avatar', file)
-    // await api.user.updateAvatar(user?._id, data)
+    setAvatarFile(file)
   }
 
   return (
     <ModalComponent opened={opened} onClose={resetAndClose} title={isCreating ? 'Add New User' : 'Edit User'}>
       <form
         onSubmit={onSubmitForm((values) => {
-          onSubmit({ _id: user?._id || '', ...values }, userAvatar, {
-            onSuccess: resetAndClose,
-          })
+          onSubmit(
+            { _id: user?._id || '', avatarFile, ...values },
+            {
+              onSuccess: resetAndClose,
+            },
+          )
         })}
       >
         <div className="flex items-end mb-4">

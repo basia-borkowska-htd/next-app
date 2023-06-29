@@ -14,6 +14,7 @@ import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 import { queryClient } from '@/pages/_app'
 import { ContainerComponent } from '@/components/container'
 import { AvatarComponent } from '@/components/avatar'
+import { AddUserType } from '@/types/User'
 
 const UsersPage = () => {
   const router = useRouter()
@@ -22,7 +23,7 @@ const UsersPage = () => {
   const { data, error, isLoading } = useQuery({ queryKey: [QueryKeyEnum.USERS], queryFn: api.user.getUsers })
 
   const addUserMutation = useMutation({
-    mutationFn: api.user.addUser,
+    mutationFn: (user: AddUserType) => api.user.addUser(user),
     onSuccess: async () => {
       await queryClient.refetchQueries({ queryKey: [QueryKeyEnum.USERS] })
 
