@@ -1,14 +1,16 @@
 import { NumberInput, TextInput, Input, SegmentedControl } from '@mantine/core'
 import { useForm } from '@mantine/form'
 
-import { UserType } from '@/types/User'
+import { UpdateUserType, UserType } from '@/types/User'
 import { SexEnum } from '@/enums/Sex.enum'
 
 import { ModalComponent } from '../modal'
 import { ButtonComponent } from '../button'
 import { UnitEnum } from '@/enums/Unit.enum'
 import { MutateOptions } from '@tanstack/react-query'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { AvatarComponent } from '../avatar'
+import { FileUploaderComponent } from '../fileUploader'
 
 interface UserModalProps {
   user?: UserType
@@ -16,17 +18,19 @@ interface UserModalProps {
   loading: boolean
 
   onClose: () => void
-  onSubmit: (user: UserType, options?: MutateOptions<UserType, unknown, UserType, unknown>) => void
+  onSubmit: (user: UpdateUserType, options?: MutateOptions<UpdateUserType, unknown, UpdateUserType, unknown>) => void
 }
 
 export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }: UserModalProps) => {
   const isCreating = !user
+  const [avatarFile, setAvatarFile] = useState<File>()
 
   const {
     onSubmit: onSubmitForm,
     reset,
     getInputProps,
     setValues,
+    setFieldValue,
   } = useForm({
     initialValues: {
       name: user?.name || '',
@@ -34,6 +38,7 @@ export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }:
       sex: user?.sex || SexEnum.WOMAN,
       height: user?.height || { value: undefined, unit: UnitEnum.CENTIMETERS },
       weight: user?.weight || { value: undefined, unit: UnitEnum.KILOS },
+      avatarUrl: user?.avatarUrl || '',
     },
 
     validate: {
@@ -62,18 +67,30 @@ export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }:
     onClose()
   }
 
+  const handleChange = async (file: File | undefined) => {
+    if (!file) return
+
+    const url = URL.createObjectURL(file)
+    setFieldValue('avatarUrl', url)
+    setAvatarFile(file)
+  }
+
   return (
     <ModalComponent opened={opened} onClose={resetAndClose} title={isCreating ? 'Add New User' : 'Edit User'}>
       <form
         onSubmit={onSubmitForm((values) => {
           onSubmit(
-            { _id: user?._id || '', ...values },
+            { _id: user?._id || '', avatarFile, ...values },
             {
               onSuccess: resetAndClose,
             },
           )
         })}
       >
+        <div className="flex items-end mb-4">
+          <AvatarComponent src={getInputProps('avatarUrl').value} centered={false} />
+          <FileUploaderComponent message="Upload image" handleChange={handleChange} />
+        </div>
         <TextInput label="Name" placeholder="Name" withAsterisk {...getInputProps('name')} />
         <NumberInput mt="sm" label="Age" placeholder="20" min={18} max={99} {...getInputProps('age')} />
         <Input.Wrapper mt="sm" withAsterisk label="Sex" className="flex flex-col" error={getInputProps('sex').error}>

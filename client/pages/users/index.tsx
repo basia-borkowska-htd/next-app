@@ -14,6 +14,7 @@ import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 import { queryClient } from '@/pages/_app'
 import { ContainerComponent } from '@/components/container'
 import { AvatarComponent } from '@/components/avatar'
+import { AddUserType } from '@/types/User'
 
 const UsersPage = () => {
   const router = useRouter()
@@ -22,7 +23,7 @@ const UsersPage = () => {
   const { data, error, isLoading } = useQuery({ queryKey: [QueryKeyEnum.USERS], queryFn: api.user.getUsers })
 
   const addUserMutation = useMutation({
-    mutationFn: api.user.addUser,
+    mutationFn: (user: AddUserType) => api.user.addUser(user),
     onSuccess: async () => {
       await queryClient.refetchQueries({ queryKey: [QueryKeyEnum.USERS] })
 
@@ -39,27 +40,30 @@ const UsersPage = () => {
   const handleRedirect = (id: string) => {
     router.push(Pathnames.userProfile.replace(':id', id))
   }
-  return (
-    <ContainerComponent className="flex h-screen items-center bg-green-100/10">
-      <div className="w-full flex flex-wrap gap-6 justify-center">
-        {data?.map(({ _id, name, avatarUrl }) => (
-          <CardComponent key={`card-${_id}`} onClick={() => handleRedirect(_id)}>
-            <AvatarComponent src={avatarUrl} compact />
-            <div className="text-2xl">{name}</div>
-          </CardComponent>
-        ))}
-        <CardComponent className="bg-green-300/25 hover:bg-green-300/30" onClick={open}>
-          <div className="text-2xl">+ Add new user</div>
-        </CardComponent>
-      </div>
 
-      <UserModalComponent
-        opened={opened}
-        onClose={close}
-        onSubmit={addUserMutation.mutate}
-        loading={addUserMutation.isLoading}
-      />
-    </ContainerComponent>
+  return (
+    <div className="bg-green-100/10">
+      <ContainerComponent className="flex h-screen items-center">
+        <div className="w-full flex flex-wrap gap-6 justify-center">
+          {data?.map(({ _id, name, avatarUrl }) => (
+            <CardComponent key={`card-${_id}`} onClick={() => handleRedirect(_id)}>
+              <AvatarComponent src={avatarUrl} compact />
+              <div className="text-2xl">{name}</div>
+            </CardComponent>
+          ))}
+          <CardComponent className="bg-green-300/25 hover:bg-green-300/30" onClick={open}>
+            <div className="text-2xl">+ Add new user</div>
+          </CardComponent>
+        </div>
+
+        <UserModalComponent
+          opened={opened}
+          onClose={close}
+          onSubmit={addUserMutation.mutate}
+          loading={addUserMutation.isLoading}
+        />
+      </ContainerComponent>
+    </div>
   )
 }
 

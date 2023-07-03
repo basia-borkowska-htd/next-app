@@ -13,3 +13,9 @@ export interface UserType extends BasicUserType {
   height: RecordType
   weight?: RecordType
 }
+
+export interface AddUserType extends UserType {
+  avatarFile?: File
+}
+
+export type UpdateUserType = AddUserType

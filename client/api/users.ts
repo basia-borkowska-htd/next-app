@@ -1,4 +1,4 @@
-import { BasicUserType, UserType } from '@/types/User'
+import { AddUserType, BasicUserType, UpdateUserType, UserType } from '@/types/User'
 
 export const usersApi = {
   getUsers: async (): Promise<BasicUserType[]> => {
@@ -23,28 +23,22 @@ export const usersApi = {
     if (!data?.user) throw new Error(data.error)
     return data.user
   },
-  addUser: async (user: UserType): Promise<UserType> => {
-    const newUser = { ...user, _id: undefined }
+  addUser: async (user: AddUserType): Promise<AddUserType> => {
+    const body = formatUser(user)
     const res = await fetch('http://localhost:3001/api/users', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newUser),
+      body,
     })
     const data = await res.json()
 
     if (!data?.user) throw new Error(data.error)
     return data.user
   },
-  updateUser: async (user?: UserType): Promise<UserType> => {
-    if (!user) throw new Error('User does not exist')
+  updateUser: async (user: UpdateUserType): Promise<UpdateUserType> => {
+    const body = formatUser(user)
     const res = await fetch(`http://localhost:3001/api/users/${user._id}`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(user),
+      body,
     })
     const data = await res.json()
 
@@ -65,4 +59,19 @@ export const usersApi = {
     if (!data?.success) throw new Error(data.error)
     return data.success
   },
+}
+
+const formatUser = ({ age, name, sex, height, weight, avatarFile }: UpdateUserType) => {
+  const formData = new FormData()
+  if (avatarFile) formData.append('avatar', avatarFile)
+  formData.append('age', age.toString())
+  formData.append('name', name)
+  formData.append('sex', sex)
+  formData.append('height[unit]', height.unit)
+  formData.append('height[value]', height.value?.toString() || '')
+  if (weight) {
+    formData.append('weight[unit]', weight.unit)
+    formData.append('weight[value]', weight.value?.toString() || '')
+  }
+  return formData
 }
