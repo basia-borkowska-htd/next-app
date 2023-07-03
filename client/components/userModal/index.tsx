@@ -88,7 +88,13 @@ export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }:
         })}
       >
         <div className="flex items-end mb-4">
-          <AvatarComponent src={getInputProps('avatarUrl').value} centered={false} />
+          <AvatarComponent
+            src={getInputProps('avatarUrl').value}
+            centered={false}
+            removeAvatar={() => {
+              setFieldValue('avatarUrl', '')
+            }}
+          />
           <FileUploaderComponent message="Upload image" handleChange={handleChange} />
         </div>
         <TextInput label="Name" placeholder="Name" withAsterisk {...getInputProps('name')} />
