@@ -59,16 +59,6 @@ export const usersApi = {
     if (!data?.success) throw new Error(data.error)
     return data.success
   },
-  updateAvatar: async (id: string | undefined, data: FormData): Promise<UserType> => {
-    const res = await fetch(`http://localhost:3001/api/users/${id}/avatar`, {
-      method: 'PUT',
-      body: data,
-    })
-    const result = await res.json()
-
-    if (!result?.user) throw new Error(result.error)
-    return result.user
-  },
 }
 
 const formatUser = ({ age, name, sex, height, weight, avatarFile }: UpdateUserType) => {
