@@ -9,7 +9,7 @@ interface AvatarProps {
   centered?: boolean
 }
 
-export const AvatarComponent = ({ src, name, compact = false, className, centered = true }: AvatarProps) => (
+export const AvatarComponent = ({ src, name, compact = false, className = '', centered = true }: AvatarProps) => (
   <div
     className={`flex ${centered ? 'items-center' : 'items-start'} ${
       compact ? 'flex-row gap-5' : 'flex-col gap-2'
@@ -25,6 +25,7 @@ export const AvatarComponent = ({ src, name, compact = false, className, centere
     >
       <IconUser size={compact ? '30' : '60'} />
     </Avatar>
+
     {!!name && <div className={compact ? 'text-3xl' : 'text-xl font-bold'}>{name}</div>}
   </div>
 )
