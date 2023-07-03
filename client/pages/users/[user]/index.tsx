@@ -11,7 +11,7 @@ import { ErrorComponent } from '@/components/error'
 import { PageLoaderComponent } from '@/components/pageLoader'
 import { UserModalComponent } from '@/components/userModal'
 
-import { UserType } from '@/types/User'
+import { UpdateUserType } from '@/types/User'
 
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 
@@ -41,7 +41,7 @@ const UserProfilePage = () => {
   const [confirmationModalOpened, { open: openConfirmationModal, close: closeConfirmationModal }] = useDisclosure(false)
 
   const editUserMutation = useMutation({
-    mutationFn: (currentUser: UserType) => api.user.updateUser(currentUser),
+    mutationFn: (currentUser: UpdateUserType) => api.user.updateUser(currentUser),
     onSuccess: async () => {
       await queryClient.refetchQueries({ queryKey: [QueryKeyEnum.USER] })
       notify({ type: 'success', message: 'User updated successfully' })
