@@ -1,10 +1,11 @@
+import cors from 'cors'
+import dotenv from 'dotenv'
 import express from 'express'
 import mongoose from 'mongoose'
-import dotenv from 'dotenv'
-import { router as userRoutes } from './routes/users'
+
 import { router as measurementsRoutes } from './routes/measurements'
 import { router as rangesRoutes } from './routes/rangesLists'
-import cors from 'cors'
+import { router as userRoutes } from './routes/users'
 
 dotenv.config()
 

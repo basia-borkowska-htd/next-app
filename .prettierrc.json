@@ -3,5 +3,8 @@
   "printWidth": 120,
   "semi": false,
   "singleQuote": true,
-  "trailingComma": "all"
+  "trailingComma": "all",
+  "importOrder": ["controllers/(.*)$", "routes/(.*)$", "models/(.*)$", "enums/(.*)$", "utils", "^[./*.*]"],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
 }

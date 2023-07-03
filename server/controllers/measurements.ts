@@ -1,5 +1,6 @@
-import { Request, Response } from 'express'
 import dayjs from 'dayjs'
+import { Request, Response } from 'express'
+
 import { Measurement } from '../models/measurement'
 import { User } from '../models/user'
 
