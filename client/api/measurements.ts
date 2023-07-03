@@ -1,6 +1,7 @@
-import { MeasurementEnum } from '@/enums/Measurement.enum'
 import { ChartDataType } from '@/types/ChartData'
 import { MeasurementType } from '@/types/Measurement'
+
+import { MeasurementEnum } from '@/enums/Measurement.enum'
 
 export const measurementsApi = {
   getMeasurements: async (userId: string): Promise<MeasurementType[]> => {

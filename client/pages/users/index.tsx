@@ -1,16 +1,19 @@
+import { api } from '@/api'
 import { useDisclosure } from '@mantine/hooks'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
 
-import { api } from '@/api'
+import { queryClient } from '@/pages/_app'
+
 import { AvatarComponent } from '@/components/avatar'
 import { CardComponent } from '@/components/card'
 import { ContainerComponent } from '@/components/container'
 import { ErrorComponent } from '@/components/error'
 import { PageLoaderComponent } from '@/components/pageLoader'
 import { UserModalComponent } from '@/components/userModal'
+
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
-import { queryClient } from '@/pages/_app'
+
 import { notify } from '@/utils/notifications'
 import { Pathnames } from '@/utils/pathnames'
 

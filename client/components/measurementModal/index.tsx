@@ -6,9 +6,12 @@ import { useEffect } from 'react'
 
 import { ButtonComponent } from '@/components/button'
 import { ModalComponent } from '@/components/modal'
-import { MeasurementLabels } from '@/enums/Measurement.enum'
+
 import { MeasurementType } from '@/types/Measurement'
-import { dates, DEFAULT_DATE_FORMAT } from '@/utils/dates'
+
+import { MeasurementLabels } from '@/enums/Measurement.enum'
+
+import { DEFAULT_DATE_FORMAT, dates } from '@/utils/dates'
 
 import { getInitialValues, inputValues } from './helpers'
 

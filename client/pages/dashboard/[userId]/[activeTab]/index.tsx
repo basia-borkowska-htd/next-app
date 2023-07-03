@@ -1,17 +1,21 @@
+import { api } from '@/api'
 import { Tabs } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
 
-import { api } from '@/api'
+import { queryClient } from '@/pages/_app'
+
 import { ContainerComponent } from '@/components/container'
 import { ErrorComponent } from '@/components/error'
 import { MeasurementModalComponent } from '@/components/measurementModal'
 import { PageLoaderComponent } from '@/components/pageLoader'
+
+import { MeasurementType } from '@/types/Measurement'
+
 import { DashboardTabEnum } from '@/enums/DashboardTab.enum'
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
-import { queryClient } from '@/pages/_app'
-import { MeasurementType } from '@/types/Measurement'
+
 import { notify } from '@/utils/notifications'
 import { Pathnames } from '@/utils/pathnames'
 

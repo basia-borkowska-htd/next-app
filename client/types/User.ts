@@ -1,4 +1,5 @@
 import { SexEnum } from '@/enums/Sex.enum'
+
 import { RecordType } from './helpers'
 
 export type BasicUserType = {

@@ -4,7 +4,9 @@ import { AvatarComponent } from '@/components/avatar'
 import { ButtonComponent } from '@/components/button'
 import { ContainerComponent } from '@/components/container'
 import { GoBackComponent } from '@/components/goBack'
+
 import { UserType } from '@/types/User'
+
 import { Pathnames } from '@/utils/pathnames'
 import { units } from '@/utils/units'
 
