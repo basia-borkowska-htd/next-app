@@ -61,7 +61,7 @@ export const usersApi = {
   },
 }
 
-const formatUser = ({ age, name, sex, height, weight, avatarFile }: UpdateUserType) => {
+const formatUser = ({ age, name, sex, height, weight, avatarFile, avatarUrl }: UpdateUserType) => {
   const formData = new FormData()
   if (avatarFile) formData.append('avatar', avatarFile)
   formData.append('age', age.toString())
@@ -73,5 +73,6 @@ const formatUser = ({ age, name, sex, height, weight, avatarFile }: UpdateUserTy
     formData.append('weight[unit]', weight.unit)
     formData.append('weight[value]', weight.value?.toString() || '')
   }
+  if (!avatarUrl) formData.append('removeAvatar', 'true')
   return formData
 }

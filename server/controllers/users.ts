@@ -46,8 +46,13 @@ const uploadUserData = async (req: Request, res: Response, action: ActionType) =
     // TODO: avatarUrl is in two different places
     // TODO: polish signs are not being handled properly
 
-    deleteAvatar(req, res)
+    if (!!req?.body?.removeAvatar) {
+      deleteAvatar(req, res)
+    }
+
     if (!!req.file) {
+      deleteAvatar(req, res)
+
       const params: PutObjectRequest = {
         Bucket: process.env.AWS_BUCKET_NAME || '',
         Key: req.file.originalname,
@@ -83,7 +88,7 @@ const deleteAvatar = async (req: Request, res: Response) => {
   const user = await User.findOne({ _id: req.params.id })
   console.log({ req, user })
   if (user?.avatarUrl) {
-    const match = user?.avatarUrl.match('/([^/]+)$')
+    const match = user?.avatarUrl?.match('/([^/]+)$')
     const params = {
       Bucket: process.env.AWS_BUCKET_NAME || '',
       Key: match ? match[1] : '',
