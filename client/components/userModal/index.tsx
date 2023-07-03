@@ -11,7 +11,7 @@ import { MutateOptions } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { AvatarComponent } from '../avatar'
 import { FileUploaderComponent } from '../fileUploader'
-
+import { IconTrash } from '@tabler/icons-react'
 interface UserModalProps {
   user?: UserType
   opened: boolean
@@ -88,14 +88,23 @@ export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }:
         })}
       >
         <div className="flex items-end mb-4">
-          <AvatarComponent
-            src={getInputProps('avatarUrl').value}
-            centered={false}
-            removeAvatar={() => {
-              setFieldValue('avatarUrl', '')
-            }}
-          />
-          <FileUploaderComponent message="Upload image" handleChange={handleChange} />
+          <AvatarComponent src={getInputProps('avatarUrl').value} centered={false} />
+          <div className="flex flex-col">
+            <FileUploaderComponent message="Upload image" handleChange={handleChange} />
+            {!!getInputProps('avatarUrl').value && (
+              <ButtonComponent
+                variant="icon"
+                className="text-red-600"
+                fullWidth={false}
+                onClick={() => {
+                  setFieldValue('avatarUrl', '')
+                }}
+              >
+                <IconTrash size={22} className="mr-2" />
+                Remove image
+              </ButtonComponent>
+            )}
+          </div>
         </div>
         <TextInput label="Name" placeholder="Name" withAsterisk {...getInputProps('name')} />
         <NumberInput mt="sm" label="Age" placeholder="20" min={18} max={99} {...getInputProps('age')} />
