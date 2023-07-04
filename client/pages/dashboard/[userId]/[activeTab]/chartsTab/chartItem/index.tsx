@@ -7,14 +7,17 @@ import { EmptyStateComponent } from '@/components/emptyState'
 import { ErrorComponent } from '@/components/error'
 import { PageLoaderComponent } from '@/components/pageLoader'
 
-import { MeasurementEnum, MeasurementLabels } from '@/enums/Measurement.enum'
+import { useTranslate } from '@/hooks/useTranslate'
+
+import { MeasurementEnum, getMeasurementLabel } from '@/enums/Measurement.enum'
 
 interface ChartItemProps {
   userId: string
   itemKey: MeasurementEnum
 }
 export const ChartItemComponent = ({ userId, itemKey }: ChartItemProps) => {
-  const title = MeasurementLabels[itemKey]
+  const { t } = useTranslate()
+  const title = getMeasurementLabel(itemKey, t)
   const {
     data: chart,
     isLoading,
@@ -28,7 +31,7 @@ export const ChartItemComponent = ({ userId, itemKey }: ChartItemProps) => {
   const getPanelComponent = () => {
     if (isLoading || isFetching) return <PageLoaderComponent compact />
     if (isError) return <ErrorComponent compact />
-    if (!chart.length) return <EmptyStateComponent title={`No ${title} Measurements`} compact />
+    if (!chart.length) return <EmptyStateComponent compact />
 
     return <ChartComponent data={chart} />
   }

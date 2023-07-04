@@ -88,7 +88,6 @@ const deleteUser = async (req: Request, res: Response) => {
 
 const deleteAvatar = async (req: Request, res: Response) => {
   const user = await User.findOne({ _id: req.params.id })
-  console.log({ req, user })
   if (user?.avatarUrl) {
     const match = user?.avatarUrl?.match('/([^/]+)$')
     const params = {

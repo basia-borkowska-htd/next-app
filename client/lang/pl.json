@@ -1,0 +1,158 @@
+{
+  "users": {
+    "add_user_button": "Dodaj nowego użytkownika",
+    "add_user_toast_success": "Użytkownik dodany prawidłowo",
+    "add_user_toast_error": "Nie udało się dodać użytkownika"
+  },
+  "user": {
+    "header": {
+      "age": "Wiek",
+      "sex": "Płeć",
+      "height": "Wzrost",
+      "weight": "Waga",
+      "edit_button": "Edytuj"
+    },
+    "edit_user": {
+      "toast_success": "Użytkownik zaktualizowany poprawnie",
+      "toast_error": "Nie udało się zaktualizować użytkownika"
+    },
+    "ranges": {
+      "title": "Zakresy",
+      "history_button": "Zobacz historię pomiarów",
+      "empty_state": "Brak dostępnych zakresów",
+      "headers": {
+        "min": "Dolny zakres",
+        "max": "Górny zakres",
+        "current": "Aktualny pomiar"
+      }
+    },
+    "chart": {
+      "title": "Wykres wagi",
+      "empty_state": {
+        "title": "Brak pomiarów wagi",
+        "message": "Dodaj pomiary dla wagi, aby zobaczyć je wyświetlone na wykresie"
+      }
+    },
+    "settings": {
+      "settings_button": "Ustawienia",
+      "delete_user_button": "Usuń konto",
+      "modal": {
+        "title": "Ustawienia",
+        "language": {
+          "title": "Język",
+          "english": "Angielski",
+          "polish": "Polski"
+        },
+        "unit_system": {
+          "title": "System miar",
+          "metric": "Metryczny",
+          "imperial": "Imperialny"
+        },
+        "appearance_mode": {
+          "title": "Tryb wyglądu",
+          "light": "Jasny",
+          "dark": "Ciemny"
+        }
+      },
+      "delete_user_modal": {
+        "title": "Usuń użytkownika",
+        "message": "Czy jesteś pewien, że chcesz usunąć tego użytkownika i wszystkie jego pomiary? Ta akcja jest nieodwracalna!",
+        "delete_button": "Usuń",
+        "cancel_button": "Anuluj",
+        "toast_success": "Użytkownik usunięty poprawnie",
+        "toast_error": "Nie udało się usunąć użytkownika"
+      }
+    }
+  },
+  "dashboard": {
+    "tabs": {
+      "history": "Historia",
+      "charts": "Wykresy"
+    },
+    "delete_measurement": {
+      "toast_success": "Pomiar usunięty prawidłowo",
+      "toast_error": "Nie udało się usunąć pomiaru"
+    },
+    "edit_measurement": {
+      "toast_success": "Pomiar zaktualizowany prawidłowo",
+      "toast_error": "Nie udało się zaktualizować pomiaru"
+    },
+    "date_header": "Data",
+    "delete_measurement_description": "Czy jesteś pewien, że chcesz usunąć ten pomiar?"
+  },
+  "add_measurement": {
+    "toast_success": "Pomiar dodany prawidłowo",
+    "toast_error": "Nie udało się dodać pomiaru",
+    "button": "Dodaj nowy pomiar"
+  },
+  "user_modal": {
+    "title_add_user": "Dodaj nowego użytkownika",
+    "title_edit_user": "Edytuj użytkownika",
+    "validate": {
+      "name": "Imię musi mieć co najmniej 2 znaki",
+      "age": "Niepoprawny wiek: akceptowalne są tylko wartości z zakresu 18-99 lat",
+      "sex": "Płeć jest wymagana",
+      "height": "Niepoprawny wzrost: akceptowalne są tylko wartości z zakresu 100-300 cm",
+      "weight": "Invalid weight: akceptowalne są tylko wartości z zakresu 30-300 kg"
+    },
+    "upload_button": "Prześlij zdjęcie",
+    "remove_button": "Usuń zdjęcie",
+    "name": "Imię",
+    "age": "Wiek",
+    "sex": {
+      "label": "Płeć",
+      "woman": "Kobieta",
+      "man": "Mężczyzna"
+    },
+    "height": "Wzrost",
+    "weight": "Waga",
+    "placeholders": {
+      "name": "Jan",
+      "age": "22",
+      "height": "185",
+      "weight": "77.5"
+    },
+    "submit_button": "Wyślij"
+  },
+  "measurement_modal": {
+    "title_add": "Dodaj nowy pomiar",
+    "title_edit": "Edytuj pomiar",
+    "date": "Data i czas",
+    "submit_button": "Wyślij"
+  },
+  "confirmation_modal": {
+    "title": "Czy jesteś pewien?",
+    "message": "Czy jesteś pewien, że chcesz potwierdzić tę akcję? Jest ona nieodwracalna!",
+    "yes_button": "Tak",
+    "no_button": "Nie"
+  },
+  "error": {
+    "title": "Błąd",
+    "message": "O nie! Coś poszło nie tak.",
+    "secondary_message": "Spróbuj odświeżyć stronę i powtórzyć tę akcję."
+  },
+  "chart": {
+    "title": "Brak pomiarów",
+    "message": "Dodaj pomiary, aby zobaczyć je wyświetlone na wykresie"
+  },
+  "empty_state": {
+    "title": "Brak danych",
+    "message": "Nic tu jeszcze nie ma. Wróć innym razem!"
+  },
+  "page_loader": {
+    "title": "Ładowanie"
+  },
+  "measurement_labels": {
+    "weight": "Waga",
+    "body_fat": "Tkanka tłuszczowa",
+    "visceral_fat": "Tłuszcz trzewny",
+    "muscles": "Mięśnie",
+    "protein": "Białko",
+    "water": "Woda",
+    "bone_tissue": "Tkanka kostna",
+    "bmi": "BMI",
+    "bmr": "BMR",
+    "metabolic_age": "Wiek metaboliczny",
+    "body_rating": "Ocena sylwetki"
+  }
+}
