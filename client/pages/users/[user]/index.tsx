@@ -6,10 +6,12 @@ import { useRouter } from 'next/router'
 
 import { queryClient } from '@/pages/_app'
 
-import { ConfirmationModalComponent } from '@/components/confirmationModal'
 import { EmptyStateComponent } from '@/components/emptyState'
 import { ErrorComponent } from '@/components/error'
 import { PageLoaderComponent } from '@/components/pageLoader'
+import { ChartSectionComponent } from '@/components/users/chart'
+import { HeaderComponent } from '@/components/users/header'
+import { RangesComponent } from '@/components/users/ranges'
 
 import { UpdateUserType } from '@/types/User'
 
@@ -18,12 +20,12 @@ import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 import { notify } from '@/utils/notifications'
 import { Pathnames } from '@/utils/pathnames'
 
-import { ChartSectionComponent } from './chart'
-import { HeaderComponent } from './header'
-import { RangesComponent } from './ranges'
-
 const UserModalComponent = dynamic(() =>
   import('@/components/userModal').then((component) => component.UserModalComponent),
+)
+
+const ConfirmationModalComponent = dynamic(() =>
+  import('@/components/confirmationModal').then((component) => component.ConfirmationModalComponent),
 )
 
 const UserProfilePage = () => {

@@ -7,6 +7,9 @@ import { useRouter } from 'next/router'
 import { queryClient } from '@/pages/_app'
 
 import { ContainerComponent } from '@/components/container'
+import { ChartsTabComponent } from '@/components/dashboard/chartsTab'
+import { HeaderComponent } from '@/components/dashboard/header'
+import { HistoryTabComponent } from '@/components/dashboard/historyTab'
 import { ErrorComponent } from '@/components/error'
 import { MeasurementModalComponent } from '@/components/measurementModal'
 import { PageLoaderComponent } from '@/components/pageLoader'
@@ -18,10 +21,6 @@ import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 
 import { notify } from '@/utils/notifications'
 import { Pathnames } from '@/utils/pathnames'
-
-import { ChartsTabComponent } from './chartsTab'
-import { HeaderComponent } from './header'
-import { HistoryTabComponent } from './historyTab'
 
 const DashboardPage = () => {
   const router = useRouter()

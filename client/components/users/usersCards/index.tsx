@@ -6,7 +6,7 @@ interface UsersCardsProps {
   onClick: () => void
 }
 
-export const UsersCards = ({ users, onClick }: UsersCardsProps) => (
+export const UsersCardsComponent = ({ users, onClick }: UsersCardsProps) => (
   <ContainerComponent className="flex h-screen items-center">
     <div className="w-full flex flex-wrap gap-6 justify-center">
       {users}

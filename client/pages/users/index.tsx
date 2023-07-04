@@ -18,9 +18,12 @@ const ErrorComponent = dynamic(() => import('@/components/error').then((componen
 const PageLoaderComponent = dynamic(() =>
   import('@/components/pageLoader').then((component) => component.PageLoaderComponent),
 )
-const UsersCards = dynamic(() => import('./usersCards').then((component) => component.UsersCards), {
-  loading: () => <PageLoaderComponent />,
-})
+const UsersCardsComponent = dynamic(
+  () => import('@/components/users/usersCards').then((component) => component.UsersCardsComponent),
+  {
+    loading: () => <PageLoaderComponent />,
+  },
+)
 const UserCardComponent = dynamic(() =>
   import('@/components/userCard').then((component) => component.UserCardComponent),
 )
@@ -69,7 +72,7 @@ const UsersPage = () => {
 
   return (
     <div className="bg-green-100/10">
-      <UsersCards users={memoUsersList} onClick={open} />
+      <UsersCardsComponent users={memoUsersList} onClick={open} />
       <UserModalComponent
         opened={opened}
         onClose={close}
