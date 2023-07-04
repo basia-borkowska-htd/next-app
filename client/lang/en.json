@@ -141,5 +141,18 @@
   },
   "page_loader": {
     "title": "Loading"
+  },
+  "measurement_labels": {
+    "weight": "Weight",
+    "body_fat": "Body fat",
+    "visceral_fat": "Visceral fat",
+    "muscles": "Muscles",
+    "protein": "Protein",
+    "water": "Water",
+    "bone_tissue": "Bone tissue",
+    "bmi": "BMI",
+    "bmr": "BMR",
+    "metabolic_age": "Metabolic age",
+    "body_rating": "Body rating"
   }
 }

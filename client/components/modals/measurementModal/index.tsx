@@ -10,7 +10,7 @@ import { ModalComponent } from '@/components/modals/modal'
 
 import { MeasurementType } from '@/types/Measurement'
 
-import { MeasurementLabels } from '@/enums/Measurement.enum'
+import { getMeasurementLabel } from '@/enums/Measurement.enum'
 
 import { DEFAULT_DATE_FORMAT, dates } from '@/utils/dates'
 
@@ -80,7 +80,7 @@ export const MeasurementModalComponent = ({
           {inputValues.map(({ value, placeholder, rightSection }, idx) => (
             <TextInput
               key={`modal-input-${value}-${idx}`}
-              label={MeasurementLabels[value]}
+              label={getMeasurementLabel(value, t)}
               placeholder={placeholder}
               rightSection={rightSection}
               {...getInputProps(`${value}.value`)}

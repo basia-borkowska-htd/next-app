@@ -141,5 +141,18 @@
   },
   "page_loader": {
     "title": "Ładowanie"
+  },
+  "measurement_labels": {
+    "weight": "Waga",
+    "body_fat": "Tkanka tłuszczowa",
+    "visceral_fat": "Tłuszcz trzewny",
+    "muscles": "Mięśnie",
+    "protein": "Białko",
+    "water": "Woda",
+    "bone_tissue": "Tkanka kostna",
+    "bmi": "BMI",
+    "bmr": "BMR",
+    "metabolic_age": "Wiek metaboliczny",
+    "body_rating": "Ocena sylwetki"
   }
 }

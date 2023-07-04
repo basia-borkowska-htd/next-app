@@ -18,7 +18,7 @@ import { TableComponent } from '@/components/table'
 
 import { MeasurementType } from '@/types/Measurement'
 
-import { MeasurementLabels } from '@/enums/Measurement.enum'
+import { MeasurementEnum, getMeasurementLabel } from '@/enums/Measurement.enum'
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 
 import { dates } from '@/utils/dates'
@@ -86,9 +86,11 @@ export const HistoryTabComponent = ({ userId }: HistoryTabProps) => {
     if (action === 'edit') openEditModal()
   }
 
+  const headers = Object.values(MeasurementEnum).map((key) => getMeasurementLabel(key, t))
+
   return (
     <>
-      <TableComponent headers={[t('dashboard.date_header'), ...Object.values(MeasurementLabels)]}>
+      <TableComponent headers={[t('dashboard.date_header'), ...headers]}>
         {measurements.map(
           ({
             _id,

@@ -1,4 +1,5 @@
 import { api } from '@/api'
+import { useTranslate } from '@/hooks/useTranslate'
 import { Accordion } from '@mantine/core'
 import { useQuery } from '@tanstack/react-query'
 
@@ -7,14 +8,15 @@ import { EmptyStateComponent } from '@/components/emptyState'
 import { ErrorComponent } from '@/components/error'
 import { PageLoaderComponent } from '@/components/pageLoader'
 
-import { MeasurementEnum, MeasurementLabels } from '@/enums/Measurement.enum'
+import { MeasurementEnum, getMeasurementLabel } from '@/enums/Measurement.enum'
 
 interface ChartItemProps {
   userId: string
   itemKey: MeasurementEnum
 }
 export const ChartItemComponent = ({ userId, itemKey }: ChartItemProps) => {
-  const title = MeasurementLabels[itemKey]
+  const { t } = useTranslate()
+  const title = getMeasurementLabel(itemKey, t)
   const {
     data: chart,
     isLoading,

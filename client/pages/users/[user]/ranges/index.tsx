@@ -17,7 +17,7 @@ import { TableComponent } from '@/components/table'
 import { MeasurementType } from '@/types/Measurement'
 
 import { DashboardTabEnum } from '@/enums/DashboardTab.enum'
-import { MeasurementEnum, MeasurementLabels } from '@/enums/Measurement.enum'
+import { MeasurementEnum, getMeasurementLabel } from '@/enums/Measurement.enum'
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 
 import { notify } from '@/utils/notifications'
@@ -76,61 +76,61 @@ export const RangesComponent = ({ userId }: RangesProps) => {
         headers={['', t('user.ranges.headers.min'), t('user.ranges.headers.max'), t('user.ranges.headers.current')]}
       >
         <tr>
-          <td>{MeasurementLabels[MeasurementEnum.WEIGHT]}</td>
+          <td>{getMeasurementLabel(MeasurementEnum.WEIGHT, t)}</td>
           <td>{units.display(ranges.weight.unit, ranges.weight.min)}</td>
           <td>{units.display(ranges.weight.unit, ranges.weight.max)}</td>
           <td>{units.display(ranges.weight.unit, measurement?.weight?.value)}</td>
         </tr>
         <tr>
-          <td>{MeasurementLabels[MeasurementEnum.BODY_FAT]}</td>
+          <td>{getMeasurementLabel(MeasurementEnum.BODY_FAT, t)}</td>
           <td>{units.display(ranges.bodyFat.unit, ranges.bodyFat.min)}</td>
           <td>{units.display(ranges.bodyFat.unit, ranges.bodyFat.max)}</td>
           <td>{units.display(ranges.bodyFat.unit, measurement?.bodyFat?.value)}</td>
         </tr>
         <tr>
-          <td>{MeasurementLabels[MeasurementEnum.VISCERAL_FAT]}</td>
+          <td>{getMeasurementLabel(MeasurementEnum.VISCERAL_FAT, t)}</td>
           <td>{units.display(ranges.visceralFat.unit, ranges.visceralFat.min)}</td>
           <td>{units.display(ranges.visceralFat.unit, ranges.visceralFat.max)}</td>
           <td>{units.display(ranges.visceralFat.unit, measurement?.visceralFat?.value)}</td>
         </tr>
         <tr>
-          <td>{MeasurementLabels[MeasurementEnum.MUSCLES]}</td>
+          <td>{getMeasurementLabel(MeasurementEnum.MUSCLES, t)}</td>
           <td>{units.display(ranges.muscles.unit, ranges.muscles.min)}</td>
           <td>{units.display(ranges.muscles.unit, ranges.muscles.max)}</td>
           <td>{units.display(ranges.muscles.unit, measurement?.muscles?.value)}</td>
         </tr>
         <tr>
-          <td>{MeasurementLabels[MeasurementEnum.PROTEIN]}</td>
+          <td>{getMeasurementLabel(MeasurementEnum.PROTEIN, t)}</td>
           <td>{units.display(ranges.protein.unit, ranges.protein.min)}</td>
           <td>{units.display(ranges.protein.unit, ranges.protein.max)}</td>
           <td>{units.display(ranges.protein.unit, measurement?.protein?.value)}</td>
         </tr>
         <tr>
-          <td>{MeasurementLabels[MeasurementEnum.WATER]}</td>
+          <td>{getMeasurementLabel(MeasurementEnum.WATER, t)}</td>
           <td>{units.display(ranges.water.unit, ranges.water.min)}</td>
           <td>{units.display(ranges.water.unit, ranges.water.max)}</td>
           <td>{units.display(ranges.water.unit, measurement?.water?.value)}</td>
         </tr>
         <tr>
-          <td>{MeasurementLabels[MeasurementEnum.BONE_TISSUE]}</td>
+          <td>{getMeasurementLabel(MeasurementEnum.BONE_TISSUE, t)}</td>
           <td>{units.display(ranges.boneTissue.unit, ranges.boneTissue.min)}</td>
           <td>{units.display(ranges.boneTissue.unit, ranges.boneTissue.max)}</td>
           <td>{units.display(ranges.boneTissue.unit, measurement?.boneTissue?.value)}</td>
         </tr>
         <tr>
-          <td>{MeasurementLabels[MeasurementEnum.BMI]}</td>
+          <td>{getMeasurementLabel(MeasurementEnum.BMI, t)}</td>
           <td>{units.display(ranges.BMI.unit, ranges.BMI.min)}</td>
           <td>{units.display(ranges.BMI.unit, ranges.BMI.max)}</td>
           <td>{units.display(ranges.BMI.unit, measurement?.BMI?.value)}</td>
         </tr>
         <tr>
-          <td>{MeasurementLabels[MeasurementEnum.BMR]}</td>
+          <td>{getMeasurementLabel(MeasurementEnum.BMR, t)}</td>
           <td>{units.display(ranges.BMR.unit, ranges.BMR.min)}</td>
           <td>{units.display(ranges.BMR.unit, ranges.BMR.max)}</td>
           <td>{units.display(ranges.BMR.unit, measurement?.BMR?.value)}</td>
         </tr>
         <tr>
-          <td>{MeasurementLabels[MeasurementEnum.METABOLIC_AGE]}</td>
+          <td>{getMeasurementLabel(MeasurementEnum.METABOLIC_AGE, t)}</td>
           <td>{units.display(ranges.metabolicAge.unit, ranges.metabolicAge.min)}</td>
           <td>{units.display(ranges.metabolicAge.unit, ranges.metabolicAge.max)}</td>
           <td>{units.display(ranges.metabolicAge.unit, measurement?.metabolicAge?.value)}</td>
