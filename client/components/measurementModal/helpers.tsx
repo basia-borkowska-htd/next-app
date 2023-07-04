@@ -1,9 +1,11 @@
-import { MeasurementEnum, MeasurementLabels } from '@/enums/Measurement.enum'
-import { UnitEnum } from '@/enums/Unit.enum'
-import { MeasurementType } from '@/types/Measurement'
 import dayjs from 'dayjs'
 import { omit } from 'lodash'
 import { ReactNode } from 'react'
+
+import { MeasurementType } from '@/types/Measurement'
+
+import { MeasurementEnum } from '@/enums/Measurement.enum'
+import { UnitEnum } from '@/enums/Unit.enum'
 
 type InputValuesType = {
   value: MeasurementEnum

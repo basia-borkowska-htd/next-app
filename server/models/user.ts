@@ -1,6 +1,7 @@
+import mongoose from 'mongoose'
+
 import { Sex } from '../enums/Sex.enum'
 
-import mongoose from 'mongoose'
 import { Record } from './helpers'
 
 const Schema = mongoose.Schema

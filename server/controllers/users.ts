@@ -1,8 +1,10 @@
-import { Request, Response } from 'express'
-import { User } from '../models/user'
-import { Measurement } from '../models/measurement'
-import { s3 } from './aws'
 import { PutObjectRequest } from 'aws-sdk/clients/s3'
+import { Request, Response } from 'express'
+
+import { Measurement } from '../models/measurement'
+import { User } from '../models/user'
+
+import { s3 } from './aws'
 
 type ActionType = 'create' | 'update'
 

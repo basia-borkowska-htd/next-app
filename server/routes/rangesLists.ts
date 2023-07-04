@@ -1,10 +1,11 @@
 import express from 'express'
+
 import {
-  getRangesLists,
-  getRangesList,
   createRangesList,
-  updateRangesList,
   deleteRangesList,
+  getRangesList,
+  getRangesLists,
+  updateRangesList,
 } from '../controllers/rangesLists'
 
 export const router = express.Router()

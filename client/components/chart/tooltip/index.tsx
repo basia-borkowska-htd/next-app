@@ -1,8 +1,8 @@
 import { TooltipProps } from 'recharts'
 
 export const TooltipComponent = ({ label, labelFormatter, payload }: TooltipProps<number, string>) => {
-  //TODO try using lodash
-  if (!payload?.length) return <></>
+  // TODO: try using lodash
+  if (!payload?.length) return null
 
   return (
     <div className="bg-white py-2 px-4 rounded-xl	">

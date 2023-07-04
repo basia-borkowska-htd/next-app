@@ -1,22 +1,26 @@
-import { useRouter } from 'next/router'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { useDisclosure } from '@mantine/hooks'
-
 import { api } from '@/api'
-import { UserModalComponent } from '@/components/userModal'
+import { useDisclosure } from '@mantine/hooks'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { useRouter } from 'next/router'
+
+import { queryClient } from '@/pages/_app'
+
 import { ConfirmationModalComponent } from '@/components/confirmationModal'
+import { EmptyStateComponent } from '@/components/emptyState'
+import { ErrorComponent } from '@/components/error'
+import { PageLoaderComponent } from '@/components/pageLoader'
+import { UserModalComponent } from '@/components/userModal'
+
+import { UpdateUserType } from '@/types/User'
+
+import { QueryKeyEnum } from '@/enums/QueryKey.enum'
+
 import { notify } from '@/utils/notifications'
 import { Pathnames } from '@/utils/pathnames'
-import { UpdateUserType } from '@/types/User'
 
 import { ChartSectionComponent } from './chart'
 import { HeaderComponent } from './header'
 import { RangesComponent } from './ranges'
-import { PageLoaderComponent } from '@/components/pageLoader'
-import { ErrorComponent } from '@/components/error'
-import { QueryKeyEnum } from '@/enums/QueryKey.enum'
-import { queryClient } from '@/pages/_app'
-import { EmptyStateComponent } from '@/components/emptyState'
 
 const UserProfilePage = () => {
   const router = useRouter()
@@ -37,7 +41,7 @@ const UserProfilePage = () => {
   const [confirmationModalOpened, { open: openConfirmationModal, close: closeConfirmationModal }] = useDisclosure(false)
 
   const editUserMutation = useMutation({
-    mutationFn: (user: UpdateUserType) => api.user.updateUser(user),
+    mutationFn: (currentUser: UpdateUserType) => api.user.updateUser(currentUser),
     onSuccess: async () => {
       await queryClient.refetchQueries({ queryKey: [QueryKeyEnum.USER] })
       notify({ type: 'success', message: 'User updated successfully' })

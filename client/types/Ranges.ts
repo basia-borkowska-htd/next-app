@@ -1,5 +1,6 @@
 import { SexEnum } from '@/enums/Sex.enum'
 import { UnitEnum } from '@/enums/Unit.enum'
+
 import { RangeType } from './helpers'
 
 export type RangesType = {

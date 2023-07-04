@@ -1,8 +1,10 @@
-import { ChartDataType } from '@/types/ChartData'
 import { useMantineTheme } from '@mantine/core'
-import { XAxis, YAxis, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts'
-import { TooltipComponent } from './tooltip'
+import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+
+import { ChartDataType } from '@/types/ChartData'
+
 import { EmptyStateComponent } from '../emptyState'
+import { TooltipComponent } from './tooltip'
 
 interface ChartProps {
   data: ChartDataType[]

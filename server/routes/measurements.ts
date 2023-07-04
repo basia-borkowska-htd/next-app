@@ -1,11 +1,12 @@
 import express from 'express'
+
 import {
-  getMeasurements,
-  getMeasurement,
   createMeasurement,
-  updateMeasurement,
   deleteMeasurement,
   getChartMeasurements,
+  getMeasurement,
+  getMeasurements,
+  updateMeasurement,
 } from '../controllers/measurements'
 
 export const router = express.Router()

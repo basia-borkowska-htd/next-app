@@ -1,5 +1,5 @@
-import { ModalComponent } from '../modal'
 import { ButtonComponent } from '../button'
+import { ModalComponent } from '../modal'
 
 interface ConfirmationModalProps {
   opened: boolean

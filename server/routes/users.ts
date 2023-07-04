@@ -1,6 +1,7 @@
 import express from 'express'
-import { getUsers, getUser, getBasicUser, createUser, updateUser, deleteUser } from '../controllers/users'
+
 import { upload } from '../controllers/aws'
+import { createUser, deleteUser, getBasicUser, getUser, getUsers, updateUser } from '../controllers/users'
 
 export const router = express.Router()
 

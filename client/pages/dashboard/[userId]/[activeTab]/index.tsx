@@ -1,22 +1,27 @@
-import { Pathnames } from '@/utils/pathnames'
+import { api } from '@/api'
 import { Tabs } from '@mantine/core'
+import { useDisclosure } from '@mantine/hooks'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
 
-import { PageLoaderComponent } from '@/components/pageLoader'
-import { ErrorComponent } from '@/components/error'
-import { HistoryTabComponent } from './historyTab'
-import { ChartsTabComponent } from './chartsTab'
-import { DashboardTabEnum } from '@/enums/DashboardTab.enum'
-import { useDisclosure } from '@mantine/hooks'
-import { MeasurementModalComponent } from '@/components/measurementModal'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { MeasurementType } from '@/types/Measurement'
-import { api } from '@/api'
-import { notify } from '@/utils/notifications'
-import { QueryKeyEnum } from '@/enums/QueryKey.enum'
-import { HeaderComponent } from './header'
 import { queryClient } from '@/pages/_app'
+
 import { ContainerComponent } from '@/components/container'
+import { ErrorComponent } from '@/components/error'
+import { MeasurementModalComponent } from '@/components/measurementModal'
+import { PageLoaderComponent } from '@/components/pageLoader'
+
+import { MeasurementType } from '@/types/Measurement'
+
+import { DashboardTabEnum } from '@/enums/DashboardTab.enum'
+import { QueryKeyEnum } from '@/enums/QueryKey.enum'
+
+import { notify } from '@/utils/notifications'
+import { Pathnames } from '@/utils/pathnames'
+
+import { ChartsTabComponent } from './chartsTab'
+import { HeaderComponent } from './header'
+import { HistoryTabComponent } from './historyTab'
 
 const DashboardPage = () => {
   const router = useRouter()

@@ -8,13 +8,11 @@ interface CardProps {
   onClick: () => void
 }
 
-export const CardComponent = ({ children, className, onClick }: CardProps) => {
-  return (
-    <Card
-      onClick={onClick}
-      className={`w-1/5 flex items-center flex-col gap-2 justify-center cursor-pointer shadow-md hover:shadow-xl ${className}`}
-    >
-      {children}
-    </Card>
-  )
-}
+export const CardComponent = ({ children, className, onClick }: CardProps) => (
+  <Card
+    onClick={onClick}
+    className={`w-1/5 flex items-center flex-col gap-2 justify-center cursor-pointer shadow-md hover:shadow-xl ${className}`}
+  >
+    {children}
+  </Card>
+)

@@ -1,20 +1,23 @@
-import { CardComponent } from '@/components/card'
-import { UserModalComponent } from '@/components/userModal'
-import { Pathnames } from '@/utils/pathnames'
+import { api } from '@/api'
 import { useDisclosure } from '@mantine/hooks'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
 
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { queryClient } from '@/pages/_app'
+
+import { AvatarComponent } from '@/components/avatar'
+import { CardComponent } from '@/components/card'
+import { ContainerComponent } from '@/components/container'
+import { ErrorComponent } from '@/components/error'
 import { PageLoaderComponent } from '@/components/pageLoader'
+import { UserModalComponent } from '@/components/userModal'
+
+import { AddUserType } from '@/types/User'
+
+import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 
 import { notify } from '@/utils/notifications'
-import { ErrorComponent } from '@/components/error'
-import { api } from '@/api'
-import { QueryKeyEnum } from '@/enums/QueryKey.enum'
-import { queryClient } from '@/pages/_app'
-import { ContainerComponent } from '@/components/container'
-import { AvatarComponent } from '@/components/avatar'
-import { AddUserType } from '@/types/User'
+import { Pathnames } from '@/utils/pathnames'
 
 const UsersPage = () => {
   const router = useRouter()

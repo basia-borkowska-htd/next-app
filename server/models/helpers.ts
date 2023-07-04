@@ -1,4 +1,5 @@
 import { Schema } from 'mongoose'
+
 import { Unit } from '../enums/Unit.enum'
 
 export const Record = new Schema({

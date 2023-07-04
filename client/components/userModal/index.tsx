@@ -1,17 +1,19 @@
-import { NumberInput, TextInput, Input, SegmentedControl } from '@mantine/core'
+import { Input, NumberInput, SegmentedControl, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
-
-import { UpdateUserType, UserType } from '@/types/User'
-import { SexEnum } from '@/enums/Sex.enum'
-
-import { ModalComponent } from '../modal'
-import { ButtonComponent } from '../button'
-import { UnitEnum } from '@/enums/Unit.enum'
+import { IconTrash } from '@tabler/icons-react'
 import { MutateOptions } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
+
+import { UpdateUserType, UserType } from '@/types/User'
+
+import { SexEnum } from '@/enums/Sex.enum'
+import { UnitEnum } from '@/enums/Unit.enum'
+
 import { AvatarComponent } from '../avatar'
+import { ButtonComponent } from '../button'
 import { FileUploaderComponent } from '../fileUploader'
-import { IconTrash } from '@tabler/icons-react'
+import { ModalComponent } from '../modal'
+
 interface UserModalProps {
   user?: UserType
   opened: boolean

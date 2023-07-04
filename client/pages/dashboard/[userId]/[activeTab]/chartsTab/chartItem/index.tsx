@@ -1,11 +1,13 @@
 import { api } from '@/api'
+import { Accordion } from '@mantine/core'
+import { useQuery } from '@tanstack/react-query'
+
 import { ChartComponent } from '@/components/chart'
 import { EmptyStateComponent } from '@/components/emptyState'
 import { ErrorComponent } from '@/components/error'
 import { PageLoaderComponent } from '@/components/pageLoader'
+
 import { MeasurementEnum, MeasurementLabels } from '@/enums/Measurement.enum'
-import { Accordion } from '@mantine/core'
-import { useQuery } from '@tanstack/react-query'
 
 interface ChartItemProps {
   userId: string
@@ -15,18 +17,18 @@ export const ChartItemComponent = ({ userId, itemKey }: ChartItemProps) => {
   const title = MeasurementLabels[itemKey]
   const {
     data: chart,
-    error,
     isLoading,
     isFetching,
+    isError,
   } = useQuery({
     queryKey: [itemKey, userId],
     queryFn: () => api.measurement.getChartMeasurements(userId, itemKey),
   })
 
-  const PanelComponent = () => {
-    if (isFetching || isLoading) return <PageLoaderComponent compact />
-    if (error) return <ErrorComponent compact />
-    if (!chart?.length) return <EmptyStateComponent title={`No ${title} Measurements`} compact />
+  const getPanelComponent = () => {
+    if (isLoading || isFetching) return <PageLoaderComponent compact />
+    if (isError) return <ErrorComponent compact />
+    if (!chart.length) return <EmptyStateComponent title={`No ${title} Measurements`} compact />
 
     return <ChartComponent data={chart} />
   }
@@ -37,9 +39,7 @@ export const ChartItemComponent = ({ userId, itemKey }: ChartItemProps) => {
         <div className="font-bold">{title}</div>
       </Accordion.Control>
       <Accordion.Panel>
-        <div className="flex justify-center">
-          <PanelComponent />
-        </div>
+        <div className="flex justify-center">{getPanelComponent()}</div>
       </Accordion.Panel>
     </Accordion.Item>
   )

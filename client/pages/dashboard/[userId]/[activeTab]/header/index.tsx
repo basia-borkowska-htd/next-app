@@ -1,6 +1,7 @@
 import { AvatarComponent } from '@/components/avatar'
 import { ButtonComponent } from '@/components/button'
 import { GoBackComponent } from '@/components/goBack'
+
 import { Pathnames } from '@/utils/pathnames'
 
 interface HeaderProps {

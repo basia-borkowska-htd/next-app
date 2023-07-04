@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
-import { RangesList } from '../models/rangesList'
+
 import { Measurement } from '../models/measurement'
+import { RangesList } from '../models/rangesList'
 import { User } from '../models/user'
 
 const getRangesLists = async (req: Request, res: Response) => {

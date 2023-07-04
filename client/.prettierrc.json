@@ -4,7 +4,15 @@
   "semi": false,
   "singleQuote": true,
   "trailingComma": "all",
-  "importOrder": ["controllers/(.*)$", "routes/(.*)$", "models/(.*)$", "enums/(.*)$", "utils", "^[./*.*]"],
+  "importOrder": [
+    "pages/(.*)$",
+    "components/(.*)$",
+    "types/(.*)$",
+    "enums/(.*)$",
+    "assets/(.*)$",
+    "utils/(.*)$",
+    "^[./*.*]"
+  ],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true
 }
