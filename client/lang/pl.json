@@ -1,0 +1,36 @@
+{
+  "users": {
+    "add_user_button": "Dodaj nowego użytkownika",
+    "add_user_toast_success": "Użytkownik dodany prawidłowo",
+    "add_user_toast_error": "Nie udało się dodać użytkownika"
+  },
+  "error": {
+    "title": "Błąd",
+    "message": "O nie! Coś poszło nie tak.",
+    "secondary_message": "Spróbuj odświeżyć stronę i powtórzyć tę akcję."
+  },
+  "user": {
+    "settings": {
+      "settings_button": "Ustawienia",
+      "delete_user_button": "Usuń konto",
+      "modal": {
+        "title": "Ustawienia",
+        "language": {
+          "title": "Język",
+          "english": "Angielski",
+          "polish": "Polski"
+        },
+        "unit_system": {
+          "title": "System miar",
+          "metric": "Metryczny",
+          "imperial": "Imperialny"
+        },
+        "appearance_mode": {
+          "title": "Tryb wyglądu",
+          "light": "Jasny",
+          "dark": "Ciemny"
+        }
+      }
+    }
+  }
+}

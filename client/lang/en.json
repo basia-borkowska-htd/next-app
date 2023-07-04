@@ -1,0 +1,36 @@
+{
+  "users": {
+    "add_user_button": "Add new user",
+    "add_user_toast_success": "User added successfully",
+    "add_user_toast_error": "Unable to add user"
+  },
+  "error": {
+    "title": "Error",
+    "message": "Oh no! Something went wrong.",
+    "secondary_message": "Please try reloading the page and repeating this action."
+  },
+  "user": {
+    "settings": {
+      "settings_button": "Settings",
+      "delete_user_button": "Delete account",
+      "modal": {
+        "title": "Settings",
+        "language": {
+          "title": "Language",
+          "english": "English",
+          "polish": "Polish"
+        },
+        "unit_system": {
+          "title": "Unit system",
+          "metric": "Metric",
+          "imperial": "Imperial"
+        },
+        "appearance_mode": {
+          "title": "Appearance mode",
+          "light": "Light",
+          "dark": "Dark"
+        }
+      }
+    }
+  }
+}

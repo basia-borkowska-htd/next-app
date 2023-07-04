@@ -1,63 +1,73 @@
+import { Locale, useLocale } from '@/hooks/useLocale'
+import { useTranslate } from '@/hooks/useTranslate'
 import { Box, Center, SegmentedControl, Select } from '@mantine/core'
 
-import { ButtonComponent } from '../../button'
 import { ModalComponent } from '../modal'
-import { APPEARANCE_MODE_DATA, LANGUAGE_DATA, UNIT_SYSTEM_DATA } from './helpers'
+import { getAppearanceData, getLanguageData, getUnitSystemData } from './helpers'
 
 interface SettingsModalProps {
   opened: boolean
-  loading: boolean
 
   onClose: () => void
-  onSubmit: () => void
 }
 
-export const SettingsModalComponent = ({ opened, loading, onClose, onSubmit }: SettingsModalProps) => (
-  <ModalComponent opened={opened} onClose={onClose} title="Settings">
-    <div className="flex flex-col gap-4 w-fit pb-4">
-      <div className="flex flex-col gap-1">
-        <strong>Language</strong>
-        {/* TODO: handle language change */}
-        <Select placeholder="Language" data={LANGUAGE_DATA} />
+export const SettingsModalComponent = ({ opened, onClose }: SettingsModalProps) => {
+  const { switchLocale, locale } = useLocale()
+  const { t } = useTranslate()
+
+  return (
+    <ModalComponent opened={opened} onClose={onClose} title={t('user.settings.modal.title')}>
+      <div className="flex flex-col gap-4 w-fit pb-4">
+        <div className="flex flex-col gap-1">
+          <strong>{t('user.settings.modal.language.title')}</strong>
+          <Select
+            className="color-red"
+            value={locale}
+            data={getLanguageData(t)}
+            styles={(theme) => ({
+              item: {
+                '&[data-selected]': {
+                  '&, &:hover': {
+                    backgroundColor: theme.colors['blue-100'][0],
+                    color: theme.white,
+                  },
+                },
+              },
+            })}
+            onChange={(lang) => switchLocale(lang as Locale)}
+          />
+        </div>
+        <div className="flex flex-col gap-1">
+          <strong>{t('user.settings.modal.unit_system.title')}</strong>
+          {/* TODO: handle unit system */}
+          <SegmentedControl
+            size="xs"
+            data={getUnitSystemData(t)}
+            color="blue-300"
+            transitionDuration={500}
+            transitionTimingFunction="linear"
+          />
+        </div>
+        <div className="flex flex-col gap-1">
+          <strong>{t('user.settings.modal.appearance_mode.title')}</strong>
+          {/* TODO: handle appearance mode */}
+          <SegmentedControl
+            data={getAppearanceData(t).map(({ label, value, icon }) => ({
+              label: (
+                <Center>
+                  {icon}
+                  <Box ml={10}>{label}</Box>
+                </Center>
+              ),
+              value,
+            }))}
+            size="xs"
+            color="blue-300"
+            transitionDuration={500}
+            transitionTimingFunction="linear"
+          />
+        </div>
       </div>
-      <div className="flex flex-col gap-1">
-        <strong>Unit system</strong>
-        {/* TODO: handle unit system */}
-        <SegmentedControl
-          size="xs"
-          data={UNIT_SYSTEM_DATA}
-          color="blue-300"
-          transitionDuration={500}
-          transitionTimingFunction="linear"
-        />
-      </div>
-      <div className="flex flex-col gap-1">
-        <strong>Appearance mode</strong>
-        {/* TODO: handle appearance mode */}
-        <SegmentedControl
-          data={APPEARANCE_MODE_DATA.map(({ label, value, icon }) => ({
-            label: (
-              <Center>
-                {icon}
-                <Box ml={10}>{label}</Box>
-              </Center>
-            ),
-            value,
-          }))}
-          size="xs"
-          color="blue-300"
-          transitionDuration={500}
-          transitionTimingFunction="linear"
-        />
-      </div>
-    </div>
-    <div className="basis-1/4 flex gap-2 mt-5">
-      <ButtonComponent variant="outline" onClick={onClose}>
-        Close
-      </ButtonComponent>
-      <ButtonComponent variant="gradient" loading={loading} onClick={onSubmit}>
-        Save
-      </ButtonComponent>
-    </div>
-  </ModalComponent>
-)
+    </ModalComponent>
+  )
+}

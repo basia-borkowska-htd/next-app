@@ -1,4 +1,5 @@
 import { api } from '@/api'
+import { useTranslate } from '@/hooks/useTranslate'
 import { useDisclosure } from '@mantine/hooks'
 import { IconSettings, IconTrash } from '@tabler/icons-react'
 import { useMutation } from '@tanstack/react-query'
@@ -18,6 +19,7 @@ interface SettingsProps {
 
 export const SettingsComponent = ({ userId }: SettingsProps) => {
   const router = useRouter()
+  const { t } = useTranslate()
 
   const [confirmationModalOpened, { open: openConfirmationModal, close: closeConfirmationModal }] = useDisclosure(false)
   const [settingsModalOpened, { open: openSettingsModal, close: closeSettingsModal }] = useDisclosure(false)
@@ -39,11 +41,11 @@ export const SettingsComponent = ({ userId }: SettingsProps) => {
       <div className="flex flex-col  items-start mb-8">
         <ButtonComponent variant="icon" fullWidth={false} onClick={openSettingsModal}>
           <IconSettings size={22} className="mr-2" />
-          Settings
+          {t('user.settings.settings_button')}
         </ButtonComponent>
         <ButtonComponent variant="icon" className="text-red-600" fullWidth={false} onClick={openConfirmationModal}>
           <IconTrash size={22} className="mr-2" />
-          Delete account
+          {t('user.settings.delete_user_button')}
         </ButtonComponent>
       </div>
 
@@ -58,15 +60,7 @@ export const SettingsComponent = ({ userId }: SettingsProps) => {
         onSubmit={deleteUserMutation.mutate}
       />
 
-      <SettingsModalComponent
-        opened={settingsModalOpened}
-        loading={false}
-        onClose={closeSettingsModal}
-        onSubmit={() => {
-          // eslint-disable-next-line no-alert
-          alert('saved')
-        }}
-      />
+      <SettingsModalComponent opened={settingsModalOpened} onClose={closeSettingsModal} />
     </ContainerComponent>
   )
 }

@@ -1,34 +1,35 @@
+import { TranslationKey } from '@/lang/flattenMessages'
 import { IconMoon, IconSunHigh } from '@tabler/icons-react'
 
-export const APPEARANCE_MODE_DATA = [
+export const getAppearanceData = (t: (key: TranslationKey) => string) => [
   {
-    label: 'Light',
+    label: t('user.settings.modal.appearance_mode.light'),
     value: 'light',
     icon: <IconSunHigh size="1rem" />,
   },
   {
-    label: 'Dark',
+    label: t('user.settings.modal.appearance_mode.dark'),
     value: 'dark',
     icon: <IconMoon size="1rem" />,
   },
 ]
-export const UNIT_SYSTEM_DATA = [
+export const getUnitSystemData = (t: (key: TranslationKey) => string) => [
   {
-    label: 'Metric',
+    label: t('user.settings.modal.unit_system.metric'),
     value: 'metric',
   },
   {
-    label: 'Imperial',
+    label: t('user.settings.modal.unit_system.imperial'),
     value: 'imperial',
   },
 ]
-export const LANGUAGE_DATA = [
+export const getLanguageData = (t: (key: TranslationKey) => string) => [
   {
-    label: 'Polish',
-    value: 'polish',
+    label: t('user.settings.modal.language.polish'),
+    value: 'pl',
   },
   {
-    label: 'English',
-    value: 'english',
+    label: t('user.settings.modal.language.english'),
+    value: 'en',
   },
 ]

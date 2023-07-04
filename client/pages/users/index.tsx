@@ -1,4 +1,5 @@
 import { api } from '@/api'
+import { useTranslate } from '@/hooks/useTranslate'
 import { useDisclosure } from '@mantine/hooks'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
@@ -21,6 +22,7 @@ import { Pathnames } from '@/utils/pathnames'
 
 const UsersPage = () => {
   const router = useRouter()
+  const { t } = useTranslate()
   const [opened, { open, close }] = useDisclosure(false)
 
   const { data, error, isLoading } = useQuery({ queryKey: [QueryKeyEnum.USERS], queryFn: api.user.getUsers })
@@ -30,10 +32,10 @@ const UsersPage = () => {
     onSuccess: async () => {
       await queryClient.refetchQueries({ queryKey: [QueryKeyEnum.USERS] })
 
-      notify({ type: 'success', message: 'User added successfully' })
+      notify({ type: 'success', message: t('users.add_user_toast_success') })
     },
     onError: () => {
-      notify({ type: 'error', message: 'Unable to add user' })
+      notify({ type: 'error', message: t('users.add_user_toast_error') })
     },
   })
 
@@ -55,7 +57,7 @@ const UsersPage = () => {
             </CardComponent>
           ))}
           <CardComponent className="bg-green-300/25 hover:bg-green-300/30" onClick={open}>
-            <div className="text-2xl">+ Add new user</div>
+            <div className="text-2xl">{t('users.add_user_button')}</div>
           </CardComponent>
         </div>
 
