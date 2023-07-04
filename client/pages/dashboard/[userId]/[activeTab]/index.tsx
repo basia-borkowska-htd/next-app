@@ -8,7 +8,7 @@ import { queryClient } from '@/pages/_app'
 
 import { ContainerComponent } from '@/components/container'
 import { ErrorComponent } from '@/components/error'
-import { MeasurementModalComponent } from '@/components/measurementModal'
+import { MeasurementModalComponent } from '@/components/modals/measurementModal'
 import { PageLoaderComponent } from '@/components/pageLoader'
 
 import { MeasurementType } from '@/types/Measurement'

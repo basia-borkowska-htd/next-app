@@ -1,4 +1,4 @@
-import { ButtonComponent } from '../button'
+import { ButtonComponent } from '../../button'
 import { ModalComponent } from '../modal'
 
 interface ConfirmationModalProps {

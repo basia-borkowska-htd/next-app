@@ -9,9 +9,9 @@ import { UpdateUserType, UserType } from '@/types/User'
 import { SexEnum } from '@/enums/Sex.enum'
 import { UnitEnum } from '@/enums/Unit.enum'
 
-import { AvatarComponent } from '../avatar'
-import { ButtonComponent } from '../button'
-import { FileUploaderComponent } from '../fileUploader'
+import { AvatarComponent } from '../../avatar'
+import { ButtonComponent } from '../../button'
+import { FileUploaderComponent } from '../../fileUploader'
 import { ModalComponent } from '../modal'
 
 interface UserModalProps {

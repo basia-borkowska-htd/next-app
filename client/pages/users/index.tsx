@@ -9,8 +9,8 @@ import { AvatarComponent } from '@/components/avatar'
 import { CardComponent } from '@/components/card'
 import { ContainerComponent } from '@/components/container'
 import { ErrorComponent } from '@/components/error'
+import { UserModalComponent } from '@/components/modals/userModal'
 import { PageLoaderComponent } from '@/components/pageLoader'
-import { UserModalComponent } from '@/components/userModal'
 
 import { AddUserType } from '@/types/User'
 

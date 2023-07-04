@@ -1,6 +1,7 @@
-import { useRef } from 'react'
-import { ButtonComponent } from '../button'
 import { IconUpload } from '@tabler/icons-react'
+import { useRef } from 'react'
+
+import { ButtonComponent } from '../button'
 
 interface FileUploaderProps {
   handleChange: (file: File | undefined) => void

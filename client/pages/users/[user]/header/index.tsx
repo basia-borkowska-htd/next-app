@@ -12,10 +12,10 @@ import { units } from '@/utils/units'
 
 interface HeaderProps {
   user: UserType
+
   openModal: () => void
-  openConfirmationModal: () => void
 }
-export const HeaderComponent = ({ user, openModal, openConfirmationModal }: HeaderProps) => {
+export const HeaderComponent = ({ user, openModal }: HeaderProps) => {
   const { name, age, sex, height, weight, avatarUrl } = user
 
   return (
@@ -39,11 +39,8 @@ export const HeaderComponent = ({ user, openModal, openConfirmationModal }: Head
               <div>{weight ? units.display(weight.unit, weight.value) : '-'}</div>
             </div>
           </div>
-          <div className="basis-1/4 flex justify-end flex-col items-end gap-2">
+          <div className="basis-1/4">
             <ButtonComponent onClick={openModal}>Edit</ButtonComponent>
-            <ButtonComponent variant="outline" onClick={openConfirmationModal}>
-              Delete
-            </ButtonComponent>
           </div>
         </div>
       </ContainerComponent>

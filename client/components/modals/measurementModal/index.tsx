@@ -5,7 +5,7 @@ import { MutateOptions } from '@tanstack/react-query'
 import { useEffect } from 'react'
 
 import { ButtonComponent } from '@/components/button'
-import { ModalComponent } from '@/components/modal'
+import { ModalComponent } from '@/components/modals/modal'
 
 import { MeasurementType } from '@/types/Measurement'
 
