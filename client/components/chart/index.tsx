@@ -1,6 +1,8 @@
 import { useMantineTheme } from '@mantine/core'
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 
+import { useTranslate } from '@/hooks/useTranslate'
+
 import { ChartDataType } from '@/types/ChartData'
 
 import { EmptyStateComponent } from '../emptyState'
@@ -13,16 +15,10 @@ interface ChartProps {
 
 export const ChartComponent = ({ data, color }: ChartProps) => {
   const { colors } = useMantineTheme()
+  const { t } = useTranslate()
   const areaColor = color || colors['blue-200'][0]
 
-  if (!data.length)
-    return (
-      <EmptyStateComponent
-        title="No weight measurements"
-        message="Add weight measurements to see them displayed on chart"
-        compact
-      />
-    )
+  if (!data.length) return <EmptyStateComponent title={t('chart.title')} message={t('chart.message')} compact />
 
   return (
     <ResponsiveContainer width="60%" height={400}>

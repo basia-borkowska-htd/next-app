@@ -5,11 +5,13 @@ import { MutateOptions } from '@tanstack/react-query'
 import { useEffect } from 'react'
 
 import { ButtonComponent } from '@/components/button'
-import { ModalComponent } from '@/components/modal'
+import { ModalComponent } from '@/components/modals/modal'
+
+import { useTranslate } from '@/hooks/useTranslate'
 
 import { MeasurementType } from '@/types/Measurement'
 
-import { MeasurementLabels } from '@/enums/Measurement.enum'
+import { getMeasurementLabel } from '@/enums/Measurement.enum'
 
 import { DEFAULT_DATE_FORMAT, dates } from '@/utils/dates'
 
@@ -38,7 +40,7 @@ export const MeasurementModalComponent = ({
 }: MeasurementModalProps) => {
   const isCreating = !measurement
   const initialValues = getInitialValues(measurement)
-
+  const { t } = useTranslate()
   const {
     onSubmit: onSubmitForm,
     getInputProps,
@@ -62,7 +64,7 @@ export const MeasurementModalComponent = ({
     <ModalComponent
       opened={opened}
       onClose={resetAndClose}
-      title={isCreating ? 'Add New Measurement' : 'Edit Measurement'}
+      title={isCreating ? t('measurement_modal.title_add') : t('measurement_modal.title_edit')}
       size="xl"
     >
       <form
@@ -79,7 +81,7 @@ export const MeasurementModalComponent = ({
           {inputValues.map(({ value, placeholder, rightSection }, idx) => (
             <TextInput
               key={`modal-input-${value}-${idx}`}
-              label={MeasurementLabels[value]}
+              label={getMeasurementLabel(value, t)}
               placeholder={placeholder}
               rightSection={rightSection}
               {...getInputProps(`${value}.value`)}
@@ -87,14 +89,13 @@ export const MeasurementModalComponent = ({
           ))}
           <DateTimePicker
             valueFormat={DEFAULT_DATE_FORMAT}
-            label="Date and time"
-            placeholder="09 Jun 2023, 16:30"
+            label={t('measurement_modal.date')}
             value={dates.fromISOToDate(getInputProps('date').value)}
             onChange={(date) => setFieldValue('date', dates.fromDateToISO(date))}
           />
         </div>
         <ButtonComponent className="mt-6" loading={loading} type="submit" variant="gradient">
-          Submit
+          {t('measurement_modal.submit_button')}
         </ButtonComponent>
       </form>
     </ModalComponent>

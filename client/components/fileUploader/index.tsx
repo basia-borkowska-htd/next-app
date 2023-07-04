@@ -5,10 +5,10 @@ import { ButtonComponent } from '../button'
 
 interface FileUploaderProps {
   handleChange: (file: File | undefined) => void
-  message?: string
+  message: string
 }
 
-export const FileUploaderComponent = ({ handleChange, message = 'Upload' }: FileUploaderProps) => {
+export const FileUploaderComponent = ({ handleChange, message }: FileUploaderProps) => {
   const ref = useRef<HTMLInputElement>(null)
 
   const handleClick = () => {
@@ -18,7 +18,7 @@ export const FileUploaderComponent = ({ handleChange, message = 'Upload' }: File
   return (
     <>
       <input type="file" className="hidden" ref={ref} onChange={(e) => handleChange(e.target.files?.[0])} />
-      <ButtonComponent variant="icon" fullWidth={false} onClick={handleClick}>
+      <ButtonComponent className="flex" variant="icon" fullWidth={false} onClick={handleClick}>
         <IconUpload className="mr-2" size={22} />
         {message}
       </ButtonComponent>

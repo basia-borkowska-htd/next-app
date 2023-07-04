@@ -1,4 +1,5 @@
 import { api } from '@/api'
+import { Divider } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import dynamic from 'next/dynamic'
@@ -10,12 +11,16 @@ import { EmptyStateComponent } from '@/components/emptyState'
 import { ErrorComponent } from '@/components/error'
 import { PageLoaderComponent } from '@/components/pageLoader'
 
+import { useTranslate } from '@/hooks/useTranslate'
+
 import { UpdateUserType } from '@/types/User'
 
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 
 import { notify } from '@/utils/notifications'
-import { Pathnames } from '@/utils/pathnames'
+
+// TODO: move it
+import { SettingsComponent } from './settings'
 
 const ChartSectionComponent = dynamic(() =>
   import('@/components/users/chart').then((component) => component.ChartSectionComponent),
@@ -28,16 +33,13 @@ const RangesComponent = dynamic(() =>
 )
 
 const UserModalComponent = dynamic(() =>
-  import('@/components/userModal').then((component) => component.UserModalComponent),
-)
-
-const ConfirmationModalComponent = dynamic(() =>
-  import('@/components/confirmationModal').then((component) => component.ConfirmationModalComponent),
+  import('@/components/modals/userModal').then((component) => component.UserModalComponent),
 )
 
 const UserProfilePage = () => {
   const router = useRouter()
   const { user: userId } = router.query
+  const { t } = useTranslate()
 
   const {
     data: user,
@@ -45,33 +47,20 @@ const UserProfilePage = () => {
     isLoading,
   } = useQuery({
     queryKey: [QueryKeyEnum.USER],
-    queryFn: () => api.user.getUser(userId?.toString() || ''),
+    queryFn: () => api.user.getUser(userId.toString()),
     enabled: router.isReady,
   })
 
-  const [editModalOpened, { open: openEditModal, close: closeEditModal }] = useDisclosure(false)
-  const [confirmationModalOpened, { open: openConfirmationModal, close: closeConfirmationModal }] = useDisclosure(false)
+  const [opened, { open, close }] = useDisclosure(false)
 
   const editUserMutation = useMutation({
     mutationFn: (currentUser: UpdateUserType) => api.user.updateUser(currentUser),
     onSuccess: async () => {
       await queryClient.refetchQueries({ queryKey: [QueryKeyEnum.USER] })
-      notify({ type: 'success', message: 'User updated successfully' })
+      notify({ type: 'success', message: t('user.edit_user.toast_success') })
     },
     onError: () => {
-      notify({ type: 'error', message: 'Unable to update user' })
-    },
-  })
-
-  const deleteUserMutation = useMutation({
-    mutationFn: () => api.user.deleteUser(userId?.toString() || ''),
-    onSuccess: async () => {
-      closeConfirmationModal()
-      notify({ type: 'success', message: 'User deleted successfully' })
-      router.push(Pathnames.home)
-    },
-    onError: () => {
-      notify({ type: 'error', message: 'Unable to delete user' })
+      notify({ type: 'error', message: t('user.edit_user.toast_error') })
     },
   })
 
@@ -84,23 +73,15 @@ const UserProfilePage = () => {
       <HeaderComponent user={user} openModal={openEditModal} openConfirmationModal={openConfirmationModal} />
       <RangesComponent userId={user._id} />
       <ChartSectionComponent userId={user._id} />
+      <Divider py="md" mx="md" />
+      <SettingsComponent userId={user._id} />
 
       <UserModalComponent
-        opened={editModalOpened}
+        opened={opened}
         user={user}
-        onClose={closeEditModal}
+        onClose={close}
         onSubmit={editUserMutation.mutate}
         loading={editUserMutation.isLoading}
-      />
-      <ConfirmationModalComponent
-        opened={confirmationModalOpened}
-        loading={deleteUserMutation.isLoading}
-        title={`Delete ${user.name} User`}
-        description="Are you sure you want to delete this user and all of their measurements? This action is irreversible."
-        confirmButtonText="Delete"
-        declineButtonText="Cancel"
-        onClose={closeConfirmationModal}
-        onSubmit={deleteUserMutation.mutate}
       />
     </>
   )

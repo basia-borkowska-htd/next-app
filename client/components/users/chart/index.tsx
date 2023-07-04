@@ -7,6 +7,8 @@ import { EmptyStateComponent } from '@/components/emptyState'
 import { ErrorComponent } from '@/components/error'
 import { PageLoaderComponent } from '@/components/pageLoader'
 
+import { useTranslate } from '@/hooks/useTranslate'
+
 import { MeasurementEnum } from '@/enums/Measurement.enum'
 
 interface ChartSectionProps {
@@ -14,6 +16,7 @@ interface ChartSectionProps {
 }
 
 export const ChartSectionComponent = ({ userId }: ChartSectionProps) => {
+  const { t } = useTranslate()
   const {
     data: chart,
     error,
@@ -26,13 +29,20 @@ export const ChartSectionComponent = ({ userId }: ChartSectionProps) => {
 
   if (error) return <ErrorComponent title={error.toString()} compact />
   if (isLoading || isFetching) return <PageLoaderComponent compact />
-  if (!chart) return <EmptyStateComponent title="No weights data available" compact />
 
   return (
     <ContainerComponent className="mt-8">
-      <div className="mb-4 font-bold text-xl">Weight Chart</div>
+      <div className="mb-4 font-bold text-xl">{t('user.chart.title')}</div>
       <div className="flex justify-center mb-8">
-        <ChartComponent data={chart} />
+        {chart.length ? (
+          <ChartComponent data={chart} />
+        ) : (
+          <EmptyStateComponent
+            title={t('user.chart.empty_state.title')}
+            message={t('user.chart.empty_state.message')}
+            compact
+          />
+        )}
       </div>
     </ContainerComponent>
   )

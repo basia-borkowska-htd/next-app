@@ -9,9 +9,11 @@ import React, { useState } from 'react'
 
 import { queryClient } from '@/pages/_app'
 
+import { useTranslate } from '@/hooks/useTranslate'
+
 import { MeasurementType } from '@/types/Measurement'
 
-import { MeasurementLabels } from '@/enums/Measurement.enum'
+import { MeasurementEnum, getMeasurementLabel } from '@/enums/Measurement.enum'
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 
 import { dates } from '@/utils/dates'
@@ -23,10 +25,10 @@ const PageLoaderComponent = dynamic(() =>
   import('@/components/pageLoader').then((component) => component.PageLoaderComponent),
 )
 const MeasurementModalComponent = dynamic(() =>
-  import('@/components/measurementModal').then((component) => component.MeasurementModalComponent),
+  import('@/components/modals/measurementModal').then((component) => component.MeasurementModalComponent),
 )
 const ConfirmationModalComponent = dynamic(() =>
-  import('@/components/confirmationModal').then((component) => component.ConfirmationModalComponent),
+  import('@/components/modals/confirmationModal').then((component) => component.ConfirmationModalComponent),
 )
 const EmptyStateComponent = dynamic(() =>
   import('@/components/emptyState').then((component) => component.EmptyStateComponent),
@@ -37,6 +39,7 @@ interface HistoryTabProps {
   userId: string
 }
 export const HistoryTabComponent = ({ userId }: HistoryTabProps) => {
+  const { t } = useTranslate()
   const [openedDeleteModal, { open: openDeleteModal, close: closeDeleteModal }] = useDisclosure(false)
   const [openedEditModal, { open: openEditModal, close: closeEditModal }] = useDisclosure(false)
   const [currentMeasurement, setCurrentMeasurement] = useState<MeasurementType | undefined>(undefined)
@@ -58,10 +61,10 @@ export const HistoryTabComponent = ({ userId }: HistoryTabProps) => {
         measurements?.filter((measurement) => measurement._id !== currentMeasurement?._id),
       )
       setCurrentMeasurement(undefined)
-      notify({ type: 'success', message: 'Measurement deleted successfully' })
+      notify({ type: 'success', message: t('dashboard.delete_measurement.toast_success') })
     },
     onError: () => {
-      notify({ type: 'error', message: 'Unable to delete measurement' })
+      notify({ type: 'error', message: t('dashboard.delete_measurement.toast_error') })
     },
   })
 
@@ -75,16 +78,16 @@ export const HistoryTabComponent = ({ userId }: HistoryTabProps) => {
         ),
       )
       setCurrentMeasurement(undefined)
-      notify({ type: 'success', message: 'Measurement edited successfully' })
+      notify({ type: 'success', message: t('dashboard.edit_measurement.toast_success') })
     },
     onError: () => {
-      notify({ type: 'error', message: 'Unable to edit measurement' })
+      notify({ type: 'error', message: t('dashboard.edit_measurement.toast_error') })
     },
   })
 
   if (isLoading) return <PageLoaderComponent compact />
   if (error) return <ErrorComponent />
-  if (!measurements?.length) return <EmptyStateComponent title="No measurements" compact />
+  if (!measurements?.length) return <EmptyStateComponent compact />
 
   const handleActionClick = (value: React.MouseEvent<HTMLButtonElement, MouseEvent>, action: 'edit' | 'delete') => {
     const measurementId = get(value, 'target.parentElement.id', '')
@@ -93,9 +96,11 @@ export const HistoryTabComponent = ({ userId }: HistoryTabProps) => {
     if (action === 'edit') openEditModal()
   }
 
+  const headers = Object.values(MeasurementEnum).map((key) => getMeasurementLabel(key, t))
+
   return (
     <>
-      <TableComponent headers={['Date', ...Object.values(MeasurementLabels)]}>
+      <TableComponent headers={[t('dashboard.date_header'), ...headers]}>
         {measurements.map(
           ({
             _id,
@@ -144,7 +149,7 @@ export const HistoryTabComponent = ({ userId }: HistoryTabProps) => {
         onClose={closeDeleteModal}
         loading={false}
         onSubmit={deleteMeasurementMutation.mutate}
-        description="Are you sure you want to delete this measurement?"
+        description={t('dashboard.delete_measurement_description')}
       />
       <MeasurementModalComponent
         opened={openedEditModal}

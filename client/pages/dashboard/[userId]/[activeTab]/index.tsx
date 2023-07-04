@@ -9,6 +9,8 @@ import { queryClient } from '@/pages/_app'
 
 import { ContainerComponent } from '@/components/container'
 
+import { useTranslate } from '@/hooks/useTranslate'
+
 import { MeasurementType } from '@/types/Measurement'
 
 import { DashboardTabEnum } from '@/enums/DashboardTab.enum'
@@ -22,7 +24,7 @@ const PageLoaderComponent = dynamic(() =>
   import('@/components/pageLoader').then((component) => component.PageLoaderComponent),
 )
 const MeasurementModalComponent = dynamic(() =>
-  import('@/components/measurementModal').then((component) => component.MeasurementModalComponent),
+  import('@/components/modals/measurementModal').then((component) => component.MeasurementModalComponent),
 )
 
 const HeaderComponent = dynamic(() =>
@@ -40,6 +42,7 @@ const DashboardPage = () => {
   const router = useRouter()
   const { userId, activeTab } = router.query
   const [opened, { open, close }] = useDisclosure(false)
+  const { t } = useTranslate()
 
   const {
     data: user,
@@ -55,10 +58,10 @@ const DashboardPage = () => {
     mutationFn: (measurement: MeasurementType) => api.measurement.addMeasurement(measurement),
     onSuccess: async () => {
       await queryClient.refetchQueries({ stale: true })
-      notify({ type: 'success', message: 'Measurement added successfully' })
+      notify({ type: 'success', message: t('add_measurement.toast_success') })
     },
     onError: () => {
-      notify({ type: 'error', message: 'Unable to add measurement' })
+      notify({ type: 'error', message: t('add_measurement.toast_error') })
     },
   })
 
@@ -90,8 +93,8 @@ const DashboardPage = () => {
         color="blue-100"
       >
         <Tabs.List grow>
-          <Tabs.Tab value={DashboardTabEnum.HISTORY}>History</Tabs.Tab>
-          <Tabs.Tab value={DashboardTabEnum.CHARTS}>Charts</Tabs.Tab>
+          <Tabs.Tab value={DashboardTabEnum.HISTORY}>{t('dashboard.tabs.history')}</Tabs.Tab>
+          <Tabs.Tab value={DashboardTabEnum.CHARTS}>{t('dashboard.tabs.charts')}</Tabs.Tab>
         </Tabs.List>
 
         <Tabs.Panel value={DashboardTabEnum.HISTORY}>

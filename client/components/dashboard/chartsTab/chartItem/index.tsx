@@ -3,7 +3,9 @@ import { Accordion } from '@mantine/core'
 import { useQuery } from '@tanstack/react-query'
 import dynamic from 'next/dynamic'
 
-import { MeasurementEnum, MeasurementLabels } from '@/enums/Measurement.enum'
+import { useTranslate } from '@/hooks/useTranslate'
+
+import { MeasurementEnum, getMeasurementLabel } from '@/enums/Measurement.enum'
 
 const ErrorComponent = dynamic(() => import('@/components/error').then((component) => component.ErrorComponent))
 const PageLoaderComponent = dynamic(() =>
@@ -19,7 +21,8 @@ interface ChartItemProps {
   itemKey: MeasurementEnum
 }
 export const ChartItemComponent = ({ userId, itemKey }: ChartItemProps) => {
-  const title = MeasurementLabels[itemKey]
+  const { t } = useTranslate()
+  const title = getMeasurementLabel(itemKey, t)
   const {
     data: chart,
     isLoading,
@@ -33,7 +36,7 @@ export const ChartItemComponent = ({ userId, itemKey }: ChartItemProps) => {
   const getPanelComponent = () => {
     if (isLoading || isFetching) return <PageLoaderComponent compact />
     if (isError) return <ErrorComponent compact />
-    if (!chart.length) return <EmptyStateComponent title={`No ${title} Measurements`} compact />
+    if (!chart.length) return <EmptyStateComponent compact />
 
     return <ChartComponent data={chart} />
   }

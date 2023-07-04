@@ -7,6 +7,12 @@ import { useMemo } from 'react'
 
 import { queryClient } from '@/pages/_app'
 
+import { AvatarComponent } from '@/components/avatar'
+import { CardComponent } from '@/components/card'
+import { ContainerComponent } from '@/components/container'
+
+import { useTranslate } from '@/hooks/useTranslate'
+
 import { AddUserType } from '@/types/User'
 
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
@@ -18,21 +24,17 @@ const ErrorComponent = dynamic(() => import('@/components/error').then((componen
 const PageLoaderComponent = dynamic(() =>
   import('@/components/pageLoader').then((component) => component.PageLoaderComponent),
 )
-const UsersCardsComponent = dynamic(
-  () => import('@/components/users/usersCards').then((component) => component.UsersCardsComponent),
-  {
-    loading: () => <PageLoaderComponent />,
-  },
-)
+
 const UserCardComponent = dynamic(() =>
   import('@/components/userCard').then((component) => component.UserCardComponent),
 )
 const UserModalComponent = dynamic(() =>
-  import('@/components/userModal').then((component) => component.UserModalComponent),
+  import('@/components/modals/userModal').then((component) => component.UserModalComponent),
 )
 
 const UsersPage = () => {
   const router = useRouter()
+  const { t } = useTranslate()
   const [opened, { open, close }] = useDisclosure(false)
 
   const { data, error, isLoading } = useQuery({ queryKey: [QueryKeyEnum.USERS], queryFn: api.user.getUsers })
@@ -42,10 +44,10 @@ const UsersPage = () => {
     onSuccess: async () => {
       await queryClient.refetchQueries({ queryKey: [QueryKeyEnum.USERS] })
 
-      notify({ type: 'success', message: 'User added successfully' })
+      notify({ type: 'success', message: t('users.add_user_toast_success') })
     },
     onError: () => {
-      notify({ type: 'error', message: 'Unable to add user' })
+      notify({ type: 'error', message: t('users.add_user_toast_error') })
     },
   })
 
@@ -72,13 +74,26 @@ const UsersPage = () => {
 
   return (
     <div className="bg-green-100/10">
-      <UsersCardsComponent users={memoUsersList} onClick={open} />
-      <UserModalComponent
-        opened={opened}
-        onClose={close}
-        onSubmit={addUserMutation.mutate}
-        loading={addUserMutation.isLoading}
-      />
+      <ContainerComponent className="flex h-screen items-center">
+        <div className="w-full flex flex-wrap gap-6 justify-center">
+          {data?.map(({ _id, name, avatarUrl }) => (
+            <CardComponent key={`card-${_id}`} onClick={() => handleRedirect(_id)}>
+              <AvatarComponent src={avatarUrl} compact />
+              <div className="text-2xl">{name}</div>
+            </CardComponent>
+          ))}
+          <CardComponent className="bg-green-300/25 hover:bg-green-300/30" onClick={open}>
+            <div className="text-2xl">{t('users.add_user_button')}</div>
+          </CardComponent>
+        </div>
+
+        <UserModalComponent
+          opened={opened}
+          onClose={close}
+          onSubmit={addUserMutation.mutate}
+          loading={addUserMutation.isLoading}
+        />
+      </ContainerComponent>
     </div>
   )
 }
