@@ -1,4 +1,5 @@
 import { api } from '@/api'
+import { useTranslate } from '@/hooks/useTranslate'
 import { Tabs } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useMutation, useQuery } from '@tanstack/react-query'
@@ -26,6 +27,7 @@ import { HistoryTabComponent } from './historyTab'
 const DashboardPage = () => {
   const router = useRouter()
   const { userId, activeTab } = router.query
+  const { t } = useTranslate()
 
   const {
     data: user,
@@ -42,10 +44,10 @@ const DashboardPage = () => {
     mutationFn: (measurement: MeasurementType) => api.measurement.addMeasurement(measurement),
     onSuccess: async () => {
       await queryClient.refetchQueries({ stale: true })
-      notify({ type: 'success', message: 'Measurement added successfully' })
+      notify({ type: 'success', message: t('add_measurement.toast_success') })
     },
     onError: () => {
-      notify({ type: 'error', message: 'Unable to add measurement' })
+      notify({ type: 'error', message: t('add_measurement.toast_error') })
     },
   })
 
@@ -77,8 +79,8 @@ const DashboardPage = () => {
         color="blue-100"
       >
         <Tabs.List grow>
-          <Tabs.Tab value={DashboardTabEnum.HISTORY}>History</Tabs.Tab>
-          <Tabs.Tab value={DashboardTabEnum.CHARTS}>Charts</Tabs.Tab>
+          <Tabs.Tab value={DashboardTabEnum.HISTORY}>{t('dashboard.tabs.history')}</Tabs.Tab>
+          <Tabs.Tab value={DashboardTabEnum.CHARTS}>{t('dashboard.tabs.charts')}</Tabs.Tab>
         </Tabs.List>
 
         <Tabs.Panel value={DashboardTabEnum.HISTORY}>

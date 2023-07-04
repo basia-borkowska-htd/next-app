@@ -1,3 +1,4 @@
+import { useTranslate } from '@/hooks/useTranslate'
 import { Divider } from '@mantine/core'
 
 import { AvatarComponent } from '@/components/avatar'
@@ -16,6 +17,7 @@ interface HeaderProps {
   openModal: () => void
 }
 export const HeaderComponent = ({ user, openModal }: HeaderProps) => {
+  const { t } = useTranslate()
   const { name, age, sex, height, weight, avatarUrl } = user
 
   return (
@@ -26,10 +28,10 @@ export const HeaderComponent = ({ user, openModal }: HeaderProps) => {
           <AvatarComponent src={avatarUrl} name={name} />
           <div className="basis-1/2 flex ms-10">
             <div className="flex flex-col me-5">
-              <strong>Age</strong>
-              <strong>Sex</strong>
-              <strong>Height</strong>
-              <strong>Weight</strong>
+              <strong>{t('user.header.age')}</strong>
+              <strong>{t('user.header.sex')}</strong>
+              <strong>{t('user.header.height')}</strong>
+              <strong>{t('user.header.weight')}</strong>
             </div>
             <Divider mx="xl" size="xs" orientation="vertical" />
             <div className="flex flex-col ms-5">
@@ -40,7 +42,7 @@ export const HeaderComponent = ({ user, openModal }: HeaderProps) => {
             </div>
           </div>
           <div className="basis-1/4">
-            <ButtonComponent onClick={openModal}>Edit</ButtonComponent>
+            <ButtonComponent onClick={openModal}>{t('user.header.edit_button')}</ButtonComponent>
           </div>
         </div>
       </ContainerComponent>

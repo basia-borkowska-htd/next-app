@@ -28,11 +28,11 @@ export const SettingsComponent = ({ userId }: SettingsProps) => {
     mutationFn: () => api.user.deleteUser(userId),
     onSuccess: async () => {
       closeConfirmationModal()
-      notify({ type: 'success', message: 'User deleted successfully' })
+      notify({ type: 'success', message: t('user.settings.delete_user_modal.toast_success') })
       router.push(Pathnames.home)
     },
     onError: () => {
-      notify({ type: 'error', message: 'Unable to delete user' })
+      notify({ type: 'error', message: t('user.settings.delete_user_modal.toast_error') })
     },
   })
 
@@ -52,10 +52,10 @@ export const SettingsComponent = ({ userId }: SettingsProps) => {
       <ConfirmationModalComponent
         opened={confirmationModalOpened}
         loading={deleteUserMutation.isLoading}
-        title="Delete user"
-        description="Are you sure you want to delete this user and all of their measurements? This action is irreversible."
-        confirmButtonText="Delete"
-        declineButtonText="Cancel"
+        title={t('user.settings.delete_user_modal.title')}
+        description={t('user.settings.delete_user_modal.message')}
+        confirmButtonText={t('user.settings.delete_user_modal.delete_button')}
+        declineButtonText={t('user.settings.delete_user_modal.cancel_button')}
         onClose={closeConfirmationModal}
         onSubmit={deleteUserMutation.mutate}
       />

@@ -1,3 +1,4 @@
+import { useTranslate } from '@/hooks/useTranslate'
 import { TextInput } from '@mantine/core'
 import { DateTimePicker } from '@mantine/dates'
 import { useForm } from '@mantine/form'
@@ -38,7 +39,7 @@ export const MeasurementModalComponent = ({
 }: MeasurementModalProps) => {
   const isCreating = !measurement
   const initialValues = getInitialValues(measurement)
-
+  const { t } = useTranslate()
   const {
     onSubmit: onSubmitForm,
     getInputProps,
@@ -62,7 +63,7 @@ export const MeasurementModalComponent = ({
     <ModalComponent
       opened={opened}
       onClose={resetAndClose}
-      title={isCreating ? 'Add New Measurement' : 'Edit Measurement'}
+      title={isCreating ? t('measurement_modal.title_add') : t('measurement_modal.title_edit')}
       size="xl"
     >
       <form
@@ -87,14 +88,13 @@ export const MeasurementModalComponent = ({
           ))}
           <DateTimePicker
             valueFormat={DEFAULT_DATE_FORMAT}
-            label="Date and time"
-            placeholder="09 Jun 2023, 16:30"
+            label={t('measurement_modal.date')}
             value={dates.fromISOToDate(getInputProps('date').value)}
             onChange={(date) => setFieldValue('date', dates.fromDateToISO(date))}
           />
         </div>
         <ButtonComponent className="mt-6" loading={loading} type="submit" variant="gradient">
-          Submit
+          {t('measurement_modal.submit_button')}
         </ButtonComponent>
       </form>
     </ModalComponent>

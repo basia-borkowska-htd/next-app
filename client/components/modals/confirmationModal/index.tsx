@@ -1,3 +1,5 @@
+import { useTranslate } from '@/hooks/useTranslate'
+
 import { ButtonComponent } from '../../button'
 import { ModalComponent } from '../modal'
 
@@ -22,16 +24,20 @@ export const ConfirmationModalComponent = ({
   declineButtonText,
   onClose,
   onSubmit,
-}: ConfirmationModalProps) => (
-  <ModalComponent opened={opened} onClose={onClose} title={title || 'Are you sure?'}>
-    {description || 'Are you sure you want to confirm this action? It is irreversable!'}
-    <div className="basis-1/4 flex gap-2 mt-5">
-      <ButtonComponent variant="outline" onClick={onClose}>
-        {declineButtonText || 'No'}
-      </ButtonComponent>
-      <ButtonComponent variant="gradient" loading={loading} onClick={onSubmit}>
-        {confirmButtonText || 'Yes'}
-      </ButtonComponent>
-    </div>
-  </ModalComponent>
-)
+}: ConfirmationModalProps) => {
+  const { t } = useTranslate()
+
+  return (
+    <ModalComponent opened={opened} onClose={onClose} title={title || t('confirmation_modal.title')}>
+      {description || t('confirmation_modal.message')}
+      <div className="basis-1/4 flex gap-2 mt-5">
+        <ButtonComponent variant="outline" onClick={onClose}>
+          {declineButtonText || t('confirmation_modal.no_button')}
+        </ButtonComponent>
+        <ButtonComponent variant="gradient" loading={loading} onClick={onSubmit}>
+          {confirmButtonText || t('confirmation_modal.yes_button')}
+        </ButtonComponent>
+      </div>
+    </ModalComponent>
+  )
+}

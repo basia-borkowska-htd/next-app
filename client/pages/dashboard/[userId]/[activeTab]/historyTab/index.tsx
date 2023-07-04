@@ -1,4 +1,5 @@
 import { api } from '@/api'
+import { useTranslate } from '@/hooks/useTranslate'
 import { ActionIcon, Group } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { IconPencil, IconTrash } from '@tabler/icons-react'
@@ -28,6 +29,7 @@ interface HistoryTabProps {
   userId: string
 }
 export const HistoryTabComponent = ({ userId }: HistoryTabProps) => {
+  const { t } = useTranslate()
   const [openedDeleteModal, { open: openDeleteModal, close: closeDeleteModal }] = useDisclosure(false)
   const [openedEditModal, { open: openEditModal, close: closeEditModal }] = useDisclosure(false)
   const [currentMeasurement, setCurrentMeasurement] = useState<MeasurementType | undefined>(undefined)
@@ -49,10 +51,10 @@ export const HistoryTabComponent = ({ userId }: HistoryTabProps) => {
         measurements?.filter((measurement) => measurement._id !== currentMeasurement?._id),
       )
       setCurrentMeasurement(undefined)
-      notify({ type: 'success', message: 'Measurement deleted successfully' })
+      notify({ type: 'success', message: t('dashboard.delete_measurement.toast_success') })
     },
     onError: () => {
-      notify({ type: 'error', message: 'Unable to delete measurement' })
+      notify({ type: 'error', message: t('dashboard.delete_measurement.toast_error') })
     },
   })
 
@@ -66,16 +68,16 @@ export const HistoryTabComponent = ({ userId }: HistoryTabProps) => {
         ),
       )
       setCurrentMeasurement(undefined)
-      notify({ type: 'success', message: 'Measurement edited successfully' })
+      notify({ type: 'success', message: t('dashboard.edit_measurement.toast_success') })
     },
     onError: () => {
-      notify({ type: 'error', message: 'Unable to edit measurement' })
+      notify({ type: 'error', message: t('dashboard.edit_measurement.toast_error') })
     },
   })
 
   if (isLoading) return <PageLoaderComponent compact />
   if (error) return <ErrorComponent />
-  if (!measurements?.length) return <EmptyStateComponent title="No measurements" compact />
+  if (!measurements?.length) return <EmptyStateComponent compact />
 
   const handleActionClick = (value: React.MouseEvent<HTMLButtonElement, MouseEvent>, action: 'edit' | 'delete') => {
     const measurementId = get(value, 'target.parentElement.id', '')
@@ -86,7 +88,7 @@ export const HistoryTabComponent = ({ userId }: HistoryTabProps) => {
 
   return (
     <>
-      <TableComponent headers={['Date', ...Object.values(MeasurementLabels)]}>
+      <TableComponent headers={[t('dashboard.date_header'), ...Object.values(MeasurementLabels)]}>
         {measurements.map(
           ({
             _id,
@@ -135,7 +137,7 @@ export const HistoryTabComponent = ({ userId }: HistoryTabProps) => {
         onClose={closeDeleteModal}
         loading={false}
         onSubmit={deleteMeasurementMutation.mutate}
-        description="Are you sure you want to delete this measurement?"
+        description={t('dashboard.delete_measurement_description')}
       />
       <MeasurementModalComponent
         opened={openedEditModal}

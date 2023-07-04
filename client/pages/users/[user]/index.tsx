@@ -1,4 +1,5 @@
 import { api } from '@/api'
+import { useTranslate } from '@/hooks/useTranslate'
 import { Divider } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useMutation, useQuery } from '@tanstack/react-query'
@@ -25,6 +26,7 @@ import { SettingsComponent } from './settings'
 const UserProfilePage = () => {
   const router = useRouter()
   const { user: userId } = router.query
+  const { t } = useTranslate()
 
   const {
     data: user,
@@ -42,10 +44,10 @@ const UserProfilePage = () => {
     mutationFn: (currentUser: UpdateUserType) => api.user.updateUser(currentUser),
     onSuccess: async () => {
       await queryClient.refetchQueries({ queryKey: [QueryKeyEnum.USER] })
-      notify({ type: 'success', message: 'User updated successfully' })
+      notify({ type: 'success', message: t('user.edit_user.toast_success') })
     },
     onError: () => {
-      notify({ type: 'error', message: 'Unable to update user' })
+      notify({ type: 'error', message: t('user.edit_user.toast_error') })
     },
   })
 
