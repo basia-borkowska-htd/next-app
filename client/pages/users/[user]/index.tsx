@@ -1,6 +1,7 @@
 import { api } from '@/api'
 import { useDisclosure } from '@mantine/hooks'
 import { useMutation, useQuery } from '@tanstack/react-query'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 
 import { queryClient } from '@/pages/_app'
@@ -9,7 +10,6 @@ import { ConfirmationModalComponent } from '@/components/confirmationModal'
 import { EmptyStateComponent } from '@/components/emptyState'
 import { ErrorComponent } from '@/components/error'
 import { PageLoaderComponent } from '@/components/pageLoader'
-import { UserModalComponent } from '@/components/userModal'
 
 import { UpdateUserType } from '@/types/User'
 
@@ -21,6 +21,10 @@ import { Pathnames } from '@/utils/pathnames'
 import { ChartSectionComponent } from './chart'
 import { HeaderComponent } from './header'
 import { RangesComponent } from './ranges'
+
+const UserModalComponent = dynamic(() =>
+  import('@/components/userModal').then((component) => component.UserModalComponent),
+)
 
 const UserProfilePage = () => {
   const router = useRouter()

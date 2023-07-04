@@ -2,17 +2,21 @@ import { Input, NumberInput, SegmentedControl, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { IconTrash } from '@tabler/icons-react'
 import { MutateOptions } from '@tanstack/react-query'
+import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
-
-import { AvatarComponent } from '@/components/avatar'
-import { ButtonComponent } from '@/components/button'
-import { FileUploaderComponent } from '@/components/fileUploader'
-import { ModalComponent } from '@/components/modal'
 
 import { UpdateUserType, UserType } from '@/types/User'
 
-import { SexEnum } from '@/enums/Sex.enum'
 import { UnitEnum } from '@/enums/Unit.enum'
+
+import { getInitialValues, validate } from './helpers'
+
+const ModalComponent = dynamic(() => import('@/components/modal').then((component) => component.ModalComponent))
+const AvatarComponent = dynamic(() => import('@/components/avatar').then((component) => component.AvatarComponent))
+const ButtonComponent = dynamic(() => import('@/components/button').then((component) => component.ButtonComponent))
+const FileUploaderComponent = dynamic(() =>
+  import('@/components/fileUploader').then((component) => component.FileUploaderComponent),
+)
 
 interface UserModalProps {
   user?: UserType
@@ -26,6 +30,7 @@ interface UserModalProps {
 export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }: UserModalProps) => {
   const isCreating = !user
   const [avatarFile, setAvatarFile] = useState<File>()
+  const initialValues = getInitialValues(user)
 
   const {
     onSubmit: onSubmitForm,
@@ -34,30 +39,8 @@ export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }:
     setValues,
     setFieldValue,
   } = useForm({
-    initialValues: {
-      name: user?.name || '',
-      age: user?.age || 0,
-      sex: user?.sex || SexEnum.WOMAN,
-      height: user?.height || { value: undefined, unit: UnitEnum.CENTIMETERS },
-      weight: user?.weight || { value: undefined, unit: UnitEnum.KILOS },
-      avatarUrl: user?.avatarUrl || '',
-    },
-
-    validate: {
-      name: ({ length }) => (length < 2 ? 'Name must be at least 2 characters' : undefined),
-      age: (age) => (age > 17 && age < 100 ? undefined : 'Invalid age: acceptable values are from 18 to 99 years-old'),
-      sex: (sex) => (!sex ? 'Sex is required' : undefined),
-      height: (height) => {
-        if (!height || !height?.value) return undefined
-        return height?.value > 99 && height?.value < 301
-          ? undefined
-          : 'Invalid height: acceptable values are from 100 cm to 300 cm'
-      },
-      weight: (weight) => {
-        if (!weight || !weight?.value) return undefined
-        return weight.value < 301 ? undefined : 'Invalid weight: acceptable values are from 30 kg to 300 kg'
-      },
-    },
+    initialValues,
+    validate,
   })
 
   useEffect(() => {
