@@ -21,15 +21,14 @@ export const SettingsModalComponent = ({ opened, onClose }: SettingsModalProps) 
         <div className="flex flex-col gap-1">
           <strong>{t('user.settings.modal.language.title')}</strong>
           <Select
-            className="color-red"
             value={locale}
             data={getLanguageData(t)}
-            styles={(theme) => ({
+            styles={({ colors }) => ({
               item: {
                 '&[data-selected]': {
                   '&, &:hover': {
-                    backgroundColor: theme.colors['blue-100'][0],
-                    color: theme.white,
+                    backgroundColor: colors['blue-100'][0],
+                    color: colors.white,
                   },
                 },
               },
