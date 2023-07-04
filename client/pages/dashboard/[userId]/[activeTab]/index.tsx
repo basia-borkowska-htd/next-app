@@ -2,17 +2,12 @@ import { api } from '@/api'
 import { Tabs } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useMutation, useQuery } from '@tanstack/react-query'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 
 import { queryClient } from '@/pages/_app'
 
 import { ContainerComponent } from '@/components/container'
-import { ChartsTabComponent } from '@/components/dashboard/chartsTab'
-import { HeaderComponent } from '@/components/dashboard/header'
-import { HistoryTabComponent } from '@/components/dashboard/historyTab'
-import { ErrorComponent } from '@/components/error'
-import { MeasurementModalComponent } from '@/components/measurementModal'
-import { PageLoaderComponent } from '@/components/pageLoader'
 
 import { MeasurementType } from '@/types/Measurement'
 
@@ -22,9 +17,29 @@ import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 import { notify } from '@/utils/notifications'
 import { Pathnames } from '@/utils/pathnames'
 
+const ErrorComponent = dynamic(() => import('@/components/error').then((component) => component.ErrorComponent))
+const PageLoaderComponent = dynamic(() =>
+  import('@/components/pageLoader').then((component) => component.PageLoaderComponent),
+)
+const MeasurementModalComponent = dynamic(() =>
+  import('@/components/measurementModal').then((component) => component.MeasurementModalComponent),
+)
+
+const HeaderComponent = dynamic(() =>
+  import('@/components/dashboard/header').then((component) => component.HeaderComponent),
+)
+const ChartsTabComponent = dynamic(() =>
+  import('@/components/dashboard/chartsTab').then((component) => component.ChartsTabComponent),
+)
+
+const HistoryTabComponent = dynamic(() =>
+  import('@/components/dashboard/historyTab').then((component) => component.HistoryTabComponent),
+)
+
 const DashboardPage = () => {
   const router = useRouter()
   const { userId, activeTab } = router.query
+  const [opened, { open, close }] = useDisclosure(false)
 
   const {
     data: user,
@@ -36,7 +51,6 @@ const DashboardPage = () => {
     enabled: router.isReady,
   })
 
-  const [opened, { open, close }] = useDisclosure(false)
   const addMeasurementMutation = useMutation({
     mutationFn: (measurement: MeasurementType) => api.measurement.addMeasurement(measurement),
     onSuccess: async () => {

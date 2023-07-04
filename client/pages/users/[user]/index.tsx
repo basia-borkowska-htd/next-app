@@ -9,9 +9,6 @@ import { queryClient } from '@/pages/_app'
 import { EmptyStateComponent } from '@/components/emptyState'
 import { ErrorComponent } from '@/components/error'
 import { PageLoaderComponent } from '@/components/pageLoader'
-import { ChartSectionComponent } from '@/components/users/chart'
-import { HeaderComponent } from '@/components/users/header'
-import { RangesComponent } from '@/components/users/ranges'
 
 import { UpdateUserType } from '@/types/User'
 
@@ -19,6 +16,16 @@ import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 
 import { notify } from '@/utils/notifications'
 import { Pathnames } from '@/utils/pathnames'
+
+const ChartSectionComponent = dynamic(() =>
+  import('@/components/users/chart').then((component) => component.ChartSectionComponent),
+)
+const HeaderComponent = dynamic(() =>
+  import('@/components/users/header').then((component) => component.HeaderComponent),
+)
+const RangesComponent = dynamic(() =>
+  import('@/components/users/ranges').then((component) => component.RangesComponent),
+)
 
 const UserModalComponent = dynamic(() =>
   import('@/components/userModal').then((component) => component.UserModalComponent),
@@ -30,7 +37,6 @@ const ConfirmationModalComponent = dynamic(() =>
 
 const UserProfilePage = () => {
   const router = useRouter()
-
   const { user: userId } = router.query
 
   const {
@@ -76,7 +82,6 @@ const UserProfilePage = () => {
   return (
     <>
       <HeaderComponent user={user} openModal={openEditModal} openConfirmationModal={openConfirmationModal} />
-
       <RangesComponent userId={user._id} />
       <ChartSectionComponent userId={user._id} />
 

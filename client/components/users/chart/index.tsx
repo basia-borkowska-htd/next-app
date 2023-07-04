@@ -27,6 +27,7 @@ export const ChartSectionComponent = ({ userId }: ChartSectionProps) => {
   if (error) return <ErrorComponent title={error.toString()} compact />
   if (isLoading || isFetching) return <PageLoaderComponent compact />
   if (!chart) return <EmptyStateComponent title="No weights data available" compact />
+
   return (
     <ContainerComponent className="mt-8">
       <div className="mb-4 font-bold text-xl">Weight Chart</div>
