@@ -1,5 +1,6 @@
-import { useTranslate } from '@/hooks/useTranslate'
 import Image from 'next/image'
+
+import { useTranslate } from '@/hooks/useTranslate'
 
 import ErrorRobot from '@/assets/graphics/error-robot.svg'
 

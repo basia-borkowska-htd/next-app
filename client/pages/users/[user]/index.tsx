@@ -1,5 +1,4 @@
 import { api } from '@/api'
-import { useTranslate } from '@/hooks/useTranslate'
 import { Divider } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useMutation, useQuery } from '@tanstack/react-query'
@@ -11,6 +10,8 @@ import { EmptyStateComponent } from '@/components/emptyState'
 import { ErrorComponent } from '@/components/error'
 import { UserModalComponent } from '@/components/modals/userModal'
 import { PageLoaderComponent } from '@/components/pageLoader'
+
+import { useTranslate } from '@/hooks/useTranslate'
 
 import { UpdateUserType } from '@/types/User'
 

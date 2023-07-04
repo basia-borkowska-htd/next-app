@@ -1,6 +1,7 @@
+import { Box, Center, SegmentedControl, Select } from '@mantine/core'
+
 import { Locale, useLocale } from '@/hooks/useLocale'
 import { useTranslate } from '@/hooks/useTranslate'
-import { Box, Center, SegmentedControl, Select } from '@mantine/core'
 
 import { ModalComponent } from '../modal'
 import { getAppearanceData, getLanguageData, getUnitSystemData } from './helpers'

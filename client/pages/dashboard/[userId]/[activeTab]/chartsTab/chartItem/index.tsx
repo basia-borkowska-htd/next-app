@@ -1,5 +1,4 @@
 import { api } from '@/api'
-import { useTranslate } from '@/hooks/useTranslate'
 import { Accordion } from '@mantine/core'
 import { useQuery } from '@tanstack/react-query'
 
@@ -7,6 +6,8 @@ import { ChartComponent } from '@/components/chart'
 import { EmptyStateComponent } from '@/components/emptyState'
 import { ErrorComponent } from '@/components/error'
 import { PageLoaderComponent } from '@/components/pageLoader'
+
+import { useTranslate } from '@/hooks/useTranslate'
 
 import { MeasurementEnum, getMeasurementLabel } from '@/enums/Measurement.enum'
 

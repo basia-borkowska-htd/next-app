@@ -1,5 +1,4 @@
 import { api } from '@/api'
-import { useTranslate } from '@/hooks/useTranslate'
 import { useDisclosure } from '@mantine/hooks'
 import { IconSettings, IconTrash } from '@tabler/icons-react'
 import { useMutation } from '@tanstack/react-query'
@@ -9,6 +8,8 @@ import { ButtonComponent } from '@/components/button'
 import { ContainerComponent } from '@/components/container'
 import { ConfirmationModalComponent } from '@/components/modals/confirmationModal'
 import { SettingsModalComponent } from '@/components/modals/settingsModal'
+
+import { useTranslate } from '@/hooks/useTranslate'
 
 import { notify } from '@/utils/notifications'
 import { Pathnames } from '@/utils/pathnames'

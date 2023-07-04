@@ -1,5 +1,6 @@
-import { useTranslate } from '@/hooks/useTranslate'
 import { Loader } from '@mantine/core'
+
+import { useTranslate } from '@/hooks/useTranslate'
 
 interface PageLoaderProps {
   compact?: boolean

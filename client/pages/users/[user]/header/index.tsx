@@ -1,10 +1,11 @@
-import { useTranslate } from '@/hooks/useTranslate'
 import { Divider } from '@mantine/core'
 
 import { AvatarComponent } from '@/components/avatar'
 import { ButtonComponent } from '@/components/button'
 import { ContainerComponent } from '@/components/container'
 import { GoBackComponent } from '@/components/goBack'
+
+import { useTranslate } from '@/hooks/useTranslate'
 
 import { UserType } from '@/types/User'
 

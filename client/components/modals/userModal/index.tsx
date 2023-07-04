@@ -1,19 +1,20 @@
-import { useTranslate } from '@/hooks/useTranslate'
 import { Input, NumberInput, SegmentedControl, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { IconTrash } from '@tabler/icons-react'
 import { MutateOptions } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 
+import { AvatarComponent } from '@/components/avatar'
+import { ButtonComponent } from '@/components/button'
+import { FileUploaderComponent } from '@/components/fileUploader'
+import { ModalComponent } from '@/components/modals/modal'
+
+import { useTranslate } from '@/hooks/useTranslate'
+
 import { UpdateUserType, UserType } from '@/types/User'
 
 import { SexEnum } from '@/enums/Sex.enum'
 import { UnitEnum } from '@/enums/Unit.enum'
-
-import { AvatarComponent } from '../../avatar'
-import { ButtonComponent } from '../../button'
-import { FileUploaderComponent } from '../../fileUploader'
-import { ModalComponent } from '../modal'
 
 interface UserModalProps {
   user?: UserType

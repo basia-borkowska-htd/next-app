@@ -1,5 +1,6 @@
-import { useTranslate } from '@/hooks/useTranslate'
 import Image from 'next/image'
+
+import { useTranslate } from '@/hooks/useTranslate'
 
 import EmptyStateCat from '@/assets/graphics/empty-state-cat.svg'
 

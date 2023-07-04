@@ -1,8 +1,8 @@
-import { useTranslate } from '@/hooks/useTranslate'
-
 import { AvatarComponent } from '@/components/avatar'
 import { ButtonComponent } from '@/components/button'
 import { GoBackComponent } from '@/components/goBack'
+
+import { useTranslate } from '@/hooks/useTranslate'
 
 import { Pathnames } from '@/utils/pathnames'
 

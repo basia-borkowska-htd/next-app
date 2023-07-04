@@ -1,7 +1,7 @@
-import { useTranslate } from '@/hooks/useTranslate'
+import { ButtonComponent } from '@/components/button'
+import { ModalComponent } from '@/components/modals/modal'
 
-import { ButtonComponent } from '../../button'
-import { ModalComponent } from '../modal'
+import { useTranslate } from '@/hooks/useTranslate'
 
 interface ConfirmationModalProps {
   opened: boolean

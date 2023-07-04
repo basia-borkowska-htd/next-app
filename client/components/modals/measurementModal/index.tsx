@@ -1,4 +1,3 @@
-import { useTranslate } from '@/hooks/useTranslate'
 import { TextInput } from '@mantine/core'
 import { DateTimePicker } from '@mantine/dates'
 import { useForm } from '@mantine/form'
@@ -7,6 +6,8 @@ import { useEffect } from 'react'
 
 import { ButtonComponent } from '@/components/button'
 import { ModalComponent } from '@/components/modals/modal'
+
+import { useTranslate } from '@/hooks/useTranslate'
 
 import { MeasurementType } from '@/types/Measurement'
 

@@ -1,6 +1,7 @@
-import { useTranslate } from '@/hooks/useTranslate'
 import { useMantineTheme } from '@mantine/core'
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+
+import { useTranslate } from '@/hooks/useTranslate'
 
 import { ChartDataType } from '@/types/ChartData'
 

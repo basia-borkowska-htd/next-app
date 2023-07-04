@@ -1,5 +1,4 @@
 import { api } from '@/api'
-import { useTranslate } from '@/hooks/useTranslate'
 import { Tabs } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useMutation, useQuery } from '@tanstack/react-query'
@@ -11,6 +10,8 @@ import { ContainerComponent } from '@/components/container'
 import { ErrorComponent } from '@/components/error'
 import { MeasurementModalComponent } from '@/components/modals/measurementModal'
 import { PageLoaderComponent } from '@/components/pageLoader'
+
+import { useTranslate } from '@/hooks/useTranslate'
 
 import { MeasurementType } from '@/types/Measurement'
 

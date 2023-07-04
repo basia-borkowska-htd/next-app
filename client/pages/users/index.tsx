@@ -1,5 +1,4 @@
 import { api } from '@/api'
-import { useTranslate } from '@/hooks/useTranslate'
 import { useDisclosure } from '@mantine/hooks'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
@@ -12,6 +11,8 @@ import { ContainerComponent } from '@/components/container'
 import { ErrorComponent } from '@/components/error'
 import { UserModalComponent } from '@/components/modals/userModal'
 import { PageLoaderComponent } from '@/components/pageLoader'
+
+import { useTranslate } from '@/hooks/useTranslate'
 
 import { AddUserType } from '@/types/User'
 
