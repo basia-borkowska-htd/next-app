@@ -1,7 +1,10 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { api } from '@/api'
 import { useDisclosure } from '@mantine/hooks'
 import { useMutation, useQuery } from '@tanstack/react-query'
+import { signIn, signOut, useSession } from 'next-auth/react'
 import dynamic from 'next/dynamic'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 
@@ -33,6 +36,7 @@ const UserModalComponent = dynamic(() =>
 )
 
 const UsersPage = () => {
+  const { data: session } = useSession()
   const router = useRouter()
   const { t } = useTranslate()
   const [opened, { open, close }] = useDisclosure(false)
@@ -71,29 +75,36 @@ const UsersPage = () => {
 
   if (error) return <ErrorComponent title={error.toString()} />
   if (isLoading) return <PageLoaderComponent />
-
+  console.log({ session })
   return (
     <div className="bg-green-100/10">
-      <ContainerComponent className="flex h-screen items-center">
-        <div className="w-full flex flex-wrap gap-6 justify-center">
-          {data?.map(({ _id, name, avatarUrl }) => (
-            <CardComponent key={`card-${_id}`} onClick={() => handleRedirect(_id)}>
-              <AvatarComponent src={avatarUrl} compact />
-              <div className="text-2xl">{name}</div>
-            </CardComponent>
-          ))}
-          <CardComponent className="bg-green-300/25 hover:bg-green-300/30" onClick={open}>
-            <div className="text-2xl">{t('users.add_user_button')}</div>
-          </CardComponent>
-        </div>
+      {!session && (
+        <Link href="#" onClick={() => signIn()} className="btn-signin">
+          Sign in
+        </Link>
+      )}
+      {session && (
+        <>
+          <Link href="#" onClick={() => signOut()} className="btn-signin">
+            Sign out
+          </Link>
+          <ContainerComponent className="flex h-screen items-center">
+            <div className="w-full flex flex-wrap gap-6 justify-center">
+              {memoUsersList}
+              <CardComponent className="bg-green-300/25 hover:bg-green-300/30" onClick={open}>
+                <div className="text-2xl">{t('users.add_user_button')}</div>
+              </CardComponent>
+            </div>
 
-        <UserModalComponent
-          opened={opened}
-          onClose={close}
-          onSubmit={addUserMutation.mutate}
-          loading={addUserMutation.isLoading}
-        />
-      </ContainerComponent>
+            <UserModalComponent
+              opened={opened}
+              onClose={close}
+              onSubmit={addUserMutation.mutate}
+              loading={addUserMutation.isLoading}
+            />
+          </ContainerComponent>
+        </>
+      )}
     </div>
   )
 }
