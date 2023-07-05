@@ -19,9 +19,6 @@ import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 
 import { notify } from '@/utils/notifications'
 
-// TODO: move it
-import { SettingsComponent } from './settings'
-
 const ChartSectionComponent = dynamic(() =>
   import('@/components/users/chart').then((component) => component.ChartSectionComponent),
 )
@@ -34,6 +31,10 @@ const RangesComponent = dynamic(() =>
 
 const UserModalComponent = dynamic(() =>
   import('@/components/modals/userModal').then((component) => component.UserModalComponent),
+)
+
+const SettingsComponent = dynamic(() =>
+  import('@/components/users/settings').then((component) => component.SettingsComponent),
 )
 
 const UserProfilePage = () => {
@@ -70,7 +71,7 @@ const UserProfilePage = () => {
 
   return (
     <>
-      <HeaderComponent user={user} openModal={openEditModal} openConfirmationModal={openConfirmationModal} />
+      <HeaderComponent user={user} openModal={open} />
       <RangesComponent userId={user._id} />
       <ChartSectionComponent userId={user._id} />
       <Divider py="md" mx="md" />
