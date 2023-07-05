@@ -2,9 +2,11 @@ import { Head, Html, Main, NextScript } from 'next/document'
 
 const Document = () => (
   <Html lang="en">
-    <Head />
+    <Head>
+      <meta name="description" content="Application to control your weight" />
+    </Head>
+    <title>Next App</title>
     <body className="text-blue-300">
-      <title>Next App</title>
       <Main />
       <NextScript />
     </body>

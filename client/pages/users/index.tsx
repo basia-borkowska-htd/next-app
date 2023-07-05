@@ -1,16 +1,15 @@
 import { api } from '@/api'
 import { useDisclosure } from '@mantine/hooks'
 import { useMutation, useQuery } from '@tanstack/react-query'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
+import { useMemo } from 'react'
 
 import { queryClient } from '@/pages/_app'
 
 import { AvatarComponent } from '@/components/avatar'
 import { CardComponent } from '@/components/card'
 import { ContainerComponent } from '@/components/container'
-import { ErrorComponent } from '@/components/error'
-import { UserModalComponent } from '@/components/modals/userModal'
-import { PageLoaderComponent } from '@/components/pageLoader'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
@@ -20,6 +19,18 @@ import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 
 import { notify } from '@/utils/notifications'
 import { Pathnames } from '@/utils/pathnames'
+
+const ErrorComponent = dynamic(() => import('@/components/error').then((component) => component.ErrorComponent))
+const PageLoaderComponent = dynamic(() =>
+  import('@/components/pageLoader').then((component) => component.PageLoaderComponent),
+)
+
+const UserCardComponent = dynamic(() =>
+  import('@/components/userCard').then((component) => component.UserCardComponent),
+)
+const UserModalComponent = dynamic(() =>
+  import('@/components/modals/userModal').then((component) => component.UserModalComponent),
+)
 
 const UsersPage = () => {
   const router = useRouter()
@@ -40,12 +51,26 @@ const UsersPage = () => {
     },
   })
 
-  if (error) return <ErrorComponent title={error.toString()} />
-  if (isLoading) return <PageLoaderComponent />
-
   const handleRedirect = (id: string) => {
     router.push(Pathnames.userProfile.replace(':id', id))
   }
+
+  const memoUsersList = useMemo(
+    () =>
+      data?.map(({ _id, name, avatarUrl }) => (
+        <UserCardComponent
+          key={`user-card-${_id}-${name}`}
+          _id={_id}
+          avatarUrl={avatarUrl}
+          name={name}
+          handleClick={() => handleRedirect(_id)}
+        />
+      )),
+    [data],
+  )
+
+  if (error) return <ErrorComponent title={error.toString()} />
+  if (isLoading) return <PageLoaderComponent />
 
   return (
     <div className="bg-green-100/10">

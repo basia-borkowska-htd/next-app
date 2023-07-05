@@ -1,9 +1,15 @@
-import { AccordionComponent } from '@/components/accordion'
-import { ContainerComponent } from '@/components/container'
+import dynamic from 'next/dynamic'
 
 import { MeasurementEnum } from '@/enums/Measurement.enum'
 
-import { ChartItemComponent } from './chartItem'
+const AccordionComponent = dynamic(() =>
+  import('@/components/accordion').then((components) => components.AccordionComponent),
+)
+const ContainerComponent = dynamic(() =>
+  import('@/components/container').then((components) => components.ContainerComponent),
+)
+
+const ChartItemComponent = dynamic(() => import('./chartItem').then((components) => components.ChartItemComponent))
 
 interface ChartsTabProps {
   userId: string

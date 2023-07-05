@@ -1,5 +1,7 @@
 import { Avatar } from '@mantine/core'
-import { IconUser } from '@tabler/icons-react'
+import Image from 'next/image'
+
+import UserIcon from '@/assets/icons/user.svg'
 
 interface AvatarProps {
   src?: string
@@ -15,6 +17,7 @@ export const AvatarComponent = ({ src, name, compact = false, className = '', ce
       compact ? 'flex-row gap-5' : 'flex-col gap-2'
     } ${className}`}
   >
+    {/* TODO: remove avatar, because it still uses img component instead of next/image */}
     <Avatar
       src={src}
       alt="avatar"
@@ -23,7 +26,7 @@ export const AvatarComponent = ({ src, name, compact = false, className = '', ce
       radius={compact ? 'xl' : 'lg'}
       size={compact ? 'lg' : 'xl'}
     >
-      <IconUser size={compact ? '30' : '60'} />
+      <Image height={compact ? 30 : 50} src={UserIcon} alt="avatar" />
     </Avatar>
 
     {!!name && <div className={compact ? 'text-3xl' : 'text-xl font-bold'}>{name}</div>}

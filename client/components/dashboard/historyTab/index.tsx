@@ -4,16 +4,10 @@ import { useDisclosure } from '@mantine/hooks'
 import { IconPencil, IconTrash } from '@tabler/icons-react'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import get from 'lodash/get'
+import dynamic from 'next/dynamic'
 import React, { useState } from 'react'
 
 import { queryClient } from '@/pages/_app'
-
-import { EmptyStateComponent } from '@/components/emptyState'
-import { ErrorComponent } from '@/components/error'
-import { ConfirmationModalComponent } from '@/components/modals/confirmationModal'
-import { MeasurementModalComponent } from '@/components/modals/measurementModal'
-import { PageLoaderComponent } from '@/components/pageLoader'
-import { TableComponent } from '@/components/table'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
@@ -25,6 +19,21 @@ import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 import { dates } from '@/utils/dates'
 import { notify } from '@/utils/notifications'
 import { units } from '@/utils/units'
+
+const ErrorComponent = dynamic(() => import('@/components/error').then((component) => component.ErrorComponent))
+const PageLoaderComponent = dynamic(() =>
+  import('@/components/pageLoader').then((component) => component.PageLoaderComponent),
+)
+const MeasurementModalComponent = dynamic(() =>
+  import('@/components/modals/measurementModal').then((component) => component.MeasurementModalComponent),
+)
+const ConfirmationModalComponent = dynamic(() =>
+  import('@/components/modals/confirmationModal').then((component) => component.ConfirmationModalComponent),
+)
+const EmptyStateComponent = dynamic(() =>
+  import('@/components/emptyState').then((component) => component.EmptyStateComponent),
+)
+const TableComponent = dynamic(() => import('@/components/table').then((component) => component.TableComponent))
 
 interface HistoryTabProps {
   userId: string

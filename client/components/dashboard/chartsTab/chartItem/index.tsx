@@ -1,15 +1,20 @@
 import { api } from '@/api'
 import { Accordion } from '@mantine/core'
 import { useQuery } from '@tanstack/react-query'
-
-import { ChartComponent } from '@/components/chart'
-import { EmptyStateComponent } from '@/components/emptyState'
-import { ErrorComponent } from '@/components/error'
-import { PageLoaderComponent } from '@/components/pageLoader'
+import dynamic from 'next/dynamic'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
 import { MeasurementEnum, getMeasurementLabel } from '@/enums/Measurement.enum'
+
+const ErrorComponent = dynamic(() => import('@/components/error').then((component) => component.ErrorComponent))
+const PageLoaderComponent = dynamic(() =>
+  import('@/components/pageLoader').then((component) => component.PageLoaderComponent),
+)
+const EmptyStateComponent = dynamic(() =>
+  import('@/components/emptyState').then((component) => component.EmptyStateComponent),
+)
+const ChartComponent = dynamic(() => import('@/components/chart').then((component) => component.ChartComponent))
 
 interface ChartItemProps {
   userId: string

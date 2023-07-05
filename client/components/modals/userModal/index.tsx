@@ -2,12 +2,8 @@ import { Input, NumberInput, SegmentedControl, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { IconTrash } from '@tabler/icons-react'
 import { MutateOptions } from '@tanstack/react-query'
+import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
-
-import { AvatarComponent } from '@/components/avatar'
-import { ButtonComponent } from '@/components/button'
-import { FileUploaderComponent } from '@/components/fileUploader'
-import { ModalComponent } from '@/components/modals/modal'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
@@ -15,6 +11,15 @@ import { UpdateUserType, UserType } from '@/types/User'
 
 import { SexEnum } from '@/enums/Sex.enum'
 import { UnitEnum } from '@/enums/Unit.enum'
+
+import { getInitialValues, validate } from './helpers'
+
+const ModalComponent = dynamic(() => import('@/components/modals/modal').then((component) => component.ModalComponent))
+const AvatarComponent = dynamic(() => import('@/components/avatar').then((component) => component.AvatarComponent))
+const ButtonComponent = dynamic(() => import('@/components/button').then((component) => component.ButtonComponent))
+const FileUploaderComponent = dynamic(() =>
+  import('@/components/fileUploader').then((component) => component.FileUploaderComponent),
+)
 
 interface UserModalProps {
   user?: UserType
@@ -28,6 +33,7 @@ interface UserModalProps {
 export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }: UserModalProps) => {
   const isCreating = !user
   const [avatarFile, setAvatarFile] = useState<File>()
+  const initialValues = getInitialValues(user)
   const { t } = useTranslate()
 
   const {

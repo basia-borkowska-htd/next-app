@@ -2,13 +2,13 @@ import { api } from '@/api'
 import { Divider } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useMutation, useQuery } from '@tanstack/react-query'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 
 import { queryClient } from '@/pages/_app'
 
 import { EmptyStateComponent } from '@/components/emptyState'
 import { ErrorComponent } from '@/components/error'
-import { UserModalComponent } from '@/components/modals/userModal'
 import { PageLoaderComponent } from '@/components/pageLoader'
 
 import { useTranslate } from '@/hooks/useTranslate'
@@ -19,10 +19,23 @@ import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 
 import { notify } from '@/utils/notifications'
 
-import { ChartSectionComponent } from './chart'
-import { HeaderComponent } from './header'
-import { RangesComponent } from './ranges'
-import { SettingsComponent } from './settings'
+const ChartSectionComponent = dynamic(() =>
+  import('@/components/users/chart').then((component) => component.ChartSectionComponent),
+)
+const HeaderComponent = dynamic(() =>
+  import('@/components/users/header').then((component) => component.HeaderComponent),
+)
+const RangesComponent = dynamic(() =>
+  import('@/components/users/ranges').then((component) => component.RangesComponent),
+)
+
+const UserModalComponent = dynamic(() =>
+  import('@/components/modals/userModal').then((component) => component.UserModalComponent),
+)
+
+const SettingsComponent = dynamic(() =>
+  import('@/components/users/settings').then((component) => component.SettingsComponent),
+)
 
 const UserProfilePage = () => {
   const router = useRouter()
@@ -59,7 +72,6 @@ const UserProfilePage = () => {
   return (
     <>
       <HeaderComponent user={user} openModal={open} />
-
       <RangesComponent userId={user._id} />
       <ChartSectionComponent userId={user._id} />
       <Divider py="md" mx="md" />
