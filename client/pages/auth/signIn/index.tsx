@@ -1,5 +1,5 @@
 import { Card, Title } from '@mantine/core'
-import { IconBrandFacebookFilled, IconBrandGoogle } from '@tabler/icons-react'
+import { IconBrandFacebookFilled, IconBrandGoogle, IconBrandInstagram, IconBrandLinkedin } from '@tabler/icons-react'
 import type { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
 import { getServerSession } from 'next-auth/next'
 import { getProviders, signIn } from 'next-auth/react'
@@ -28,6 +28,10 @@ const getButtonIcon = (name: string) => {
       return <IconBrandGoogle size={20} stroke={4} />
     case 'Facebook':
       return <IconBrandFacebookFilled size={22} />
+    case 'Instagram':
+      return <IconBrandInstagram size={22} />
+    case 'LinkedIn':
+      return <IconBrandLinkedin size={22} />
     default:
       return null
   }
