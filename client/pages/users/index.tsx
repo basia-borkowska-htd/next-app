@@ -6,11 +6,9 @@ import { signIn, signOut, useSession } from 'next-auth/react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useMemo } from 'react'
 
 import { queryClient } from '@/pages/_app'
 
-import { AvatarComponent } from '@/components/avatar'
 import { CardComponent } from '@/components/card'
 import { ContainerComponent } from '@/components/container'
 import { EmptyStateComponent } from '@/components/emptyState'
@@ -46,6 +44,7 @@ const UsersPage = () => {
     queryKey: [QueryKeyEnum.USER],
     queryFn: () => api.user.getUserByEmail(session?.user?.email),
     enabled: !!session,
+    retry: 1,
   })
 
   const addUserMutation = useMutation({

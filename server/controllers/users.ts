@@ -26,6 +26,16 @@ const getUser = async (req: Request, res: Response) => {
   }
 }
 
+const getUserByEmail = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findOne({ email: req.params.email })
+    if (user === null) res.status(404).json({ error: 'User with that email does not exist' })
+    else res.status(200).json({ user })
+  } catch (error) {
+    res.status(404).json({ msg: 'User not found' })
+  }
+}
+
 const getBasicUser = async (req: Request, res: Response) => {
   try {
     const user = await User.findOne({ _id: req.params.id }).select('name avatarUrl')
@@ -117,4 +127,4 @@ const modifyUser = async (req: Request, res: Response, action: ActionType, avata
   res.status(200).json({ user })
 }
 
-export { getUsers, getUser, getBasicUser, createUser, updateUser, deleteUser }
+export { getUsers, getUser, getUserByEmail, getBasicUser, createUser, updateUser, deleteUser }
