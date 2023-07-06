@@ -14,7 +14,7 @@ const HomePage = () => {
     if (session?.user) {
       router.push(Pathnames.users)
     } else {
-      router.push(Pathnames.auth)
+      router.push(Pathnames.auth.signIn)
     }
   }, [session?.user])
 

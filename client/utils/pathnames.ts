@@ -3,5 +3,8 @@ export const Pathnames = {
   users: '/users',
   userProfile: '/users/:id',
   dashboard: '/dashboard/:id/:activeTab',
-  auth: '/auth/signIn',
+  auth: {
+    signIn: '/auth/signIn',
+    register: '/auth/register',
+  },
 }
