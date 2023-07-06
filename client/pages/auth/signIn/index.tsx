@@ -16,7 +16,7 @@ import { Pathnames } from '@/utils/pathnames'
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const session = await getServerSession(context.req, context.res, authOptions)
-  if (session) return { redirect: { destination: '/' } }
+  if (session) return { redirect: { destination: Pathnames.home } }
 
   const providers = await getProviders()
   const csrfToken = await getCsrfToken(context)
