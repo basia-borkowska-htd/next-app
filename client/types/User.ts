@@ -5,6 +5,7 @@ import { RecordType } from './helpers'
 export type BasicUserType = {
   _id: string
   name: string
+  email: string
   avatarUrl?: string
 }
 

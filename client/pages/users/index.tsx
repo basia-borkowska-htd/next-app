@@ -13,6 +13,7 @@ import { queryClient } from '@/pages/_app'
 import { AvatarComponent } from '@/components/avatar'
 import { CardComponent } from '@/components/card'
 import { ContainerComponent } from '@/components/container'
+import { EmptyStateComponent } from '@/components/emptyState'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
@@ -41,7 +42,11 @@ const UsersPage = () => {
   const { t } = useTranslate()
   const [opened, { open, close }] = useDisclosure(false)
 
-  const { data, error, isLoading } = useQuery({ queryKey: [QueryKeyEnum.USERS], queryFn: api.user.getUsers })
+  const { data, error, isLoading } = useQuery({
+    queryKey: [QueryKeyEnum.USER],
+    queryFn: () => api.user.getUserByEmail(session?.user?.email),
+    enabled: !!session,
+  })
 
   const addUserMutation = useMutation({
     mutationFn: (user: AddUserType) => api.user.addUser(user),
@@ -59,30 +64,18 @@ const UsersPage = () => {
     router.push(Pathnames.userProfile.replace(':id', id))
   }
 
-  const memoUsersList = useMemo(
-    () =>
-      data?.map(({ _id, name, avatarUrl }) => (
-        <UserCardComponent
-          key={`user-card-${_id}-${name}`}
-          _id={_id}
-          avatarUrl={avatarUrl}
-          name={name}
-          handleClick={() => handleRedirect(_id)}
-        />
-      )),
-    [data],
-  )
-
-  if (error) return <ErrorComponent title={error.toString()} />
+  if (!session)
+    return (
+      <Link href="#" onClick={() => signIn()} className="btn-signin">
+        Sign in
+      </Link>
+    )
   if (isLoading) return <PageLoaderComponent />
-  console.log({ session })
+  if (error) return <ErrorComponent title={error.toString()} />
+  if (!data) return <EmptyStateComponent />
+
   return (
     <div className="bg-green-100/10">
-      {!session && (
-        <Link href="#" onClick={() => signIn()} className="btn-signin">
-          Sign in
-        </Link>
-      )}
       {session && (
         <>
           <Link href="#" onClick={() => signOut()} className="btn-signin">
@@ -90,7 +83,13 @@ const UsersPage = () => {
           </Link>
           <ContainerComponent className="flex h-screen items-center">
             <div className="w-full flex flex-wrap gap-6 justify-center">
-              {memoUsersList}
+              <UserCardComponent
+                key={`user-card-${data._id}-${data.name}`}
+                _id={data._id}
+                avatarUrl={data.avatarUrl}
+                name={data.name}
+                handleClick={() => handleRedirect(data._id)}
+              />
               <CardComponent className="bg-green-300/25 hover:bg-green-300/30" onClick={open}>
                 <div className="text-2xl">{t('users.add_user_button')}</div>
               </CardComponent>

@@ -1,5 +1,21 @@
 import { AddUserType, BasicUserType, UpdateUserType, UserType } from '@/types/User'
 
+const formatUser = ({ age, name, sex, height, weight, avatarFile, avatarUrl }: UpdateUserType) => {
+  const formData = new FormData()
+  if (avatarFile) formData.append('avatar', avatarFile)
+  formData.append('age', age.toString())
+  formData.append('name', name)
+  formData.append('sex', sex)
+  formData.append('height[unit]', height.unit)
+  formData.append('height[value]', height.value?.toString() || '')
+  if (weight) {
+    formData.append('weight[unit]', weight.unit)
+    formData.append('weight[value]', weight.value?.toString() || '')
+  }
+  if (!avatarUrl) formData.append('removeAvatar', 'true')
+  return formData
+}
+
 export const usersApi = {
   getUsers: async (): Promise<BasicUserType[]> => {
     const res = await fetch('http://localhost:3001/api/users')
@@ -11,6 +27,14 @@ export const usersApi = {
     if (!id) throw new Error('User does not exist')
 
     const res = await fetch(`http://localhost:3001/api/users/${id}`)
+    const data = await res.json()
+    if (!data?.user) throw new Error(data.error)
+    return data.user
+  },
+  getUserByEmail: async (email?: string): Promise<UserType> => {
+    if (!email) throw new Error('Email not provided')
+
+    const res = await fetch(`http://localhost:3001/api/users/${email}/auth`)
     const data = await res.json()
     if (!data?.user) throw new Error(data.error)
     return data.user
@@ -59,20 +83,4 @@ export const usersApi = {
     if (!data?.success) throw new Error(data.error)
     return data.success
   },
-}
-
-const formatUser = ({ age, name, sex, height, weight, avatarFile, avatarUrl }: UpdateUserType) => {
-  const formData = new FormData()
-  if (avatarFile) formData.append('avatar', avatarFile)
-  formData.append('age', age.toString())
-  formData.append('name', name)
-  formData.append('sex', sex)
-  formData.append('height[unit]', height.unit)
-  formData.append('height[value]', height.value?.toString() || '')
-  if (weight) {
-    formData.append('weight[unit]', weight.unit)
-    formData.append('weight[value]', weight.value?.toString() || '')
-  }
-  if (!avatarUrl) formData.append('removeAvatar', 'true')
-  return formData
 }

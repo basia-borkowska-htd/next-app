@@ -1,8 +1,11 @@
+import { signOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
 import ErrorRobot from '@/assets/graphics/error-robot.svg'
+
+import { ButtonComponent } from '../button'
 
 interface ErrorProps {
   title?: string
@@ -20,6 +23,9 @@ export const ErrorComponent = ({ title, message, secondaryMessage, compact = fal
       <strong className={`${compact ? 'text-xl' : 'text-2xl'}`}>
         {secondaryMessage || t('error.secondary_message')}
       </strong>
+      <ButtonComponent onClick={() => signOut()} variant="outline" fullWidth={false}>
+        Go to login page
+      </ButtonComponent>
     </div>
   )
 }
