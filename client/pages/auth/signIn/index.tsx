@@ -5,16 +5,18 @@ import { getServerSession } from 'next-auth/next'
 import { getProviders, signIn } from 'next-auth/react'
 import Image from 'next/image'
 
+import { authOptions } from '@/pages/api/auth/[...nextauth]'
+
 import { ButtonComponent } from '@/components/button'
 
 import Logo from '@/assets/graphics/logo.svg'
 
-import { authOptions } from '../../api/auth/[...nextauth]'
+import { Pathnames } from '@/utils/pathnames'
 
 export const getServerSideProps = async ({ req, res }: GetServerSidePropsContext) => {
   const session = await getServerSession(req, res, authOptions)
 
-  if (session) return { redirect: { destination: '/' } }
+  if (session) return { redirect: { destination: Pathnames.home } }
 
   const providers = await getProviders()
 

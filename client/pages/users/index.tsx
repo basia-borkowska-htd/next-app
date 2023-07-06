@@ -19,6 +19,7 @@ import { AddUserType } from '@/types/User'
 
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 
+import { customSignOut } from '@/utils/customSignOut'
 import { notify } from '@/utils/notifications'
 import { Pathnames } from '@/utils/pathnames'
 
@@ -77,14 +78,7 @@ const UsersPage = () => {
     <div className="bg-green-100/10">
       {session && (
         <>
-          <Link
-            href="#"
-            onClick={() => {
-              window.localStorage.clear()
-              signOut({ callbackUrl: '/' })
-            }}
-            className="btn-signin"
-          >
+          <Link href="#" onClick={customSignOut} className="btn-signin">
             Sign out
           </Link>
           <ContainerComponent className="flex h-screen items-center">
