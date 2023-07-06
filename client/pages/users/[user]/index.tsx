@@ -10,6 +10,7 @@ import { queryClient } from '@/pages/_app'
 import { EmptyStateComponent } from '@/components/emptyState'
 import { ErrorComponent } from '@/components/error'
 import { PageLoaderComponent } from '@/components/pageLoader'
+import withPrivateRoute from '@/components/withPrivateRoute'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
@@ -88,4 +89,4 @@ const UserProfilePage = () => {
   )
 }
 
-export default UserProfilePage
+export default withPrivateRoute(UserProfilePage)

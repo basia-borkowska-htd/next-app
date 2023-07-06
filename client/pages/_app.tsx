@@ -18,7 +18,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     <SessionProvider session={pageProps.session}>
       <QueryClientProvider client={queryClient}>
         <IntlProvider locale={locale as string} messages={messages}>
-          <ReactQueryDevtools initialIsOpen />
+          <ReactQueryDevtools initialIsOpen={false} />
           <MantineProvider
             theme={{
               colors: {

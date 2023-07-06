@@ -8,6 +8,7 @@ import { useRouter } from 'next/router'
 import { queryClient } from '@/pages/_app'
 
 import { ContainerComponent } from '@/components/container'
+import withPrivateRoute from '@/components/withPrivateRoute'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
@@ -108,4 +109,4 @@ const DashboardPage = () => {
   )
 }
 
-export default DashboardPage
+export default withPrivateRoute(DashboardPage)

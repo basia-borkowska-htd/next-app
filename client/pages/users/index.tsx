@@ -77,7 +77,14 @@ const UsersPage = () => {
     <div className="bg-green-100/10">
       {session && (
         <>
-          <Link href="#" onClick={() => signOut()} className="btn-signin">
+          <Link
+            href="#"
+            onClick={() => {
+              window.localStorage.clear()
+              signOut({ callbackUrl: '/' })
+            }}
+            className="btn-signin"
+          >
             Sign out
           </Link>
           <ContainerComponent className="flex h-screen items-center">

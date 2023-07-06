@@ -30,7 +30,7 @@ export const SettingsComponent = ({ userId }: SettingsProps) => {
     onSuccess: async () => {
       closeConfirmationModal()
       notify({ type: 'success', message: t('user.settings.delete_user_modal.toast_success') })
-      router.push(Pathnames.home)
+      router.push(Pathnames.users)
     },
     onError: () => {
       notify({ type: 'error', message: t('user.settings.delete_user_modal.toast_error') })

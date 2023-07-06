@@ -1,11 +1,11 @@
 import { signOut } from 'next-auth/react'
 import Image from 'next/image'
 
+import { ButtonComponent } from '@/components/button'
+
 import { useTranslate } from '@/hooks/useTranslate'
 
 import ErrorRobot from '@/assets/graphics/error-robot.svg'
-
-import { ButtonComponent } from '../button'
 
 interface ErrorProps {
   title?: string

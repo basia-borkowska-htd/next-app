@@ -5,14 +5,7 @@ const nextConfig = {
   images: {
     domains: ['nextappzepp.s3.amazonaws.com'],
   },
-  async rewrites() {
-    return [
-      {
-        source: '/',
-        destination: '/users',
-      },
-    ]
-  },
+
   i18n: {
     locales: ['en', 'pl'],
     defaultLocale: 'en',
