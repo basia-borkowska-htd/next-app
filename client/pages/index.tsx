@@ -4,7 +4,6 @@ import { useEffect } from 'react'
 
 import { PageLoaderComponent } from '@/components/pageLoader'
 
-import { zeppLocalStorage } from '@/utils/localStorage'
 import { Pathnames } from '@/utils/pathnames'
 
 const HomePage = () => {
@@ -13,7 +12,6 @@ const HomePage = () => {
 
   useEffect(() => {
     if (session?.user) {
-      zeppLocalStorage().updateSession('session', { ...session, auth: true })
       router.push(Pathnames.users)
     } else {
       router.push(Pathnames.auth)

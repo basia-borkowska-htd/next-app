@@ -1,39 +1,34 @@
+/* eslint-disable react/destructuring-assignment */
+import { useSession } from 'next-auth/react'
 import Router from 'next/router'
 import React from 'react'
 
-import { zeppLocalStorage } from '@/utils/localStorage'
-
-const login = '/auth/signIn' // Define your login route address.
-
-/**
- * Check user authentication and authorization
- * It depends on you and your auth service provider.
- * @returns {{auth: null}}
- */
+const login = '/auth/signIn'
 
 export default (WrappedComponent) => {
-  const HocComponent = ({ ...props }) => <WrappedComponent {...props} />
+  const HocComponent = (context) => {
+    const { data: auth } = useSession()
 
-  HocComponent.getInitialProps = async (context) => {
-    const userAuth = zeppLocalStorage().getSession()?.auth
-    // Are you an authorized user or not?
-    if (!userAuth) {
-      // Handle server-side and client-side rendering.
-      if (context.res) {
-        context.res?.writeHead(302, {
-          Location: login,
-        })
-        context.res?.end()
-      } else {
-        Router.replace(login)
+    const getProps = async () => {
+      if (!auth) {
+        if (context.res) {
+          context.res?.writeHead(302, {
+            Location: login,
+          })
+          context.res?.end()
+        } else {
+          Router.replace(login)
+        }
+      } else if (WrappedComponent.getInitialProps) {
+        const wrappedProps = await WrappedComponent.getInitialProps({ ...context, auth })
+        return { ...wrappedProps, userAuth: auth }
       }
-    } else if (WrappedComponent.getInitialProps) {
-      const wrappedProps = await WrappedComponent.getInitialProps({ ...context, auth: userAuth })
-      return { ...wrappedProps, userAuth }
+      return { auth }
     }
-
-    return { userAuth }
+    return <WrappedComponent {...getProps()} />
   }
+
+  HocComponent.getInitialProps = async (context) => context
 
   return HocComponent
 }
