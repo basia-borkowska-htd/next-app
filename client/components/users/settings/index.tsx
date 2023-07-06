@@ -40,12 +40,21 @@ export const SettingsComponent = ({ userId }: SettingsProps) => {
   return (
     <ContainerComponent className="flex justify-center">
       <div className="flex flex-col  items-start mb-8">
-        <ButtonComponent variant="icon" fullWidth={false} onClick={openSettingsModal}>
-          <IconSettings size={22} className="mr-2" />
+        <ButtonComponent
+          variant="icon"
+          leftIcon={<IconSettings size={22} />}
+          fullWidth={false}
+          onClick={openSettingsModal}
+        >
           {t('user.settings.settings_button')}
         </ButtonComponent>
-        <ButtonComponent variant="icon" className="text-red-600" fullWidth={false} onClick={openConfirmationModal}>
-          <IconTrash size={22} className="mr-2" />
+        <ButtonComponent
+          variant="icon"
+          leftIcon={<IconTrash size={22} />}
+          className="text-red-600"
+          fullWidth={false}
+          onClick={openConfirmationModal}
+        >
           {t('user.settings.delete_user_button')}
         </ButtonComponent>
       </div>

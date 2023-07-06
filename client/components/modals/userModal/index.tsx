@@ -108,12 +108,12 @@ export const UserModalComponent = ({ user, opened, loading, onClose, onSubmit }:
               <ButtonComponent
                 variant="icon"
                 className="text-red-600 flex"
+                leftIcon={<IconTrash size={22} />}
                 fullWidth={false}
                 onClick={() => {
                   setFieldValue('avatarUrl', '')
                 }}
               >
-                <IconTrash size={22} className="mr-2" />
                 {t('user_modal.remove_button')}
               </ButtonComponent>
             )}

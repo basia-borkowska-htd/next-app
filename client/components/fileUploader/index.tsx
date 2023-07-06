@@ -18,8 +18,13 @@ export const FileUploaderComponent = ({ handleChange, message }: FileUploaderPro
   return (
     <>
       <input type="file" className="hidden" ref={ref} onChange={(e) => handleChange(e.target.files?.[0])} />
-      <ButtonComponent className="flex" variant="icon" fullWidth={false} onClick={handleClick}>
-        <IconUpload className="mr-2" size={22} />
+      <ButtonComponent
+        className="flex"
+        variant="icon"
+        leftIcon={<IconUpload size={22} />}
+        fullWidth={false}
+        onClick={handleClick}
+      >
         {message}
       </ButtonComponent>
     </>
