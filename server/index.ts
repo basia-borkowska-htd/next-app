@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import express from 'express'
 import mongoose from 'mongoose'
 
+import { router as authRoutes } from './routes/auth'
 import { router as measurementsRoutes } from './routes/measurements'
 import { router as rangesRoutes } from './routes/rangesLists'
 import { router as userRoutes } from './routes/users'
@@ -20,5 +21,6 @@ app.use(cors())
 app.use(express.json())
 
 app.use('/api/users', userRoutes)
+app.use('/api/auth', authRoutes)
 app.use('/api/measurements', measurementsRoutes)
 app.use('/api/ranges', rangesRoutes)
