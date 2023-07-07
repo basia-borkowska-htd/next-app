@@ -1,4 +1,7 @@
 {
+  "basic": {
+    "title": "Next App"
+  },
   "users": {
     "add_user_button": "Dodaj nowego użytkownika",
     "add_user_toast_success": "Użytkownik dodany prawidłowo",
@@ -154,5 +157,29 @@
     "bmr": "BMR",
     "metabolic_age": "Wiek metaboliczny",
     "body_rating": "Ocena sylwetki"
+  },
+  "auth": {
+    "sign_in": {
+      "email_label": "Email",
+      "email_placeholder": "user@example.com",
+      "password_label": "Hasło",
+      "password_placeholder": "*********",
+      "button": "Zaloguj się",
+      "no_account": "Nie masz jeszcze konta? ",
+      "register": "Rejestracja",
+      "or": "lub",
+      "sign_in_with": "Zaloguj za pomocą {name}"
+    },
+    "register": {
+      "email_label": "Email",
+      "email_placeholder": "user@example.com",
+      "password_label": "Hasło",
+      "password_placeholder": "*********",
+      "confirm_password_label": "Potwierdzenie hasła",
+      "confirm_password_placeholder": "*********",
+      "button": "Rejestracja",
+      "sign_in": "Zaloguj się",
+      "have_account": "Masz już założone konto? "
+    }
   }
 }
