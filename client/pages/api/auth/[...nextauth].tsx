@@ -30,9 +30,8 @@ export const authOptions: NextAuthOptions = {
         email: { type: 'text' },
         password: { type: 'password' },
       },
-      async authorize(credentials, req) {
-        // TODO: authenticate user
-        const user = await api.user.getUserByEmail(credentials.email)
+      async authorize(credentials) {
+        const user = await api.auth.authenticate(credentials)
 
         if (user) {
           return { id: user._id, name: user.name, email: user.email }

@@ -1,3 +1,4 @@
+import { api } from '@/api'
 import { Card, PasswordInput, Stepper, TextInput, Title } from '@mantine/core'
 import { useForm, yupResolver } from '@mantine/form'
 import Image from 'next/image'
@@ -5,6 +6,8 @@ import Link from 'next/link'
 import * as Yup from 'yup'
 
 import { ButtonComponent } from '@/components/button'
+
+import { ProviderEnum } from '@/enums/Provider.enum'
 
 import Logo from '@/assets/graphics/logo.svg'
 
@@ -27,8 +30,10 @@ const RegisterPage = () => {
     validate: yupResolver(schema),
   })
 
-  const handleSubmit = ({ email, password }: Yup.InferType<typeof schema>) => {
-    console.log({ email, password })
+  const handleSubmit = async ({ email, password }: Yup.InferType<typeof schema>) => {
+    const result = await api.auth.createAccount({ email, password, provider: ProviderEnum.CREDENTIALS })
+    // TODO: handle result
+    console.log({ result })
   }
 
   return (
