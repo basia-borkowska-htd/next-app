@@ -1,6 +1,8 @@
-import { Card, PasswordInput, TextInput, Title } from '@mantine/core'
+import { Card, PasswordInput, Stepper, TextInput, Title } from '@mantine/core'
+import { useForm, yupResolver } from '@mantine/form'
 import Image from 'next/image'
 import Link from 'next/link'
+import * as Yup from 'yup'
 
 import { ButtonComponent } from '@/components/button'
 
@@ -8,30 +10,80 @@ import Logo from '@/assets/graphics/logo.svg'
 
 import { Pathnames } from '@/utils/pathnames'
 
-// TODO: finish register page
-const RegisterPage = () => (
-  <div className="bg-green-100/10 flex items-center justify-center h-screen">
-    <Card shadow="md" padding="lg" radius="md" className="h-fit w-3/12">
-      <div className="flex flex-col items-center gap-1 py-4">
-        <Image src={Logo} alt="Logo" />
-        <Title color="blue-300">Next App</Title>
-      </div>
-      <form className="flex flex-col gap-2" method="post" action="/api/auth/callback/credentials">
-        <TextInput label="Email" placeholder="user@example.com" name="email" />
-        <PasswordInput label="Password" placeholder="*********" name="password" />
-        <PasswordInput label="Confirm password" placeholder="*********" name="confirm_password" />
-        <ButtonComponent type="submit" className="mt-5">
-          Register
-        </ButtonComponent>
-      </form>
-      <div className="mt-3 text-sm">
-        {`Already have an account? `}
-        <Link className="text-blue-100 font-bold" href={Pathnames.auth.signIn}>
-          Sign in
-        </Link>
-      </div>
-    </Card>
-  </div>
-)
+// TODO: strength meter for password
+const schema = Yup.object().shape({
+  email: Yup.string().email('Invalid email').required('Email is required'),
+  password: Yup.string().required('Password is required'),
+  confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match'),
+})
 
+const RegisterPage = () => {
+  const { onSubmit, getInputProps } = useForm({
+    initialValues: {
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
+    validate: yupResolver(schema),
+  })
+
+  const handleSubmit = ({ email, password }: Yup.InferType<typeof schema>) => {
+    console.log({ email, password })
+  }
+
+  return (
+    <div className="bg-green-100/10 flex items-center justify-center h-screen">
+      <Card shadow="md" padding="lg" radius="md" className="h-fit w-1/2">
+        <div className="flex flex-col items-center gap-1 py-4">
+          <Image src={Logo} alt="Logo" />
+          <Title color="blue-300">Next App</Title>
+        </div>
+        <div className="my-4 pb-4">
+          <Stepper size="sm" active={0}>
+            <Stepper.Step label="Step 1" description="Register" />
+            <Stepper.Step label="Step 2" description="Verify email" />
+            <Stepper.Step label="Step 3" description="Create an account" />
+          </Stepper>
+        </div>
+        <form
+          className="flex flex-col gap-2"
+          onSubmit={onSubmit((values) => {
+            handleSubmit(values)
+          })}
+        >
+          <TextInput
+            label="Email"
+            placeholder="user@example.com"
+            name="email"
+            {...getInputProps('email')}
+            withAsterisk
+          />
+          <PasswordInput
+            label="Password"
+            placeholder="*********"
+            name="password"
+            {...getInputProps('password')}
+            withAsterisk
+          />
+          <PasswordInput
+            label="Confirm password"
+            placeholder="*********"
+            name="confirm_password"
+            {...getInputProps('confirmPassword')}
+            withAsterisk
+          />
+          <ButtonComponent type="submit" className="mt-5">
+            Register
+          </ButtonComponent>
+        </form>
+        <div className="mt-3 text-sm">
+          {`Already have an account? `}
+          <Link className="text-blue-100 font-bold" href={Pathnames.auth.signIn}>
+            Sign in
+          </Link>
+        </div>
+      </Card>
+    </div>
+  )
+}
 export default RegisterPage
