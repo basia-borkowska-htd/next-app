@@ -26,4 +26,16 @@ export const authApi = {
     if (!data?.account) throw new Error(data.error)
     return data.account
   },
+  verifyEmail: async (id: string): Promise<AccountType> => {
+    const res = await fetch(`http://localhost:3001/api/auth/accounts/${id}/verifyEmail`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    const data = await res.json()
+
+    if (!data?.account) throw new Error(data.error)
+    return data.account
+  },
 }

@@ -1,10 +1,8 @@
 import bcrypt from 'bcrypt'
 import dotenv from 'dotenv'
 import { Request, Response } from 'express'
-import jwt from 'jsonwebtoken'
 
 import { Account } from '../models/account'
-import { User } from '../models/user'
 
 import { AccountStatus } from '../enums/AccountStatus.enum'
 
@@ -49,4 +47,14 @@ const authenticate = async (req: Request, res: Response) => {
   }
 }
 
-export { createAccount, authenticate }
+const verifyEmail = async (req: Request, res: Response) => {
+  try {
+    await Account.updateOne({ _id: req.params.id }, { status: AccountStatus.VERIFIED })
+    const account = await Account.findOne({ _id: req.params.id })
+    res.status(200).json({ account })
+  } catch (error) {
+    res.status(500).json({ error })
+  }
+}
+
+export { createAccount, authenticate, verifyEmail }

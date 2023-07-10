@@ -40,9 +40,8 @@ const RegisterPage = () => {
 
   const handleSubmit = async ({ email, password }: Yup.InferType<typeof schema>) => {
     const result = await api.auth.createAccount({ email, password, provider: ProviderEnum.CREDENTIALS })
-    console.log({ result })
     if (result) {
-      const data = await signIn('credentials', { email, password })
+      await signIn('credentials', { email, password, callbackUrl: Pathnames.auth.verifyEmail })
     }
   }
 
