@@ -10,6 +10,7 @@ import { useTranslate } from '@/hooks/useTranslate'
 
 import Logo from '@/assets/graphics/logo.svg'
 
+import { customSignOut } from '@/utils/customSignOut'
 import { Pathnames } from '@/utils/pathnames'
 
 import { RegistrationStepperComponent } from '../RegistrationStepper'
@@ -42,6 +43,9 @@ const VerifyEmailPage = () => {
           </ButtonComponent>
         </div>
       </Card>
+      <button type="button" onClick={customSignOut}>
+        Sign out
+      </button>
     </div>
   )
 }

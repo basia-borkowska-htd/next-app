@@ -2,11 +2,7 @@
   "basic": {
     "title": "Next App"
   },
-  "users": {
-    "add_user_button": "Add new user",
-    "add_user_toast_success": "User added successfully",
-    "add_user_toast_error": "Unable to add user"
-  },
+  "users": {},
   "user": {
     "header": {
       "age": "Age",

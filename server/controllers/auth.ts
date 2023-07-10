@@ -6,6 +6,8 @@ import { Account } from '../models/account'
 
 import { AccountStatus } from '../enums/AccountStatus.enum'
 
+import { uploadUserData } from './users'
+
 const createAccount = async (req: Request, res: Response) => {
   try {
     // TODO: validation on BE
@@ -57,4 +59,14 @@ const verifyEmail = async (req: Request, res: Response) => {
   }
 }
 
-export { createAccount, authenticate, verifyEmail }
+const completeProfile = async (req: Request, res: Response) => {
+  try {
+    const user = await uploadUserData(req, res, 'create')
+    await Account.findOneAndUpdate({ _id: req.params.id }, { status: AccountStatus.COMPLETED })
+    res.status(200).json({ user })
+  } catch (error) {
+    res.status(500).json({ error })
+  }
+}
+
+export { createAccount, authenticate, completeProfile, verifyEmail }

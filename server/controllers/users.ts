@@ -45,15 +45,12 @@ const getBasicUser = async (req: Request, res: Response) => {
   }
 }
 
-const createUser = async (req: Request, res: Response) => {
-  uploadUserData(req, res, 'create')
-}
-
 const updateUser = async (req: Request, res: Response) => {
-  uploadUserData(req, res, 'update')
+  const user = await uploadUserData(req, res, 'update')
+  res.status(200).json({ user })
 }
 
-const uploadUserData = async (req: Request, res: Response, action: ActionType) => {
+export const uploadUserData = async (req: Request, res: Response, action: ActionType) => {
   try {
     // TODO: avatarUrl is in two different places
     // TODO: polish signs are not being handled properly
@@ -61,6 +58,8 @@ const uploadUserData = async (req: Request, res: Response, action: ActionType) =
     if (!!req?.body?.removeAvatar) {
       deleteAvatar(req, res)
     }
+
+    let user = null
 
     if (!!req.file) {
       deleteAvatar(req, res)
@@ -75,11 +74,12 @@ const uploadUserData = async (req: Request, res: Response, action: ActionType) =
 
       s3.upload(params, async (error, data) => {
         if (error) throw res.status(500).send({ error })
-        await modifyUser(req, res, action, data.Location)
+        user = await modifyUser(req, res, action, data.Location)
       })
     } else {
-      await modifyUser(req, res, action, '')
+      user = await modifyUser(req, res, action, '')
     }
+    return user
   } catch (error) {
     res.status(500).json({ msg: error })
   }
@@ -124,7 +124,8 @@ const modifyUser = async (req: Request, res: Response, action: ActionType, avata
       user = await User.findOne({ _id: req.params.id })
       break
   }
-  res.status(200).json({ user })
+
+  return user
 }
 
-export { getUsers, getUser, getUserByEmail, getBasicUser, createUser, updateUser, deleteUser }
+export { getUsers, getUser, getUserByEmail, getBasicUser, updateUser, deleteUser }

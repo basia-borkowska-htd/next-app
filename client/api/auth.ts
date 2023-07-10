@@ -1,4 +1,7 @@
 import { AccountType, CreateAccountType, CredentialsType } from '@/types/Account'
+import { AddUserType, UserType } from '@/types/User'
+
+import { formatters } from '@/utils/formatters'
 
 export const authApi = {
   authenticate: async (credentials: CredentialsType): Promise<AccountType> => {
@@ -37,5 +40,16 @@ export const authApi = {
 
     if (!data?.account) throw new Error(data.error)
     return data.account
+  },
+  completeProfile: async (accountId: string, user: AddUserType): Promise<UserType> => {
+    const body = formatters.formatUser(user)
+    const res = await fetch(`http://localhost:3001/api/auth/accounts/${accountId}/completeProfile`, {
+      method: 'POST',
+      body,
+    })
+    const data = await res.json()
+
+    if (!data?.user) throw new Error(data.error)
+    return data.user
   },
 }
