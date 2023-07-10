@@ -8,10 +8,6 @@ import GoogleProvider from 'next-auth/providers/google'
 import InstagramProvider from 'next-auth/providers/instagram'
 import LinkedInProvider from 'next-auth/providers/linkedin'
 
-import { Provider } from 'react-intl/src/components/injectIntl'
-
-import { ProviderEnum } from '@/enums/Provider.enum'
-
 export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({

@@ -1,8 +1,10 @@
 import { api } from '@/api'
 import { Card, PasswordInput, Stepper, TextInput, Title } from '@mantine/core'
 import { useForm, yupResolver } from '@mantine/form'
+import { signIn } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import * as Yup from 'yup'
 
 import { ButtonComponent } from '@/components/button'
@@ -25,6 +27,7 @@ const schema = Yup.object().shape({
 })
 
 const RegisterPage = () => {
+  const router = useRouter()
   const { t } = useTranslate()
   const { onSubmit, getInputProps } = useForm({
     initialValues: {
@@ -37,8 +40,10 @@ const RegisterPage = () => {
 
   const handleSubmit = async ({ email, password }: Yup.InferType<typeof schema>) => {
     const result = await api.auth.createAccount({ email, password, provider: ProviderEnum.CREDENTIALS })
-    // TODO: handle result
     console.log({ result })
+    if (result) {
+      const data = await signIn('credentials', { email, password })
+    }
   }
 
   return (

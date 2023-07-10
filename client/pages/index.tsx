@@ -16,7 +16,8 @@ const HomePage = () => {
     if (!session?.account) {
       router.push(Pathnames.auth.signIn)
     }
-    switch (session.account.status) {
+    console.log({ session })
+    switch (session?.account?.status) {
       case AccountStatusEnum.PENDING:
         router.push(Pathnames.auth.verifyEmail)
         break

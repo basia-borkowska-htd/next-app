@@ -13,6 +13,7 @@ import { RegistrationStepperComponent } from '../RegistrationStepper'
 const VerifyEmailPage = () => {
   const { t } = useTranslate()
   const { data: session } = useSession()
+  console.log({ session })
 
   return (
     <div className="bg-green-100/10 flex items-center justify-center h-screen">
