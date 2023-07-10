@@ -47,10 +47,10 @@ const RegisterPage = () => {
           <Title color="blue-300">{t('basic.title')}</Title>
         </div>
         <div className="my-4 pb-4">
-          <Stepper size="sm" active={0}>
-            <Stepper.Step label="Step 1" description="Register" />
+          <Stepper size="sm" active={0} color="green-100">
+            <Stepper.Step label="Step 1" description="Create an account" />
             <Stepper.Step label="Step 2" description="Verify email" />
-            <Stepper.Step label="Step 3" description="Create an account" />
+            <Stepper.Step label="Step 3" description="Complete profile" />
           </Stepper>
         </div>
         <form

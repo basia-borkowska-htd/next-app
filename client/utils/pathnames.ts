@@ -5,6 +5,8 @@ export const Pathnames = {
   dashboard: '/dashboard/:id/:activeTab',
   auth: {
     signIn: '/auth/signIn',
+    verifyEmail: '/auth/verifyEmail',
+    completeProfile: '/auth/completeProfile',
     register: '/auth/register',
   },
 }
