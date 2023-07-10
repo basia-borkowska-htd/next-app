@@ -1,19 +1,19 @@
 import 'next-auth'
 
-import { AccountStatusEnum } from '@/enums/AccountStatus.enum'
+import { AccountType } from './Account'
 
 declare module 'next-auth' {
   export interface User {
     email: string
-    beToken: string
+    account?: AccountType
   }
   export interface Session {
-    beToken: string
+    account?: AccountType
   }
 }
 
 declare module 'next-auth/jwt' {
   export interface JWT {
-    beToken: string
+    account?: AccountType
   }
 }

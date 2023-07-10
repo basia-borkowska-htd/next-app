@@ -41,21 +41,9 @@ const authenticate = async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'Incorrect email or password.' })
     }
 
-    // Create token
-    const token = jwt.sign({ account }, process.env.TOKEN_KEY || '', {
-      expiresIn: '2h',
-    })
+    const { _id, email, provider, status } = account
 
-    // save user token
-
-    // TODO: check account status
-    // if(status === 'pending') =>  step 2
-    // verified => step 3
-    // completed => home page
-
-    // const user = await User.findOne({ email: account.email })
-    res.header('Authorization', token)
-    res.status(200).json({ account })
+    res.status(200).json({ account: { _id, email, provider, status } })
   } catch (error) {
     res.status(500).json({ error })
   }

@@ -32,40 +32,27 @@ export const authOptions: NextAuthOptions = {
         password: { type: 'password' },
       },
       async authorize(credentials) {
-        const { account, token } = await api.auth.authenticate(credentials)
+        const account = await api.auth.authenticate(credentials)
 
         if (account) {
-          return { id: account._id, email: credentials.email, beToken: token }
+          return { id: account._id, email: credentials.email, account }
         }
-        // If you return null then an error will be displayed advising the user to check their details.
         return null
       },
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
-  session: {
-    strategy: 'jwt',
-  },
   pages: {
     signIn: '/auth/signIn',
     error: '/auth/signIn',
   },
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
-      return true
-    },
-    async redirect({ url, baseUrl }) {
-      return baseUrl
-    },
-    async jwt({ token, user, account, profile, isNewUser }): Promise<JWT> {
-      console.log({ token, user, account, profile, isNewUser })
+    async jwt({ token, user }): Promise<JWT> {
+      if (user?.account) return { ...token, account: user?.account }
       return token
     },
-    async session({ session, user, token }): Promise<Session> {
-      // console.log({ session, user, token })
-      // console.log(token.status)
-      // console.log({ session, token })
-      return session
+    async session({ session, token }): Promise<Session> {
+      return { ...session, account: token.account }
     },
   },
 }
