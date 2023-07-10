@@ -9,7 +9,7 @@ import { Pathnames } from '@/utils/pathnames'
 const HomePage = () => {
   const { data: session } = useSession()
   const router = useRouter()
-
+  console.log({ session })
   useEffect(() => {
     if (session?.user) {
       router.push(Pathnames.users)

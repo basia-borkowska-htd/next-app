@@ -1,5 +1,7 @@
 import bcrypt from 'bcrypt'
+import dotenv from 'dotenv'
 import { Request, Response } from 'express'
+import jwt from 'jsonwebtoken'
 
 import { Account } from '../models/account'
 import { User } from '../models/user'
@@ -26,6 +28,8 @@ const createAccount = async (req: Request, res: Response) => {
   }
 }
 const authenticate = async (req: Request, res: Response) => {
+  dotenv.config()
+
   try {
     const account = await Account.findOne({ email: req.body.email })
     if (!account) {
@@ -36,15 +40,22 @@ const authenticate = async (req: Request, res: Response) => {
     if (!passwordValid) {
       return res.status(400).json({ error: 'Incorrect email or password.' })
     }
+
+    // Create token
+    const token = jwt.sign({ account }, process.env.TOKEN_KEY || '', {
+      expiresIn: '2h',
+    })
+
+    // save user token
+
     // TODO: check account status
     // if(status === 'pending') =>  step 2
     // verified => step 3
     // completed => home page
 
-    const user = await User.findOne({ email: account.email })
-    console.log({ status: account.status })
-
-    res.status(200).json({ user })
+    // const user = await User.findOne({ email: account.email })
+    res.header('Authorization', token)
+    res.status(200).json({ account })
   } catch (error) {
     res.status(500).json({ error })
   }

@@ -1,6 +1,7 @@
 import { api } from '@/api'
 import NextAuth from 'next-auth'
-import type { NextAuthOptions } from 'next-auth'
+import type { NextAuthOptions, Session } from 'next-auth'
+import { JWT } from 'next-auth/jwt/types'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import FacebookProvider from 'next-auth/providers/facebook'
 import GoogleProvider from 'next-auth/providers/google'
@@ -31,10 +32,10 @@ export const authOptions: NextAuthOptions = {
         password: { type: 'password' },
       },
       async authorize(credentials) {
-        const user = await api.auth.authenticate(credentials)
+        const { account, token } = await api.auth.authenticate(credentials)
 
-        if (user) {
-          return { id: user._id, name: user.name, email: user.email }
+        if (account) {
+          return { id: account._id, email: credentials.email, beToken: token }
         }
         // If you return null then an error will be displayed advising the user to check their details.
         return null
@@ -42,25 +43,30 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    strategy: 'jwt',
+  },
   pages: {
     signIn: '/auth/signIn',
     error: '/auth/signIn',
   },
-  //   callbacks: {
-  //     async signIn({ user, account, profile, email, credentials }) {
-  //       return true
-  //     },
-  //     async redirect({ url, baseUrl }) {
-  //       return baseUrl
-  //     },
-  //     async session({ session, user, token }) {
-  //       // console.log('session')
-
-  //       return session
-  //     },
-  //     async jwt({ token, user, account, profile, isNewUser }) {
-  //       return token
-  //     },
-  //   },
+  callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      return true
+    },
+    async redirect({ url, baseUrl }) {
+      return baseUrl
+    },
+    async jwt({ token, user, account, profile, isNewUser }): Promise<JWT> {
+      console.log({ token, user, account, profile, isNewUser })
+      return token
+    },
+    async session({ session, user, token }): Promise<Session> {
+      // console.log({ session, user, token })
+      // console.log(token.status)
+      // console.log({ session, token })
+      return session
+    },
+  },
 }
 export default NextAuth(authOptions)
