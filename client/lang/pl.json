@@ -170,6 +170,12 @@
       "or": "lub",
       "sign_in_with": "Zaloguj za pomocą {name}"
     },
+    "registration_stepper": {
+      "step": "Krok",
+      "create_account": "Utwórz konto",
+      "verify_email": "Zweryfikuj email",
+      "complete_profile": "Uzupełnij profil"
+    },
     "register": {
       "email_label": "Email",
       "email_placeholder": "user@example.com",
@@ -180,6 +186,12 @@
       "button": "Rejestracja",
       "sign_in": "Zaloguj się",
       "have_account": "Masz już założone konto? "
+    },
+    "verify_email": {
+      "title": "Miło nam, że postanowiłeś dołączyć do Next App!",
+      "message": "Wysłaliśmy Ci wiadomość email na adres {email}, aby go potwierdzić i aktywować Twoje konto.",
+      "no_email_message": "Nie otrzymałeś wiadomości email?",
+      "resend_button": "Wyślij ponownie"
     }
   }
 }

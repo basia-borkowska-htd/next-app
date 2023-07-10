@@ -5,6 +5,8 @@ import { useTranslate } from '@/hooks/useTranslate'
 
 import Logo from '@/assets/graphics/logo.svg'
 
+import { RegistrationStepperComponent } from '../RegistrationStepper'
+
 const CompleteProfilePage = () => {
   const { t } = useTranslate()
 
@@ -15,13 +17,7 @@ const CompleteProfilePage = () => {
           <Image src={Logo} alt="Logo" />
           <Title color="blue-300">{t('basic.title')}</Title>
         </div>
-        <div className="my-4 pb-4">
-          <Stepper size="sm" active={2} color="green-100">
-            <Stepper.Step label="Step 1" description="Create an account" />
-            <Stepper.Step label="Step 2" description="Verify email" />
-            <Stepper.Step label="Step 3" description="Complete profile" />
-          </Stepper>
-        </div>
+        <RegistrationStepperComponent active={2} />
       </Card>
     </div>
   )
