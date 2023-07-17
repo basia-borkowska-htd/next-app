@@ -3,8 +3,10 @@ import { Card, Title } from '@mantine/core'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 
 import { ButtonComponent } from '@/components/button'
+import { ErrorMessageComponent } from '@/components/errorMessage'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
@@ -19,11 +21,16 @@ const VerifyEmailPage = () => {
   const { t } = useTranslate()
   const { data: session } = useSession()
   const router = useRouter()
+  const [error, setError] = useState('')
 
   const handleClick = async () => {
-    const account = await api.auth.verifyEmail(session.account._id)
-    session.account = account
-    router.push(Pathnames.auth.completeProfile)
+    try {
+      const account = await api.auth.verifyEmail(session.account._id)
+      session.account = account
+      router.push(Pathnames.auth.completeProfile)
+    } catch (e) {
+      setError(e.message.toString())
+    }
   }
 
   return (
@@ -34,6 +41,7 @@ const VerifyEmailPage = () => {
           <Title color="blue-300">{t('basic.title')}</Title>
         </div>
         <RegistrationStepperComponent active={1} />
+        {error && <ErrorMessageComponent>{error}</ErrorMessageComponent>}
         <div className="flex flex-col items-center gap-4">
           <div className="text-lg text-center font-bold">{t('auth.verify_email.title')}</div>
           <div className="text-center">{t('auth.verify_email.message', { email: session?.account?.email })}</div>

@@ -62,8 +62,10 @@ const verifyEmail = async (req: Request, res: Response) => {
 const completeProfile = async (req: Request, res: Response) => {
   try {
     const user = await uploadUserData(req, res, 'create')
-    await Account.findOneAndUpdate({ _id: req.params.id }, { status: AccountStatus.COMPLETED })
-    res.status(200).json({ user })
+    const account = await Account.findOneAndUpdate({ _id: req.params.id }, { status: AccountStatus.COMPLETED })
+    if (!user || !account) return res.status(500).json({ error: 'Unable to complete profile' })
+
+    res.status(200).json({ user, status: account.status })
   } catch (error) {
     res.status(500).json({ error })
   }

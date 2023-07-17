@@ -3,14 +3,14 @@ import { Card, Title } from '@mantine/core'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 
+import { ErrorMessageComponent } from '@/components/errorMessage'
 import { UserFormComponent } from '@/components/userForm'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
 import { AddUserType } from '@/types/User'
-
-import { AccountStatusEnum } from '@/enums/AccountStatus.enum'
 
 import Logo from '@/assets/graphics/logo.svg'
 
@@ -23,13 +23,16 @@ const CompleteProfilePage = () => {
   const { t } = useTranslate()
   const { data: session } = useSession()
   const router = useRouter()
+  const [error, setError] = useState('')
 
-  const handleSubmit = async (user: AddUserType) => {
+  const handleSubmit = async (addUser: AddUserType) => {
     if (!session?.account?._id) return
-    const result = await api.auth.completeProfile(session.account._id, user)
-    if (result) {
-      session.account.status = AccountStatusEnum.COMPLETED
+    try {
+      const { status } = await api.auth.completeProfile(session.account._id, addUser)
+      session.account.status = status
       router.push(Pathnames.home)
+    } catch (e) {
+      setError(e.message.toString())
     }
   }
 
@@ -41,6 +44,7 @@ const CompleteProfilePage = () => {
           <Title color="blue-300">{t('basic.title')}</Title>
         </div>
         <RegistrationStepperComponent active={2} />
+        {error && <ErrorMessageComponent>{error}</ErrorMessageComponent>}
         <UserFormComponent email={session?.account?.email} loading={false} onSubmit={handleSubmit} />
       </Card>
       <button type="button" onClick={customSignOut}>

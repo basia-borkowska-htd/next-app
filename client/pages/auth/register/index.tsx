@@ -5,9 +5,11 @@ import { signIn } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import * as Yup from 'yup'
 
 import { ButtonComponent } from '@/components/button'
+import { ErrorMessageComponent } from '@/components/errorMessage'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
@@ -27,7 +29,6 @@ const schema = Yup.object().shape({
 })
 
 const RegisterPage = () => {
-  const router = useRouter()
   const { t } = useTranslate()
   const { onSubmit, getInputProps } = useForm({
     initialValues: {
@@ -38,10 +39,14 @@ const RegisterPage = () => {
     validate: yupResolver(schema),
   })
 
+  const [error, setError] = useState('')
+
   const handleSubmit = async ({ email, password }: Yup.InferType<typeof schema>) => {
-    const result = await api.auth.createAccount({ email, password, provider: ProviderEnum.CREDENTIALS })
-    if (result) {
-      await signIn('credentials', { email, password, callbackUrl: Pathnames.auth.verifyEmail })
+    try {
+      await api.auth.createAccount({ email, password, provider: ProviderEnum.CREDENTIALS })
+      await signIn(ProviderEnum.CREDENTIALS, { email, password, callbackUrl: Pathnames.auth.verifyEmail })
+    } catch (e) {
+      setError(e.message.toString())
     }
   }
 
@@ -59,6 +64,7 @@ const RegisterPage = () => {
             handleSubmit(values)
           })}
         >
+          {error && <ErrorMessageComponent>{error}</ErrorMessageComponent>}
           <TextInput
             label={t('auth.register.email_label')}
             placeholder={t('auth.register.email_placeholder')}

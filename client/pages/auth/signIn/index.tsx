@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
 
 import { ButtonComponent } from '@/components/button'
-import { ErrorMessage } from '@/components/errorMessage'
+import { ErrorMessageComponent } from '@/components/errorMessage'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
@@ -66,7 +66,7 @@ const SignInPage = ({ providers, csrfToken }: InferGetServerSidePropsType<typeof
         </div>
         <form className="flex flex-col gap-2" method="post" action="/api/auth/callback/credentials">
           <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
-          {error && <ErrorMessage>{error}</ErrorMessage>}
+          {error && <ErrorMessageComponent>{error}</ErrorMessageComponent>}
           <TextInput
             label={t('auth.sign_in.email_label')}
             placeholder={t('auth.sign_in.email_placeholder')}
