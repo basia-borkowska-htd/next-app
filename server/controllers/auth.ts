@@ -53,8 +53,12 @@ const authenticate = async (req: Request, res: Response) => {
 
 const verifyEmail = async (req: Request, res: Response) => {
   try {
-    await Account.updateOne({ _id: req.params.id }, { status: AccountStatus.VERIFIED })
-    const account = await Account.findOne({ _id: req.params.id })
+    const account = await Account.findOneAndUpdate(
+      { _id: req.params.id },
+      { status: AccountStatus.VERIFIED },
+      { new: true },
+    )
+
     res.status(200).json({ account })
   } catch (error) {
     res.status(500).json({ error })
@@ -63,28 +67,12 @@ const verifyEmail = async (req: Request, res: Response) => {
 
 const completeProfile = async (req: Request, res: Response) => {
   try {
-    await createUser(req, res)
-    const user = await User.findOne({ email: req.body.email })
-    console.log({ user })
-    if (!user) return res.status(500).json({ error: 'Unable to complete profile' })
-
-    const account = await Account.findOneAndUpdate({ _id: req.params.id }, { status: AccountStatus.COMPLETED })
-    if (!account) return res.status(500).json({ error: 'Unable to update account status' })
-
-    res.status(200).json({ user, status: account.status })
-  } catch (error) {
-    res.status(500).json({ error })
-  }
-}
-
-const createUser = async (req: Request, res: Response) => {
-  try {
-    // TODO: avatarUrl is in two different places
-    // TODO: polish signs are not being handled properly
     const existingUser = await User.findOne({ email: req.body.email })
     if (existingUser) {
       return res.status(400).json({ error: 'User with that email already exists!' })
     }
+    // TODO: avatarUrl is in two different places
+    // TODO: polish signs are not being handled properly
 
     if (!!req.file) {
       const params: PutObjectRequest = {
@@ -97,14 +85,31 @@ const createUser = async (req: Request, res: Response) => {
 
       s3.upload(params, async (error, data) => {
         if (error) throw res.status(500).send({ error })
-        await User.create({ ...req.body, avatarUrl: data.Location })
+        const user = await User.create({ ...req.body, avatarUrl: data.Location })
+
+        const status = await updateAccountStatusAfterProfileCompletion(req, res)
+        return res.status(200).json({ user, status })
       })
     } else {
-      await User.create(req.body)
+      const user = await User.create(req.body)
+
+      const status = await updateAccountStatusAfterProfileCompletion(req, res)
+      return res.status(200).json({ user, status })
     }
   } catch (error) {
-    throw error
+    res.status(500).json({ error })
   }
+}
+
+const updateAccountStatusAfterProfileCompletion = async (req: Request, res: Response) => {
+  const account = await Account.findOneAndUpdate(
+    { _id: req.params.id },
+    { status: AccountStatus.COMPLETED },
+    { new: true },
+  )
+
+  if (!account) return res.status(500).json({ error: 'Unable to update account status' })
+  return account.status
 }
 
 export { createAccount, authenticate, completeProfile, verifyEmail }

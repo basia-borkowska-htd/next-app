@@ -68,14 +68,16 @@ const updateUser = async (req: Request, res: Response) => {
 
       s3.upload(params, async (error, data) => {
         if (error) throw res.status(500).send({ error })
-        await User.updateOne({ _id: req.params.id }, { ...req.body, avatarUrl: data.Location })
-        const user = await User.findOne({ _id: req.params.id })
+        const user = await User.findOneAndUpdate(
+          { _id: req.params.id },
+          { ...req.body, avatarUrl: data.Location },
+          { new: true },
+        )
 
         return res.status(200).json({ user })
       })
     } else {
-      await User.updateOne({ _id: req.params.id }, req.body)
-      const user = await User.findOne({ _id: req.params.id })
+      const user = await User.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
 
       return res.status(200).json({ user })
     }
