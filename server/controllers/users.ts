@@ -1,6 +1,7 @@
 import { PutObjectRequest } from 'aws-sdk/clients/s3'
 import { Request, Response } from 'express'
 
+import { Account } from '../models/account'
 import { Measurement } from '../models/measurement'
 import { User } from '../models/user'
 
@@ -26,6 +27,16 @@ const getUser = async (req: Request, res: Response) => {
   }
 }
 
+const getUserByEmail = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findOne({ email: req.params.email })
+    if (user === null) res.status(404).json({ error: 'User with that email does not exist' })
+    else res.status(200).json({ user })
+  } catch (error) {
+    res.status(404).json({ msg: 'User not found' })
+  }
+}
+
 const getBasicUser = async (req: Request, res: Response) => {
   try {
     const user = await User.findOne({ _id: req.params.id }).select('name avatarUrl')
@@ -35,15 +46,7 @@ const getBasicUser = async (req: Request, res: Response) => {
   }
 }
 
-const createUser = async (req: Request, res: Response) => {
-  uploadUserData(req, res, 'create')
-}
-
 const updateUser = async (req: Request, res: Response) => {
-  uploadUserData(req, res, 'update')
-}
-
-const uploadUserData = async (req: Request, res: Response, action: ActionType) => {
   try {
     // TODO: avatarUrl is in two different places
     // TODO: polish signs are not being handled properly
@@ -65,10 +68,18 @@ const uploadUserData = async (req: Request, res: Response, action: ActionType) =
 
       s3.upload(params, async (error, data) => {
         if (error) throw res.status(500).send({ error })
-        await modifyUser(req, res, action, data.Location)
+        const user = await User.findOneAndUpdate(
+          { _id: req.params.id },
+          { ...req.body, avatarUrl: data.Location },
+          { new: true },
+        )
+
+        return res.status(200).json({ user })
       })
     } else {
-      await modifyUser(req, res, action, '')
+      const user = await User.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
+
+      return res.status(200).json({ user })
     }
   } catch (error) {
     res.status(500).json({ msg: error })
@@ -78,8 +89,14 @@ const uploadUserData = async (req: Request, res: Response, action: ActionType) =
 const deleteUser = async (req: Request, res: Response) => {
   try {
     deleteAvatar(req, res)
+
     await Measurement.deleteMany({ userId: req.params.id })
-    await User.findOneAndDelete({ _id: req.params.id })
+
+    const user = await User.findOneAndDelete({ _id: req.params.id })
+    if (!user) return res.status(404).json({ error: 'Unable to delete user' })
+
+    await Account.findOneAndDelete({ email: user.email })
+
     res.status(200).json({ success: true })
   } catch (error) {
     res.status(404).json({ msg: 'User not found' })
@@ -102,19 +119,4 @@ const deleteAvatar = async (req: Request, res: Response) => {
   }
 }
 
-const modifyUser = async (req: Request, res: Response, action: ActionType, avatarUrl: String) => {
-  let user = null
-
-  switch (action) {
-    case 'create':
-      user = await User.create({ ...req.body, avatarUrl })
-      break
-    case 'update':
-      await User.updateOne({ _id: req.params.id }, { ...req.body, avatarUrl })
-      user = await User.findOne({ _id: req.params.id })
-      break
-  }
-  res.status(200).json({ user })
-}
-
-export { getUsers, getUser, getBasicUser, createUser, updateUser, deleteUser }
+export { getUsers, getUser, getUserByEmail, getBasicUser, updateUser, deleteUser }

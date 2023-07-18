@@ -24,7 +24,7 @@ export const HeaderComponent = ({ user, openModal }: HeaderProps) => {
   return (
     <div className="bg-green-100/10 shadow-md mb-8">
       <ContainerComponent className="py-8">
-        <GoBackComponent path={Pathnames.home} />
+        <GoBackComponent path={Pathnames.users} />
         <div className="flex justify-between items-center ">
           <AvatarComponent src={avatarUrl} name={name} />
           <div className="basis-1/2 flex ms-10">

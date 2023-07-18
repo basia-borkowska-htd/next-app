@@ -22,7 +22,7 @@ export const AvatarComponent = ({ src, name, compact = false, className = '', ce
       src={src}
       alt="avatar"
       variant="filled"
-      color="green-300"
+      color="green-100"
       radius={compact ? 'xl' : 'lg'}
       size={compact ? 'lg' : 'xl'}
     >

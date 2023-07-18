@@ -4,9 +4,7 @@ import { Sex } from '../enums/Sex.enum'
 
 import { Range } from './helpers'
 
-const Schema = mongoose.Schema
-
-const RangesListSchema = new Schema({
+const RangesListSchema = new mongoose.Schema({
   sex: {
     type: String,
     enum: Sex,

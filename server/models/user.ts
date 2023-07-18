@@ -4,10 +4,12 @@ import { Sex } from '../enums/Sex.enum'
 
 import { Record } from './helpers'
 
-const Schema = mongoose.Schema
-
-const UserSchema = new Schema({
+const UserSchema = new mongoose.Schema({
   name: {
+    type: String,
+    required: true,
+  },
+  email: {
     type: String,
     required: true,
   },

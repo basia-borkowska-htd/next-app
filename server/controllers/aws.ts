@@ -1,7 +1,7 @@
-import { Request } from 'express'
-import multer from 'multer'
 import Aws from 'aws-sdk'
 import dotenv from 'dotenv'
+import { Request } from 'express'
+import multer from 'multer'
 
 dotenv.config()
 

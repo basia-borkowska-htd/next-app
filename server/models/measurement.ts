@@ -2,9 +2,7 @@ import mongoose from 'mongoose'
 
 import { Record } from './helpers'
 
-const Schema = mongoose.Schema
-
-const MeasurementSchema = new Schema({
+const MeasurementSchema = new mongoose.Schema({
   userId: {
     type: String,
     required: true,

@@ -1,9 +1,8 @@
 {
-  "users": {
-    "add_user_button": "Add new user",
-    "add_user_toast_success": "User added successfully",
-    "add_user_toast_error": "Unable to add user"
+  "basic": {
+    "title": "Next App"
   },
+  "users": {},
   "user": {
     "header": {
       "age": "Age",
@@ -154,5 +153,41 @@
     "bmr": "BMR",
     "metabolic_age": "Metabolic age",
     "body_rating": "Body rating"
+  },
+  "auth": {
+    "sign_in": {
+      "email_label": "Email",
+      "email_placeholder": "user@example.com",
+      "password_label": "Password",
+      "password_placeholder": "*********",
+      "button": "Sign in",
+      "no_account": "Don't have an account? ",
+      "register": "Register",
+      "or": "OR",
+      "sign_in_with": "Sign in with {name}"
+    },
+    "registration_stepper": {
+      "step": "Step",
+      "create_account": "Create an account",
+      "verify_email": "Verify email",
+      "complete_profile": "Complete profile"
+    },
+    "register": {
+      "email_label": "Email",
+      "email_placeholder": "user@example.com",
+      "password_label": "Password",
+      "password_placeholder": "*********",
+      "confirm_password_label": "Confirm Password",
+      "confirm_password_placeholder": "*********",
+      "button": "Register",
+      "sign_in": "Sign in",
+      "have_account": "Already have an account? "
+    },
+    "verify_email": {
+      "title": "We're happy you decided to join Next App!",
+      "message": "We've sent an email to {email} to verify your email address and activate your account.",
+      "no_email_message": "Didn't recieve an email?",
+      "resend_button": "Resend verification email"
+    }
   }
 }

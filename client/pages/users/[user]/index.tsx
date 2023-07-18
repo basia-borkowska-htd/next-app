@@ -9,7 +9,9 @@ import { queryClient } from '@/pages/_app'
 
 import { EmptyStateComponent } from '@/components/emptyState'
 import { ErrorComponent } from '@/components/error'
+import { ModalComponent } from '@/components/modals/modal'
 import { PageLoaderComponent } from '@/components/pageLoader'
+import withPrivateRoute from '@/components/withPrivateRoute'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
@@ -29,8 +31,8 @@ const RangesComponent = dynamic(() =>
   import('@/components/users/ranges').then((component) => component.RangesComponent),
 )
 
-const UserModalComponent = dynamic(() =>
-  import('@/components/modals/userModal').then((component) => component.UserModalComponent),
+const UserFormComponent = dynamic(() =>
+  import('@/components/userForm').then((component) => component.UserFormComponent),
 )
 
 const SettingsComponent = dynamic(() =>
@@ -59,6 +61,7 @@ const UserProfilePage = () => {
     onSuccess: async () => {
       await queryClient.refetchQueries({ queryKey: [QueryKeyEnum.USER] })
       notify({ type: 'success', message: t('user.edit_user.toast_success') })
+      close()
     },
     onError: () => {
       notify({ type: 'error', message: t('user.edit_user.toast_error') })
@@ -77,15 +80,16 @@ const UserProfilePage = () => {
       <Divider py="md" mx="md" />
       <SettingsComponent userId={user._id} />
 
-      <UserModalComponent
-        opened={opened}
-        user={user}
-        onClose={close}
-        onSubmit={editUserMutation.mutate}
-        loading={editUserMutation.isLoading}
-      />
+      <ModalComponent opened={opened} onClose={close} title={t('user_modal.title_edit_user')}>
+        <UserFormComponent
+          user={user}
+          email={user.email}
+          onSubmit={editUserMutation.mutate}
+          loading={editUserMutation.isLoading}
+        />
+      </ModalComponent>
     </>
   )
 }
 
-export default UserProfilePage
+export default withPrivateRoute(UserProfilePage)
