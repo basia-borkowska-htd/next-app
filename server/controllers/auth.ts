@@ -1,12 +1,14 @@
+import { PutObjectRequest } from 'aws-sdk/clients/s3'
 import bcrypt from 'bcrypt'
 import dotenv from 'dotenv'
 import { Request, Response } from 'express'
 
 import { Account } from '../models/account'
+import { User } from '../models/user'
 
 import { AccountStatus } from '../enums/AccountStatus.enum'
 
-import { uploadUserData } from './users'
+import { s3 } from './aws'
 
 const createAccount = async (req: Request, res: Response) => {
   try {
@@ -61,13 +63,47 @@ const verifyEmail = async (req: Request, res: Response) => {
 
 const completeProfile = async (req: Request, res: Response) => {
   try {
-    const user = await uploadUserData(req, res, 'create')
+    await createUser(req, res)
+    const user = await User.findOne({ email: req.body.email })
+    console.log({ user })
+    if (!user) return res.status(500).json({ error: 'Unable to complete profile' })
+
     const account = await Account.findOneAndUpdate({ _id: req.params.id }, { status: AccountStatus.COMPLETED })
-    if (!user || !account) return res.status(500).json({ error: 'Unable to complete profile' })
+    if (!account) return res.status(500).json({ error: 'Unable to update account status' })
 
     res.status(200).json({ user, status: account.status })
   } catch (error) {
     res.status(500).json({ error })
+  }
+}
+
+const createUser = async (req: Request, res: Response) => {
+  try {
+    // TODO: avatarUrl is in two different places
+    // TODO: polish signs are not being handled properly
+    const existingUser = await User.findOne({ email: req.body.email })
+    if (existingUser) {
+      return res.status(400).json({ error: 'User with that email already exists!' })
+    }
+
+    if (!!req.file) {
+      const params: PutObjectRequest = {
+        Bucket: process.env.AWS_BUCKET_NAME || '',
+        Key: req.file.originalname,
+        Body: req.file.buffer,
+        ACL: 'public-read-write',
+        ContentType: 'image/jpeg',
+      }
+
+      s3.upload(params, async (error, data) => {
+        if (error) throw res.status(500).send({ error })
+        await User.create({ ...req.body, avatarUrl: data.Location })
+      })
+    } else {
+      await User.create(req.body)
+    }
+  } catch (error) {
+    throw error
   }
 }
 

@@ -47,11 +47,6 @@ const getBasicUser = async (req: Request, res: Response) => {
 }
 
 const updateUser = async (req: Request, res: Response) => {
-  const user = await uploadUserData(req, res, 'update')
-  res.status(200).json({ user })
-}
-
-export const uploadUserData = async (req: Request, res: Response, action: ActionType) => {
   try {
     // TODO: avatarUrl is in two different places
     // TODO: polish signs are not being handled properly
@@ -59,8 +54,6 @@ export const uploadUserData = async (req: Request, res: Response, action: Action
     if (!!req?.body?.removeAvatar) {
       deleteAvatar(req, res)
     }
-
-    let user = null
 
     if (!!req.file) {
       deleteAvatar(req, res)
@@ -75,12 +68,17 @@ export const uploadUserData = async (req: Request, res: Response, action: Action
 
       s3.upload(params, async (error, data) => {
         if (error) throw res.status(500).send({ error })
-        user = await modifyUser(req, res, action, data.Location)
+        await User.updateOne({ _id: req.params.id }, { ...req.body, avatarUrl: data.Location })
+        const user = await User.findOne({ _id: req.params.id })
+
+        return res.status(200).json({ user })
       })
     } else {
-      user = await modifyUser(req, res, action, '')
+      await User.updateOne({ _id: req.params.id }, req.body)
+      const user = await User.findOne({ _id: req.params.id })
+
+      return res.status(200).json({ user })
     }
-    return user
   } catch (error) {
     res.status(500).json({ msg: error })
   }
@@ -117,22 +115,6 @@ const deleteAvatar = async (req: Request, res: Response) => {
       await User.updateOne({ _id: req.params.id }, { ...req.body, avatarUrl: '' })
     })
   }
-}
-
-const modifyUser = async (req: Request, res: Response, action: ActionType, avatarUrl: String) => {
-  let user = null
-
-  switch (action) {
-    case 'create':
-      user = await User.create({ ...req.body, avatarUrl })
-      break
-    case 'update':
-      await User.updateOne({ _id: req.params.id }, { ...req.body, avatarUrl })
-      user = await User.findOne({ _id: req.params.id })
-      break
-  }
-
-  return user
 }
 
 export { getUsers, getUser, getUserByEmail, getBasicUser, updateUser, deleteUser }
