@@ -2,7 +2,6 @@ import { api } from '@/api'
 import { useDisclosure } from '@mantine/hooks'
 import { IconSettings, IconTrash } from '@tabler/icons-react'
 import { useMutation } from '@tanstack/react-query'
-import { useRouter } from 'next/router'
 
 import { ButtonComponent } from '@/components/button'
 import { ContainerComponent } from '@/components/container'
@@ -11,15 +10,14 @@ import { SettingsModalComponent } from '@/components/modals/settingsModal'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
+import { customSignOut } from '@/utils/customSignOut'
 import { notify } from '@/utils/notifications'
-import { Pathnames } from '@/utils/pathnames'
 
 interface SettingsProps {
   userId: string
 }
 
 export const SettingsComponent = ({ userId }: SettingsProps) => {
-  const router = useRouter()
   const { t } = useTranslate()
 
   const [confirmationModalOpened, { open: openConfirmationModal, close: closeConfirmationModal }] = useDisclosure(false)
@@ -30,7 +28,7 @@ export const SettingsComponent = ({ userId }: SettingsProps) => {
     onSuccess: async () => {
       closeConfirmationModal()
       notify({ type: 'success', message: t('user.settings.delete_user_modal.toast_success') })
-      router.push(Pathnames.users)
+      customSignOut()
     },
     onError: () => {
       notify({ type: 'error', message: t('user.settings.delete_user_modal.toast_error') })

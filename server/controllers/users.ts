@@ -1,6 +1,7 @@
 import { PutObjectRequest } from 'aws-sdk/clients/s3'
 import { Request, Response } from 'express'
 
+import { Account } from '../models/account'
 import { Measurement } from '../models/measurement'
 import { User } from '../models/user'
 
@@ -88,8 +89,14 @@ export const uploadUserData = async (req: Request, res: Response, action: Action
 const deleteUser = async (req: Request, res: Response) => {
   try {
     deleteAvatar(req, res)
+
     await Measurement.deleteMany({ userId: req.params.id })
-    await User.findOneAndDelete({ _id: req.params.id })
+
+    const user = await User.findOneAndDelete({ _id: req.params.id })
+    if (!user) return res.status(404).json({ error: 'Unable to delete user' })
+
+    await Account.findOneAndDelete({ email: user.email })
+
     res.status(200).json({ success: true })
   } catch (error) {
     res.status(404).json({ msg: 'User not found' })
