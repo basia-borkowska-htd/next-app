@@ -7,8 +7,6 @@ import { User } from '../models/user'
 
 import { s3 } from './aws'
 
-type ActionType = 'create' | 'update'
-
 const getUsers = async (req: Request, res: Response) => {
   try {
     const users = await User.find({}).select('name avatarUrl')
