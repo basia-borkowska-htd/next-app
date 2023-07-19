@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon server/index.ts",
+    "prod": "node server/index.ts",
     "format": "npx prettier --write ."
   },
+  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
