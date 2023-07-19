@@ -6,7 +6,7 @@ interface RegistrationStepperProps {
   active: number
 }
 
-export const RegistrationStepperComponent = ({ active }: RegistrationStepperProps) => {
+const RegistrationStepperComponent = ({ active }: RegistrationStepperProps) => {
   const { t } = useTranslate()
   return (
     <div className="my-4 pb-4">
@@ -27,3 +27,5 @@ export const RegistrationStepperComponent = ({ active }: RegistrationStepperProp
     </div>
   )
 }
+
+export default RegistrationStepperComponent

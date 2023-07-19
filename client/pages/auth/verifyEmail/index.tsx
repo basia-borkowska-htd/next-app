@@ -16,7 +16,7 @@ import Logo from '@/assets/graphics/logo.svg'
 import { customSignOut } from '@/utils/customSignOut'
 import { Pathnames } from '@/utils/pathnames'
 
-import { RegistrationStepperComponent } from '../RegistrationStepper'
+import RegistrationStepperComponent from '../RegistrationStepper'
 
 const VerifyEmailPage = () => {
   const { t } = useTranslate()

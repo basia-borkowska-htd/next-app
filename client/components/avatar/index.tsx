@@ -1,6 +1,5 @@
 import { Avatar } from '@mantine/core'
 import { IconUser } from '@tabler/icons-react'
-import Image from 'next/image'
 
 interface AvatarProps {
   src?: string

@@ -1,5 +1,4 @@
 import { IconArrowNarrowLeft } from '@tabler/icons-react'
-import Image from 'next/image'
 import Link from 'next/link'
 
 import { ButtonComponent } from '@/components/button'

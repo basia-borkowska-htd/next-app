@@ -1,11 +1,10 @@
 import { api } from '@/api'
-import { Card, PasswordInput, Stepper, TextInput, Title } from '@mantine/core'
+import { Card, PasswordInput, TextInput, Title } from '@mantine/core'
 import { useForm, yupResolver } from '@mantine/form'
 import { signIn } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import * as Yup from 'yup'
 
 import { ButtonComponent } from '@/components/button'
@@ -19,7 +18,7 @@ import Logo from '@/assets/graphics/logo.svg'
 
 import { Pathnames } from '@/utils/pathnames'
 
-import { RegistrationStepperComponent } from '../RegistrationStepper'
+import RegistrationStepperComponent from '../RegistrationStepper'
 
 // TODO: strength meter for password
 const schema = Yup.object().shape({
