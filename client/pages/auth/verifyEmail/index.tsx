@@ -1,5 +1,6 @@
 import { api } from '@/api'
 import { Card, Title } from '@mantine/core'
+import { IconArrowNarrowLeft } from '@tabler/icons-react'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -36,6 +37,9 @@ const VerifyEmailPage = () => {
   return (
     <div className="bg-green-100/10 flex items-center justify-center h-screen">
       <Card shadow="md" padding="lg" radius="md" className="h-fit w-1/2">
+        <ButtonComponent leftIcon={<IconArrowNarrowLeft />} variant="icon" onClick={customSignOut} fullWidth={false}>
+          {t('auth.registration_stepper.back_to_login_page')}
+        </ButtonComponent>
         <div className="flex flex-col items-center gap-1 py-4">
           <Image src={Logo} alt="Logo" />
           <Title color="blue-300">{t('basic.title')}</Title>
@@ -51,9 +55,6 @@ const VerifyEmailPage = () => {
           </ButtonComponent>
         </div>
       </Card>
-      <button type="button" onClick={customSignOut}>
-        Sign out
-      </button>
     </div>
   )
 }

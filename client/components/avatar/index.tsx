@@ -1,7 +1,6 @@
 import { Avatar } from '@mantine/core'
+import { IconUser } from '@tabler/icons-react'
 import Image from 'next/image'
-
-import UserIcon from '@/assets/icons/user.svg'
 
 interface AvatarProps {
   src?: string
@@ -26,7 +25,7 @@ export const AvatarComponent = ({ src, name, compact = false, className = '', ce
       radius={compact ? 'xl' : 'lg'}
       size={compact ? 'lg' : 'xl'}
     >
-      <Image height={compact ? 30 : 50} src={UserIcon} alt="avatar" />
+      <IconUser height={compact ? 30 : 50} />
     </Avatar>
 
     {!!name && <div className={compact ? 'text-3xl' : 'text-xl font-bold'}>{name}</div>}

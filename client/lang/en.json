@@ -170,7 +170,8 @@
       "step": "Step",
       "create_account": "Create an account",
       "verify_email": "Verify email",
-      "complete_profile": "Complete profile"
+      "complete_profile": "Complete profile",
+      "back_to_login_page": "Back to login page"
     },
     "register": {
       "email_label": "Email",

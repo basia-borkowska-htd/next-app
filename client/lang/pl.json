@@ -170,7 +170,8 @@
       "step": "Krok",
       "create_account": "Utwórz konto",
       "verify_email": "Zweryfikuj email",
-      "complete_profile": "Uzupełnij profil"
+      "complete_profile": "Uzupełnij profil",
+      "back_to_login_page": "Wróć do strony logowania"
     },
     "register": {
       "email_label": "Email",
