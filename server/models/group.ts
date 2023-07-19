@@ -8,7 +8,7 @@ const GroupSchema = new mongoose.Schema({
     required: true,
   },
   members: {
-    type: Array<String>,
+    type: [String],
     required: true,
   },
   photoUrl: String,

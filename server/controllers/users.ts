@@ -5,7 +5,7 @@ import { Account } from '../models/account'
 import { Measurement } from '../models/measurement'
 import { User } from '../models/user'
 
-import { s3 } from './aws'
+import { getDeleteObjectParams, getUploadParams, s3 } from './aws'
 
 const getUsers = async (req: Request, res: Response) => {
   try {
@@ -56,15 +56,7 @@ const updateUser = async (req: Request, res: Response) => {
     if (!!req.file) {
       deleteAvatar(req, res)
 
-      const params: PutObjectRequest = {
-        Bucket: process.env.AWS_BUCKET_NAME || '',
-        Key: req.file.originalname,
-        Body: req.file.buffer,
-        ACL: 'public-read-write',
-        ContentType: 'image/jpeg',
-      }
-
-      s3.upload(params, async (error, data) => {
+      s3.upload(getUploadParams(req.file), async (error, data) => {
         if (error) throw res.status(500).send({ error })
         const user = await User.findOneAndUpdate(
           { _id: req.params.id },
@@ -104,13 +96,7 @@ const deleteUser = async (req: Request, res: Response) => {
 const deleteAvatar = async (req: Request, res: Response) => {
   const user = await User.findOne({ _id: req.params.id })
   if (user?.avatarUrl) {
-    const match = user?.avatarUrl?.match('/([^/]+)$')
-    const params = {
-      Bucket: process.env.AWS_BUCKET_NAME || '',
-      Key: match ? match[1] : '',
-    }
-
-    s3.deleteObject(params, async (error) => {
+    s3.deleteObject(getDeleteObjectParams(user.avatarUrl), async (error) => {
       if (error) throw res.status(500).send({ error })
       await User.updateOne({ _id: req.params.id }, { ...req.body, avatarUrl: '' })
     })

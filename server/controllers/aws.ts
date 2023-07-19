@@ -1,4 +1,5 @@
 import Aws from 'aws-sdk'
+import { PutObjectRequest } from 'aws-sdk/clients/s3'
 import dotenv from 'dotenv'
 import { Request } from 'express'
 import multer from 'multer'
@@ -21,3 +22,19 @@ export const s3 = new Aws.S3({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_ACCESS_KEY_SECRET,
 })
+
+export const getUploadParams = (file: Express.Multer.File): PutObjectRequest => ({
+  Bucket: process.env.AWS_BUCKET_NAME || '',
+  Key: file.originalname,
+  Body: file.buffer,
+  ACL: 'public-read-write',
+  ContentType: 'image/jpeg',
+})
+
+export const getDeleteObjectParams = (url: string) => {
+  const match = url.match('/([^/]+)$')
+  return {
+    Bucket: process.env.AWS_BUCKET_NAME || '',
+    Key: match ? match[1] : '',
+  }
+}
