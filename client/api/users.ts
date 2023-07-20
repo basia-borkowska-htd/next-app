@@ -33,7 +33,7 @@ export const usersApi = {
     if (!data?.user) throw new Error(data.error)
     return data.user
   },
-  updateUser: async (user: UpdateUserType): Promise<UpdateUserType> => {
+  updateUser: async (user: UpdateUserType): Promise<UserType> => {
     const body = formatters.formatUser(user)
     const res = await fetch(`http://localhost:3001/api/users/${user._id}`, {
       method: 'PUT',
