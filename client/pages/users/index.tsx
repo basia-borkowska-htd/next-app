@@ -43,8 +43,14 @@ const UsersPage = () => {
       _id: 'string',
       name: 'B + M Foreveeeeeeeer <3 <3 <3',
       photoUrl: 'https://nextappzepp.s3.amazonaws.com/DF69ABCF-B104-4F41-8FC8-A0909A31C897.jpg',
-      members: ['6492c6486b68a1a8959348b4'],
+      members: ['6492c6486b68a1a8959348b4', '6492c6486b68a1a8959348b4', '6492c6486b68a1a8959348b4'],
       visibility: VisibilityEnum.PRIVATE,
+    },
+    {
+      _id: 'string2',
+      name: 'Boring public group',
+      members: ['6492c6486b68a1a8959348b4'],
+      visibility: VisibilityEnum.PUBLIC,
     },
   ]
   return (

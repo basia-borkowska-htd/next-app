@@ -158,6 +158,22 @@
     "metabolic_age": "Wiek metaboliczny",
     "body_rating": "Ocena sylwetki"
   },
+  "visibility_badge": {
+    "public": "Publiczna",
+    "private": "Prywatna"
+  },
+  "group": {
+    "member": "członek",
+    "members": "członków",
+    "options": {
+      "settings_label": "USTAWIENIA",
+      "danger_zone_label": "NIEBEZPIECZNE AKCJE",
+      "invite_member": "Zaproś użytkownika",
+      "edit": "Edytuj szczegóły grupy",
+      "leave": "Opuść grupę",
+      "delete": "Usuń grupę"
+    }
+  },
   "auth": {
     "sign_in": {
       "email_label": "Email",

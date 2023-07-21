@@ -158,6 +158,22 @@
     "metabolic_age": "Metabolic age",
     "body_rating": "Body rating"
   },
+  "visibility_badge": {
+    "public": "Public",
+    "private": "Private"
+  },
+  "group": {
+    "member": "member",
+    "members": "members",
+    "options": {
+      "settings_label": "SETTINGS",
+      "danger_zone_label": "DANGER ZONE",
+      "invite_member": "Invite member",
+      "edit": "Edit group details",
+      "leave": "Leave group",
+      "delete": "Delete group"
+    }
+  },
   "auth": {
     "sign_in": {
       "email_label": "Email",
