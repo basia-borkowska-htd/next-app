@@ -44,20 +44,17 @@ const UsersPage = () => {
   return (
     <div className="bg-green-100/10">
       <NavBarComponent />
-
-      {session && (
-        <ContainerComponent className="flex h-screen items-center">
-          <div className="w-full flex flex-wrap gap-6 justify-center">
-            <UserCardComponent
-              key={`user-card-${data._id}-${data.name}`}
-              _id={data._id}
-              avatarUrl={data.avatarUrl}
-              name={data.name}
-              handleClick={() => handleRedirect(data._id)}
-            />
-          </div>
-        </ContainerComponent>
-      )}
+      <ContainerComponent className="flex h-screen items-center">
+        <div className="w-full flex flex-wrap gap-6 justify-center">
+          <UserCardComponent
+            key={`user-card-${data._id}-${data.name}`}
+            _id={data._id}
+            avatarUrl={data.avatarUrl}
+            name={data.name}
+            handleClick={() => handleRedirect(data._id)}
+          />
+        </div>
+      </ContainerComponent>
     </div>
   )
 }
