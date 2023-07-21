@@ -20,4 +20,4 @@ jobs:
         node-version: 16
         cache: 'npm'
     - run: cd client && npm install
-    - run: npm run lint
+    - run: cd client && npm run lint
