@@ -7,6 +7,7 @@ import { router as authRoutes } from './routes/auth'
 import { router as measurementsRoutes } from './routes/measurements'
 import { router as rangesRoutes } from './routes/rangesLists'
 import { router as userRoutes } from './routes/users'
+import { router as groupsRoutes } from './routes/users'
 
 dotenv.config()
 
@@ -20,7 +21,8 @@ mongoose
 app.use(cors())
 app.use(express.json())
 
-app.use('/api/users', userRoutes)
 app.use('/api/auth', authRoutes)
+app.use('/api/users', userRoutes)
+app.use('/api/groups', groupsRoutes)
 app.use('/api/measurements', measurementsRoutes)
 app.use('/api/ranges', rangesRoutes)
