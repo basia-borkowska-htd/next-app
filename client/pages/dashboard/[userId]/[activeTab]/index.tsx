@@ -8,6 +8,7 @@ import { useRouter } from 'next/router'
 import { queryClient } from '@/pages/_app'
 
 import { ContainerComponent } from '@/components/container'
+import { NavBarComponent } from '@/components/navBar'
 import withPrivateRoute from '@/components/withPrivateRoute'
 
 import { useTranslate } from '@/hooks/useTranslate'
@@ -70,42 +71,45 @@ const DashboardPage = () => {
   if (!userId || error || !user || !activeTab) return <ErrorComponent />
 
   return (
-    <ContainerComponent className="flex flex-col justify-between py-8">
-      <HeaderComponent userId={user._id} userName={user.name} userAvatar={user.avatarUrl} openModal={open} />
-      <MeasurementModalComponent
-        opened={opened}
-        userId={userId.toString()}
-        onClose={close}
-        onSubmit={addMeasurementMutation.mutate}
-        loading={addMeasurementMutation.isLoading}
-      />
+    <>
+      <NavBarComponent />
+      <ContainerComponent className="flex flex-col justify-between py-8">
+        <HeaderComponent userId={user._id} userName={user.name} userAvatar={user.avatarUrl} openModal={open} />
+        <MeasurementModalComponent
+          opened={opened}
+          userId={userId.toString()}
+          onClose={close}
+          onSubmit={addMeasurementMutation.mutate}
+          loading={addMeasurementMutation.isLoading}
+        />
 
-      <Tabs
-        value={activeTab.toString()}
-        onTabChange={(value) =>
-          router.push(
-            Pathnames.dashboard
-              .replace(':id', userId.toString())
-              .replace(':activeTab', value || DashboardTabEnum.HISTORY),
-          )
-        }
-        defaultValue={DashboardTabEnum.HISTORY}
-        orientation="horizontal"
-        color="blue-100"
-      >
-        <Tabs.List grow>
-          <Tabs.Tab value={DashboardTabEnum.HISTORY}>{t('dashboard.tabs.history')}</Tabs.Tab>
-          <Tabs.Tab value={DashboardTabEnum.CHARTS}>{t('dashboard.tabs.charts')}</Tabs.Tab>
-        </Tabs.List>
+        <Tabs
+          value={activeTab.toString()}
+          onTabChange={(value) =>
+            router.push(
+              Pathnames.dashboard
+                .replace(':id', userId.toString())
+                .replace(':activeTab', value || DashboardTabEnum.HISTORY),
+            )
+          }
+          defaultValue={DashboardTabEnum.HISTORY}
+          orientation="horizontal"
+          color="blue-100"
+        >
+          <Tabs.List grow>
+            <Tabs.Tab value={DashboardTabEnum.HISTORY}>{t('dashboard.tabs.history')}</Tabs.Tab>
+            <Tabs.Tab value={DashboardTabEnum.CHARTS}>{t('dashboard.tabs.charts')}</Tabs.Tab>
+          </Tabs.List>
 
-        <Tabs.Panel value={DashboardTabEnum.HISTORY}>
-          <HistoryTabComponent userId={userId.toString()} />
-        </Tabs.Panel>
-        <Tabs.Panel value={DashboardTabEnum.CHARTS}>
-          <ChartsTabComponent userId={userId.toString()} />
-        </Tabs.Panel>
-      </Tabs>
-    </ContainerComponent>
+          <Tabs.Panel value={DashboardTabEnum.HISTORY}>
+            <HistoryTabComponent userId={userId.toString()} />
+          </Tabs.Panel>
+          <Tabs.Panel value={DashboardTabEnum.CHARTS}>
+            <ChartsTabComponent userId={userId.toString()} />
+          </Tabs.Panel>
+        </Tabs>
+      </ContainerComponent>
+    </>
   )
 }
 

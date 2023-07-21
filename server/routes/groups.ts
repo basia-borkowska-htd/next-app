@@ -13,7 +13,7 @@ import {
   updateGroup,
 } from '../controllers/groups'
 
-const router = express.Router()
+export const router = express.Router()
 
 router.get('/', getPublicGroups)
 router.get('/:userId/joined', getJoinedGroups)

@@ -110,7 +110,7 @@ const removeGroupMember = async (req: Request, res: Response) => {
 const deleteGroup = async (req: Request, res: Response) => {
   try {
     deleteGroupPhoto(req, res)
-    // if there are members <- don't delete
+
     await Group.deleteOne({ _id: req.params.id })
     res.status(200).json({ success: true })
   } catch (error) {

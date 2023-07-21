@@ -4,10 +4,10 @@ import express from 'express'
 import mongoose from 'mongoose'
 
 import { router as authRoutes } from './routes/auth'
+import { router as groupsRoutes } from './routes/groups'
 import { router as measurementsRoutes } from './routes/measurements'
 import { router as rangesRoutes } from './routes/rangesLists'
 import { router as userRoutes } from './routes/users'
-import { router as groupsRoutes } from './routes/users'
 
 dotenv.config()
 
