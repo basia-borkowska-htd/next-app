@@ -15,7 +15,7 @@ const app = express()
 
 mongoose
   .connect(process.env.MONGO_URI || '')
-  .then(() => app.listen(process.env.PORT || 3001))
+  .then(() => app.listen(process.env.PORT))
   .catch((err) => console.log(err))
 
 app.use(cors())
