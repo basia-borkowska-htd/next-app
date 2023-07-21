@@ -1,4 +1,5 @@
 import { authApi } from './auth'
+import { groupsApi } from './groups'
 import { measurementsApi } from './measurements'
 import { rangesApi } from './ranges'
 import { usersApi } from './users'
@@ -15,5 +16,8 @@ export const api = {
   },
   measurement: {
     ...measurementsApi,
+  },
+  group: {
+    ...groupsApi,
   },
 }

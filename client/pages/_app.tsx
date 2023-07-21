@@ -7,6 +7,8 @@ import { SessionProvider } from 'next-auth/react'
 import type { AppProps } from 'next/app'
 import { IntlProvider } from 'react-intl'
 
+import { NavBarComponent } from '@/components/navBar'
+
 import { useLocale } from '@/hooks/useLocale'
 
 export const queryClient = new QueryClient()

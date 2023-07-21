@@ -10,6 +10,7 @@ import { queryClient } from '@/pages/_app'
 import { EmptyStateComponent } from '@/components/emptyState'
 import { ErrorComponent } from '@/components/error'
 import { ModalComponent } from '@/components/modals/modal'
+import { NavBarComponent } from '@/components/navBar'
 import { PageLoaderComponent } from '@/components/pageLoader'
 import withPrivateRoute from '@/components/withPrivateRoute'
 
@@ -74,6 +75,7 @@ const UserProfilePage = () => {
 
   return (
     <>
+      <NavBarComponent />
       <HeaderComponent user={user} openModal={open} />
       <RangesComponent userId={user._id} />
       <ChartSectionComponent userId={user._id} />

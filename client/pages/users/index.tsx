@@ -1,17 +1,16 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { api } from '@/api'
 import { useQuery } from '@tanstack/react-query'
-import { signIn, useSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 import dynamic from 'next/dynamic'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import { ContainerComponent } from '@/components/container'
 import { EmptyStateComponent } from '@/components/emptyState'
+import { NavBarComponent } from '@/components/navBar'
+import withPrivateRoute from '@/components/withPrivateRoute'
 
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 
-import { customSignOut } from '@/utils/customSignOut'
 import { Pathnames } from '@/utils/pathnames'
 
 const ErrorComponent = dynamic(() => import('@/components/error').then((component) => component.ErrorComponent))
@@ -38,38 +37,26 @@ const UsersPage = () => {
     router.push(Pathnames.userProfile.replace(':id', id))
   }
 
-  if (!session)
-    return (
-      <Link href="#" onClick={() => signIn()} className="btn-signin">
-        Sign in
-      </Link>
-    )
   if (isLoading) return <PageLoaderComponent />
   if (error) return <ErrorComponent title={error.toString()} />
   if (!data) return <EmptyStateComponent />
 
   return (
     <div className="bg-green-100/10">
-      {session && (
-        <>
-          <Link href="#" onClick={customSignOut} className="btn-signin">
-            Sign out
-          </Link>
-          <ContainerComponent className="flex h-screen items-center">
-            <div className="w-full flex flex-wrap gap-6 justify-center">
-              <UserCardComponent
-                key={`user-card-${data._id}-${data.name}`}
-                _id={data._id}
-                avatarUrl={data.avatarUrl}
-                name={data.name}
-                handleClick={() => handleRedirect(data._id)}
-              />
-            </div>
-          </ContainerComponent>
-        </>
-      )}
+      <NavBarComponent />
+      <ContainerComponent className="flex h-screen items-center">
+        <div className="w-full flex flex-wrap gap-6 justify-center">
+          <UserCardComponent
+            key={`user-card-${data._id}-${data.name}`}
+            _id={data._id}
+            avatarUrl={data.avatarUrl}
+            name={data.name}
+            handleClick={() => handleRedirect(data._id)}
+          />
+        </div>
+      </ContainerComponent>
     </div>
   )
 }
 
-export default UsersPage
+export default withPrivateRoute(UsersPage)

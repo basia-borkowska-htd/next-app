@@ -91,7 +91,7 @@ const updateGroup = async (req: Request, res: Response) => {
 
 const addGroupMember = async (req: Request, res: Response) => {
   try {
-    await Group.findOneAndUpdate({ _id: req.params.id }, { $push: { members: req.body.userId } }, { new: true })
+    await Group.findOneAndUpdate({ _id: req.params.id }, { $push: { members: req.body.userId } })
     res.status(200).json({ success: true })
   } catch (error) {
     res.status(500).json({ error: 'Unable to add a member to a group' })
@@ -100,7 +100,7 @@ const addGroupMember = async (req: Request, res: Response) => {
 
 const removeGroupMember = async (req: Request, res: Response) => {
   try {
-    await Group.findOneAndUpdate({ _id: req.params.id }, { $pull: { members: req.body.userId } }, { new: true })
+    await Group.findOneAndUpdate({ _id: req.params.id }, { $pull: { members: req.body.userId } })
     res.status(200).json({ success: true })
   } catch (error) {
     res.status(500).json({ error: 'Unable to remove a member form a group' })
