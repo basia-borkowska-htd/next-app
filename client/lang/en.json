@@ -2,7 +2,11 @@
   "basic": {
     "title": "Next App"
   },
-  "users": {},
+  "users": {
+    "my_groups": "My groups",
+    "public_groups": "Browse public groups",
+    "create_group": "Create new group"
+  },
   "user": {
     "header": {
       "age": "Age",

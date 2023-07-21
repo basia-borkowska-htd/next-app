@@ -2,7 +2,11 @@
   "basic": {
     "title": "Next App"
   },
-  "users": {},
+  "users": {
+    "my_groups": "Moje grupy",
+    "public_groups": "Przeglądaj publiczne grupy",
+    "create_group": "Stwórz nową grupę"
+  },
   "user": {
     "header": {
       "age": "Wiek",
