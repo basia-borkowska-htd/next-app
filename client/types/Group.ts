@@ -14,9 +14,8 @@ export interface GroupType extends BasicGroupType {
   visibility: VisibilityEnum
 }
 
-export interface AddGroupType extends BasicGroupType {
+export interface AddGroupType extends GroupType {
   photoFile?: File
-  visibility: VisibilityEnum
 }
 
 export type UpdateGroupType = AddGroupType

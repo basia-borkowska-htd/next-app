@@ -1,35 +1,36 @@
 import { AddGroupType, GroupType, PreviewGroupType, UpdateGroupType } from '@/types/Group'
+import { BasicUserType } from '@/types/User'
 
 import { formatters } from '@/utils/formatters'
 
 export const groupsApi = {
   getPublicGroups: async (): Promise<PreviewGroupType[]> => {
-    const res = await fetch('http://localhost:3000/api/groups')
+    const res = await fetch('http://localhost:3001/api/groups')
     const data = await res.json()
     if (!data?.groups) throw new Error(data.error)
     return data.groups
   },
-  getJoinedGroups: async (userId: string): Promise<GroupType[]> => {
-    const res = await fetch(`http://localhost:3000/api/groups/${userId}/joined`)
+  getJoinedGroups: async (email: string): Promise<GroupType[]> => {
+    const res = await fetch(`http://localhost:3001/api/groups/${email}/joined`)
     const data = await res.json()
     if (!data?.groups) throw new Error(data.error)
     return data.groups
   },
   getGroup: async (id: string): Promise<GroupType> => {
-    const res = await fetch(`http://localhost:3000/api/groups/${id}`)
+    const res = await fetch(`http://localhost:3001/api/groups/${id}`)
     const data = await res.json()
     if (!data?.group) throw new Error(data.error)
     return data.group
   },
-  getGroupMembers: async (id: string): Promise<string[]> => {
-    const res = await fetch(`http://localhost:3000/api/groups/${id}/members`)
+  getGroupMembers: async (id: string): Promise<BasicUserType[]> => {
+    const res = await fetch(`http://localhost:3001/api/groups/${id}/members`)
     const data = await res.json()
     if (!data?.members) throw new Error(data.error)
     return data.members
   },
   createGroup: async (group: AddGroupType): Promise<GroupType> => {
     const body = formatters.formatGroup(group)
-    const res = await fetch('http://localhost:3000/api/groups', {
+    const res = await fetch('http://localhost:3001/api/groups', {
       method: 'POST',
       body,
     })
@@ -39,7 +40,7 @@ export const groupsApi = {
   },
   updateGroup: async (group: UpdateGroupType): Promise<GroupType> => {
     const body = formatters.formatGroup(group)
-    const res = await fetch(`http://localhost:3000/api/groups/${group._id}`, {
+    const res = await fetch(`http://localhost:3001/api/groups/${group._id}`, {
       method: 'PUT',
       body,
     })
@@ -48,7 +49,7 @@ export const groupsApi = {
     return data.group
   },
   addGroupMember: async (groupId: string, userId: string): Promise<boolean> => {
-    const res = await fetch(`http://localhost:3000/api/groups/${groupId}/addMember`, {
+    const res = await fetch(`http://localhost:3001/api/groups/${groupId}/addMember`, {
       method: 'PUT',
       body: JSON.stringify(userId),
     })
@@ -57,7 +58,7 @@ export const groupsApi = {
     return data.success
   },
   removeGroupMember: async (groupId: string, userId: string): Promise<boolean> => {
-    const res = await fetch(`http://localhost:3000/api/groups/${groupId}/removeMember`, {
+    const res = await fetch(`http://localhost:3001/api/groups/${groupId}/removeMember`, {
       method: 'PUT',
       body: JSON.stringify(userId),
     })
@@ -66,7 +67,7 @@ export const groupsApi = {
     return data.success
   },
   deleteGroup: async (id: string): Promise<boolean> => {
-    const res = await fetch(`http://localhost:3000/api/groups/${id}`, {
+    const res = await fetch(`http://localhost:3001/api/groups/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

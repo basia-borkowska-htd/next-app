@@ -1,21 +1,36 @@
+import { api } from '@/api'
 import { Divider } from '@mantine/core'
+import { useQuery } from '@tanstack/react-query'
 
 import { AvatarComponent } from '@/components/avatar'
+import { ErrorComponent } from '@/components/error'
+import { PageLoaderComponent } from '@/components/pageLoader'
 import { VisibilityBadgeComponent } from '@/components/visibilityBadge'
-
-import { useTranslate } from '@/hooks/useTranslate'
 
 import { GroupType } from '@/types/Group'
 
+import { QueryKeyEnum } from '@/enums/QueryKey.enum'
+
+import { MembersPreviewComponent } from './membersPreview'
 import { OptionsComponent } from './options'
 
 interface GroupProps {
   group: GroupType
 }
 
-export const GroupComponent = ({ group: { name, photoUrl, visibility, members } }: GroupProps) => {
-  const { t } = useTranslate()
-  const membersCountText = `${members.length} ${members.length === 1 ? t('group.member') : t('group.members')}`
+export const GroupComponent = ({ group: { _id, name, photoUrl, visibility } }: GroupProps) => {
+  const {
+    data: members,
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: [QueryKeyEnum.GROUP_MEMBERS, _id],
+    queryFn: () => api.group.getGroupMembers(_id),
+    retry: 1,
+  })
+
+  if (isLoading) return <PageLoaderComponent compact />
+  if (error) return <ErrorComponent compact title={error.toString()} />
 
   return (
     <div>
@@ -25,7 +40,7 @@ export const GroupComponent = ({ group: { name, photoUrl, visibility, members } 
           <div className="flex flex-col">
             <div className="font-bold text-lg">{name}</div>
             <div className="flex items-center gap-2">
-              <div className="text-sm">{membersCountText}</div>
+              <MembersPreviewComponent members={members} />
               <VisibilityBadgeComponent visibility={visibility} />
             </div>
           </div>

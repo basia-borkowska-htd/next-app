@@ -4,6 +4,10 @@
   },
   "users": {
     "my_groups": "Moje grupy",
+    "my_groups_empty_state": {
+      "title": "Nie dołączyłeś jeszcze go żadnej grupy",
+      "message": "Możesz przeglądać publiczne grupy, lub stworzyć swoją nową grupę i zaprosić znajomych!"
+    },
     "public_groups": "Przeglądaj publiczne grupy",
     "create_group": "Stwórz nową grupę"
   },
@@ -163,8 +167,6 @@
     "private": "Prywatna"
   },
   "group": {
-    "member": "członek",
-    "members": "członków",
     "options": {
       "settings_label": "USTAWIENIA",
       "danger_zone_label": "NIEBEZPIECZNE AKCJE",

@@ -4,6 +4,10 @@
   },
   "users": {
     "my_groups": "My groups",
+    "my_groups_empty_state": {
+      "title": "You've not joined any groups yet",
+      "message": "You can browse public groups or create your own and invite friends!"
+    },
     "public_groups": "Browse public groups",
     "create_group": "Create new group"
   },
@@ -163,8 +167,6 @@
     "private": "Private"
   },
   "group": {
-    "member": "member",
-    "members": "members",
     "options": {
       "settings_label": "SETTINGS",
       "danger_zone_label": "DANGER ZONE",
