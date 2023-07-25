@@ -5,7 +5,11 @@
   "users": {
     "my_groups": "Moje grupy",
     "public_groups": "Przeglądaj publiczne grupy",
-    "create_group": "Stwórz nową grupę"
+    "create_group": {
+      "title": "Utwórz nową grupę",
+      "success": "Grupa utworzona pomyślnie",
+      "error": "Nie udało się utworzyć grupy"
+    }
   },
   "user": {
     "header": {
@@ -87,6 +91,23 @@
     "toast_success": "Pomiar dodany prawidłowo",
     "toast_error": "Nie udało się dodać pomiaru",
     "button": "Dodaj nowy pomiar"
+  },
+  "group_modal": {
+    "remove_button": "Usuń zdjęcie",
+    "name": "Nazwa",
+    "placeholders": {
+      "name": "Nazwa grupa",
+      "users": "Wprowadź maile użytkowników"
+    },
+    "labels": {
+      "users": "Użytkownicy"
+    },
+    "visibility": {
+      "label": "Widoczność",
+      "private": "Prywatna",
+      "public": "Publiczna"
+    },
+    "submit_button": "Zatwierdź"
   },
   "user_modal": {
     "title_add_user": "Dodaj nowego użytkownika",

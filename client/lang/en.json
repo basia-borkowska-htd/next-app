@@ -99,7 +99,9 @@
       "name": "Group name",
       "users": "Enter user's emails"
     },
-    "labels": { "users": "Users" },
+    "labels": {
+      "users": "Users"
+    },
     "visibility": {
       "label": "Visibility",
       "private": "Private",
