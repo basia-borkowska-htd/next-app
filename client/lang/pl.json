@@ -173,7 +173,13 @@
       "invite_member": "Zaproś użytkownika",
       "edit": "Edytuj szczegóły grupy",
       "leave": "Opuść grupę",
-      "delete": "Usuń grupę"
+      "leave_success": "Opuszczono grupę prawidłowo",
+      "leave_error": "Nie udało się opuścić grupę",
+      "leave_description": "Czy na pewno chcesz opuść grupę?",
+      "delete": "Usuń grupę",
+      "delete_description": "Czy na pewno chcesz usunąć grupę? Ta akcja jest nieodwracalna!",
+      "delete_success": "Usunięto grupę prawidłowo",
+      "delete_error": "Nie udało się usunąć grupy"
     }
   },
   "auth": {

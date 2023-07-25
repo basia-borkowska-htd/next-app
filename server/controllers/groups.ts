@@ -103,6 +103,7 @@ const addGroupMember = async (req: Request, res: Response) => {
 
 const removeGroupMember = async (req: Request, res: Response) => {
   try {
+    console.log(req)
     await Group.findOneAndUpdate({ _id: req.params.id }, { $pull: { members: req.body.userId } })
     res.status(200).json({ success: true })
   } catch (error) {

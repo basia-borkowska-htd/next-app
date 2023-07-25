@@ -60,7 +60,10 @@ export const groupsApi = {
   removeGroupMember: async (groupId: string, userId: string): Promise<boolean> => {
     const res = await fetch(`http://localhost:3001/api/groups/${groupId}/removeMember`, {
       method: 'PUT',
-      body: JSON.stringify(userId),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ userId }),
     })
     const data = await res.json()
     if (!data?.success) throw new Error(data.error)

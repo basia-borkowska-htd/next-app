@@ -1,6 +1,7 @@
 import { api } from '@/api'
 import { Divider } from '@mantine/core'
 import { useQuery } from '@tanstack/react-query'
+import { group } from 'console'
 
 import { AvatarComponent } from '@/components/avatar'
 import { ErrorComponent } from '@/components/error'
@@ -46,7 +47,7 @@ export const GroupComponent = ({ group: { _id, name, photoUrl, visibility } }: G
           </div>
         </div>
         <div>
-          <OptionsComponent />
+          <OptionsComponent id={_id} />
         </div>
       </div>
 
