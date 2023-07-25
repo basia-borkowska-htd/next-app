@@ -5,9 +5,11 @@ import { AccountStatusEnum } from '@/enums/AccountStatus.enum'
 
 import { formatters } from '@/utils/formatters'
 
+import { apiUrl } from './global'
+
 export const authApi = {
   authenticate: async (credentials: CredentialsType): Promise<AccountType> => {
-    const res = await fetch('http://localhost:3001/api/auth', {
+    const res = await fetch(`${apiUrl}/auth`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -20,7 +22,7 @@ export const authApi = {
     return data.account
   },
   createAccount: async (account: CreateAccountType): Promise<AccountType> => {
-    const res = await fetch('http://localhost:3001/api/auth/accounts', {
+    const res = await fetch(`${apiUrl}/auth/accounts`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -34,7 +36,7 @@ export const authApi = {
     return data.account
   },
   verifyEmail: async (id: string): Promise<AccountType> => {
-    const res = await fetch(`http://localhost:3001/api/auth/accounts/${id}/verifyEmail`, {
+    const res = await fetch(`${apiUrl}/auth/accounts/${id}/verifyEmail`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -50,7 +52,7 @@ export const authApi = {
     user: AddUserType,
   ): Promise<{ user: UserType; status: AccountStatusEnum }> => {
     const body = formatters.formatUser(user)
-    const res = await fetch(`http://localhost:3001/api/auth/accounts/${accountId}/completeProfile`, {
+    const res = await fetch(`${apiUrl}/auth/accounts/${accountId}/completeProfile`, {
       method: 'POST',
       body,
     })
