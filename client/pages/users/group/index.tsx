@@ -1,7 +1,6 @@
 import { api } from '@/api'
 import { Divider } from '@mantine/core'
 import { useQuery } from '@tanstack/react-query'
-import { group } from 'console'
 
 import { AvatarComponent } from '@/components/avatar'
 import { ErrorComponent } from '@/components/error'
