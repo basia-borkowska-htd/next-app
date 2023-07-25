@@ -6,7 +6,7 @@
     "my_groups": "Moje grupy",
     "public_groups": "Przeglądaj publiczne grupy",
     "create_group": {
-      "title": "Utwórz nową grupę",
+      "title": "Stwórz nową grupę",
       "success": "Grupa utworzona pomyślnie",
       "error": "Nie udało się utworzyć grupy"
     }
