@@ -1,18 +1,17 @@
 import { MultiSelect } from '@mantine/core'
-import { useState } from 'react'
 
 interface CreatableProps {
   className: string
   label: string
   placeholder: string
+  values: string[]
+  setValues: (newValue: string) => void
 }
 
-export const CreatableComponent = ({ className, label, placeholder }: CreatableProps) => {
-  const [data, setData] = useState([])
-
-  const handleCreate = (query) => {
+export const CreatableSelectComponent = ({ className, label, placeholder, values, setValues }: CreatableProps) => {
+  const handleCreate = (query: string) => {
     const item = { value: query, label: query }
-    setData((current) => [...current, item])
+    setValues(item.value)
     return item
   }
 
@@ -20,7 +19,7 @@ export const CreatableComponent = ({ className, label, placeholder }: CreatableP
     <MultiSelect
       className={className}
       label={label}
-      data={data}
+      data={values}
       placeholder={placeholder}
       getCreateLabel={(query) => query}
       onCreate={handleCreate}

@@ -5,11 +5,13 @@ import { MutateOptions } from '@tanstack/react-query'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 
-import { CreatableComponent } from '@/components/creatable'
+import { CreatableSelectComponent } from '@/components/creatable'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
 import { AddGroupType, GroupType } from '@/types/Group'
+
+import { VisibilityEnum } from '@/enums/Visibility.enum'
 
 import { getInitialValues, validate } from './helpers'
 
@@ -22,11 +24,11 @@ const FileUploaderComponent = dynamic(() =>
 interface GroupModalProps {
   group?: GroupType
   loading: boolean
-
+  userId: string
   onSubmit: (group: AddGroupType, options?: MutateOptions<AddGroupType, unknown, AddGroupType, unknown>) => void
 }
 
-export const GroupFormComponent = ({ group, loading, onSubmit }: GroupModalProps) => {
+export const GroupFormComponent = ({ group, loading, onSubmit, userId }: GroupModalProps) => {
   const [photoFile, setPhotoFile] = useState<File>()
   const initialValues = getInitialValues(group)
   const { t } = useTranslate()
@@ -59,8 +61,7 @@ export const GroupFormComponent = ({ group, loading, onSubmit }: GroupModalProps
     <form
       onSubmit={onSubmitForm((values) => {
         onSubmit(
-          // TODO: error
-          { _id: group?._id || '', photoFile, ...values },
+          { _id: group?._id || '', photoFile, ...values, members: [userId] },
           {
             onSuccess: reset,
           },
@@ -68,7 +69,7 @@ export const GroupFormComponent = ({ group, loading, onSubmit }: GroupModalProps
       })}
     >
       <div className="flex items-end mb-4">
-        <AvatarComponent src={getInputProps('photoUrl').value} centered={false} />
+        <AvatarComponent src={getInputProps('photoUrl').value} centered={false} isGroup />
         <div className="flex flex-col">
           <FileUploaderComponent message={t('user_modal.upload_button')} handleChange={handleChange} />
           {!!getInputProps('photoUrl').value && (
@@ -101,8 +102,8 @@ export const GroupFormComponent = ({ group, loading, onSubmit }: GroupModalProps
       >
         <SegmentedControl
           data={[
-            { label: t('group_modal.visibility.private'), value: 'private' },
-            { label: t('group_modal.visibility.public'), value: 'public' },
+            { label: t('group_modal.visibility.private'), value: VisibilityEnum.PRIVATE },
+            { label: t('group_modal.visibility.public'), value: VisibilityEnum.PUBLIC },
           ]}
           color="blue-200"
           transitionDuration={500}
@@ -110,10 +111,14 @@ export const GroupFormComponent = ({ group, loading, onSubmit }: GroupModalProps
           {...getInputProps('visibility')}
         />
       </Input.Wrapper>
-      <CreatableComponent
+      <CreatableSelectComponent
         className="my-4"
         label={t('group_modal.labels.users')}
         placeholder={t('group_modal.placeholders.users')}
+        values={getInputProps('invitations').value}
+        setValues={(newValue: string) =>
+          setFieldValue('invitations', [...getInputProps('invitations').value, newValue])
+        }
       />
       <ButtonComponent loading={loading} type="submit" variant="gradient">
         {t('group_modal.submit_button')}

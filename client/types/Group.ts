@@ -16,6 +16,7 @@ export interface GroupType extends BasicGroupType {
 
 export interface AddGroupType extends GroupType {
   photoFile?: File
+  invitations: string[]
 }
 
 export type UpdateGroupType = AddGroupType

@@ -13,6 +13,8 @@ import withPrivateRoute from '@/components/withPrivateRoute'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
+import { AddGroupType } from '@/types/Group'
+
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 
 import { notify } from '@/utils/notifications'
@@ -42,9 +44,8 @@ const UsersPage = () => {
   })
 
   const createGroupMutation = useMutation({
-    mutationFn: (group: GroupType) => api.group.createGroup(group),
+    mutationFn: (group: AddGroupType) => api.group.createGroup(group),
     onSuccess: async () => {
-      await queryClient.refetchQueries({ queryKey: [QueryKeyEnum.USER] })
       notify({ type: 'success', message: t('users.create_group.success') })
       close()
     },
@@ -59,7 +60,11 @@ const UsersPage = () => {
   return (
     <div className="bg-green-100/10 h-screen">
       <ModalComponent opened={opened} onClose={close} title={t('users.create_group.title')}>
-        <GroupFormComponent loading={createGroupMutation.isLoading} onSubmit={createGroupMutation.mutate} />
+        <GroupFormComponent
+          loading={createGroupMutation.isLoading}
+          onSubmit={createGroupMutation.mutate}
+          userId={session?.user?._id}
+        />
       </ModalComponent>
       <ContainerComponent className="flex flex-col mt-8">
         <div className="flex justify-between items-center">

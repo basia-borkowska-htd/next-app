@@ -58,7 +58,7 @@ const createGroup = async (req: Request, res: Response) => {
         return res.status(200).json({ group })
       })
     } else {
-      const group = await Group.create(req.body)
+      const group = await Group.create({ ...req.body, members: JSON.parse(req.body.members) })
       return res.status(200).json({ group })
     }
   } catch (error) {

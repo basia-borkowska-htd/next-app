@@ -6,6 +6,7 @@ export const getInitialValues = (group: GroupType | undefined) => ({
   name: group?.name || '',
   visibility: group?.visibility || VisibilityEnum.PRIVATE,
   photoUrl: group?.photoUrl || '',
+  invitations: [],
 })
 
 export const validate = {
