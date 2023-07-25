@@ -1,17 +1,25 @@
 import { api } from '@/api'
-import { useQuery } from '@tanstack/react-query'
+import { useDisclosure } from '@mantine/hooks'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import dynamic from 'next/dynamic'
 
 import { ButtonComponent } from '@/components/button'
 import { ContainerComponent } from '@/components/container'
 import { EmptyStateComponent } from '@/components/emptyState'
+import { GroupFormComponent } from '@/components/groupForm'
+import { ModalComponent } from '@/components/modals/modal'
 import withPrivateRoute from '@/components/withPrivateRoute'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
+import { AddGroupType } from '@/types/Group'
+
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 
+import { notify } from '@/utils/notifications'
+
+import { queryClient } from '../_app'
 import { GroupComponent } from './group'
 
 const ErrorComponent = dynamic(() => import('@/components/error').then((component) => component.ErrorComponent))
@@ -22,6 +30,7 @@ const PageLoaderComponent = dynamic(() =>
 const UsersPage = () => {
   const { t } = useTranslate()
   const { data: session } = useSession()
+  const [opened, { open, close }] = useDisclosure(false)
 
   const {
     data: joinedGroups,
@@ -34,16 +43,34 @@ const UsersPage = () => {
     retry: 1,
   })
 
+  const createGroupMutation = useMutation({
+    mutationFn: (group: AddGroupType) => api.group.createGroup(group),
+    onSuccess: async () => {
+      notify({ type: 'success', message: t('users.create_group.success') })
+      close()
+    },
+    onError: () => {
+      notify({ type: 'error', message: t('users.create_group.error') })
+    },
+  })
+
   if (isLoading) return <PageLoaderComponent />
   if (error) return <ErrorComponent title={error.toString()} />
 
   return (
-    <div>
+    <div className="bg-green-100/10 h-screen">
+      <ModalComponent opened={opened} onClose={close} title={t('users.create_group.title')}>
+        <GroupFormComponent
+          loading={createGroupMutation.isLoading}
+          onSubmit={createGroupMutation.mutate}
+          userId={session?.user?._id}
+        />
+      </ModalComponent>
       <ContainerComponent className="flex flex-col mt-8">
         <div className="flex justify-between items-center">
           <div className="mb-8 font-bold text-xl">{t('users.my_groups')}</div>
-          <ButtonComponent variant="outline" className="w-3/12">
-            {t('users.create_group')}
+          <ButtonComponent variant="outline" className="w-3/12" onClick={open}>
+            {t('users.create_group.title')}
           </ButtonComponent>
         </div>
         {joinedGroups.length ? (

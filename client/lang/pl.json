@@ -9,7 +9,11 @@
       "message": "Możesz przeglądać publiczne grupy, lub stworzyć swoją nową grupę i zaprosić znajomych!"
     },
     "public_groups": "Przeglądaj publiczne grupy",
-    "create_group": "Stwórz nową grupę"
+    "create_group": {
+      "title": "Stwórz nową grupę",
+      "success": "Grupa utworzona pomyślnie",
+      "error": "Nie udało się utworzyć grupy"
+    }
   },
   "user": {
     "header": {
@@ -91,6 +95,23 @@
     "toast_success": "Pomiar dodany prawidłowo",
     "toast_error": "Nie udało się dodać pomiaru",
     "button": "Dodaj nowy pomiar"
+  },
+  "group_modal": {
+    "remove_button": "Usuń zdjęcie",
+    "name": "Nazwa",
+    "placeholders": {
+      "name": "Nazwa grupa",
+      "users": "Wprowadź maile użytkowników"
+    },
+    "labels": {
+      "users": "Zaproś członków"
+    },
+    "visibility": {
+      "label": "Widoczność",
+      "private": "Prywatna",
+      "public": "Publiczna"
+    },
+    "submit_button": "Zatwierdź"
   },
   "user_modal": {
     "title_add_user": "Dodaj nowego użytkownika",

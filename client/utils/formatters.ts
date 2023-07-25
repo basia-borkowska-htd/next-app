@@ -16,15 +16,18 @@ export const formatters = {
       formData.append('weight[value]', weight.value?.toString() || '')
     }
     if (!avatarUrl) formData.append('removeAvatar', 'true')
+
     return formData
   },
-  formatGroup: ({ name, photoFile, visibility, photoUrl, members }: AddGroupType) => {
+  formatGroup: ({ name, photoFile, visibility, photoUrl, members, invitations }: AddGroupType) => {
     const formData = new FormData()
     if (photoFile) formData.append('photo', photoFile)
     formData.append('name', name)
     formData.append('visibility', visibility)
     formData.append('members', JSON.stringify(members))
     if (!photoUrl) formData.append('removePhoto', 'true')
+    if (invitations.length) formData.append('invitations', JSON.stringify(invitations))
+
     return formData
   },
 }
