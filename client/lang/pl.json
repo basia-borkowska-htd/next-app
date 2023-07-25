@@ -4,6 +4,10 @@
   },
   "users": {
     "my_groups": "Moje grupy",
+    "my_groups_empty_state": {
+      "title": "Nie dołączyłeś jeszcze go żadnej grupy",
+      "message": "Możesz przeglądać publiczne grupy, lub stworzyć swoją nową grupę i zaprosić znajomych!"
+    },
     "public_groups": "Przeglądaj publiczne grupy",
     "create_group": {
       "title": "Stwórz nową grupę",
@@ -178,6 +182,26 @@
     "bmr": "BMR",
     "metabolic_age": "Wiek metaboliczny",
     "body_rating": "Ocena sylwetki"
+  },
+  "visibility_badge": {
+    "public": "Publiczna",
+    "private": "Prywatna"
+  },
+  "group": {
+    "options": {
+      "settings_label": "USTAWIENIA",
+      "danger_zone_label": "NIEBEZPIECZNE AKCJE",
+      "invite_member": "Zaproś użytkownika",
+      "edit": "Edytuj szczegóły grupy",
+      "leave": "Opuść grupę",
+      "leave_success": "Opuszczono grupę prawidłowo",
+      "leave_error": "Nie udało się opuścić grupę",
+      "leave_description": "Czy na pewno chcesz opuść grupę?",
+      "delete": "Usuń grupę",
+      "delete_description": "Czy na pewno chcesz usunąć grupę? Ta akcja jest nieodwracalna!",
+      "delete_success": "Usunięto grupę prawidłowo",
+      "delete_error": "Nie udało się usunąć grupy"
+    }
   },
   "auth": {
     "sign_in": {

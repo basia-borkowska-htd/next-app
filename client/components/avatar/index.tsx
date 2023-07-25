@@ -1,5 +1,5 @@
 import { Avatar } from '@mantine/core'
-import { IconUser } from '@tabler/icons-react'
+import { IconUser, IconUsersGroup } from '@tabler/icons-react'
 
 interface AvatarProps {
   src?: string
@@ -7,9 +7,17 @@ interface AvatarProps {
   compact?: boolean
   className?: string
   centered?: boolean
+  isGroup?: boolean
 }
 
-export const AvatarComponent = ({ src, name, compact = false, className = '', centered = true }: AvatarProps) => (
+export const AvatarComponent = ({
+  src,
+  name,
+  compact = false,
+  className = '',
+  centered = true,
+  isGroup = false,
+}: AvatarProps) => (
   <div
     className={`flex ${centered ? 'items-center' : 'items-start'} ${
       compact ? 'flex-row gap-5' : 'flex-col gap-2'
@@ -24,7 +32,7 @@ export const AvatarComponent = ({ src, name, compact = false, className = '', ce
       radius={compact ? 'xl' : 'lg'}
       size={compact ? 'lg' : 'xl'}
     >
-      <IconUser height={compact ? 30 : 50} />
+      {isGroup ? <IconUsersGroup size={compact ? 30 : 50} /> : <IconUser size={compact ? 30 : 50} />}
     </Avatar>
 
     {!!name && <div className={compact ? 'text-3xl' : 'text-xl font-bold'}>{name}</div>}

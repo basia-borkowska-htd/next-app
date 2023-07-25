@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 
 import { Group } from '../models/group'
+import { User } from '../models/user'
 
 import { Visibility } from '../enums/Visibility.enum'
 
@@ -39,8 +40,10 @@ const getGroup = async (req: Request, res: Response) => {
 
 const getGroupMembers = async (req: Request, res: Response) => {
   try {
-    const members = await Group.findOne({ _id: req.params.id }).select('-_id members')
-    res.status(200).json(members)
+    const ids = await Group.findOne({ _id: req.params.id }).select('-_id members')
+    const members = await User.find({ _id: { $in: ids?.members } }).select('name avatarUrl email')
+
+    res.status(200).json({ members })
   } catch (error) {
     res.status(500).json({ error })
   }

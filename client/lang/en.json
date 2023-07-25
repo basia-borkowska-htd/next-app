@@ -4,6 +4,10 @@
   },
   "users": {
     "my_groups": "My groups",
+    "my_groups_empty_state": {
+      "title": "You've not joined any groups yet",
+      "message": "You can browse public groups or create your own and invite friends!"
+    },
     "public_groups": "Browse public groups",
     "create_group": {
       "title": "Create new group",
@@ -178,6 +182,26 @@
     "bmr": "BMR",
     "metabolic_age": "Metabolic age",
     "body_rating": "Body rating"
+  },
+  "visibility_badge": {
+    "public": "Public",
+    "private": "Private"
+  },
+  "group": {
+    "options": {
+      "settings_label": "SETTINGS",
+      "danger_zone_label": "DANGER ZONE",
+      "invite_member": "Invite member",
+      "edit": "Edit group details",
+      "leave": "Leave group",
+      "leave_description": "Are you sure you want to leave this group?",
+      "leave_success": "Group left successfully",
+      "leave_error": "Unable to leave group",
+      "delete": "Delete group",
+      "delete_description": "Are you sure you want to delete this group? This action is irreversible!",
+      "delete_success": "Group deleted successfully",
+      "delete_error": "Unable to delete group"
+    }
   },
   "auth": {
     "sign_in": {

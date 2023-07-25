@@ -1,6 +1,7 @@
 import 'next-auth'
 
 import { AccountType } from './Account'
+import { UserType } from './User'
 
 declare module 'next-auth' {
   export interface User {
@@ -9,6 +10,7 @@ declare module 'next-auth' {
   }
   export interface Session {
     account?: AccountType
+    user: UserType
   }
 }
 

@@ -18,11 +18,12 @@ export const formatters = {
     if (!avatarUrl) formData.append('removeAvatar', 'true')
     return formData
   },
-  formatGroup: ({ name, photoFile, visibility, photoUrl }: AddGroupType) => {
+  formatGroup: ({ name, photoFile, visibility, photoUrl, members }: AddGroupType) => {
     const formData = new FormData()
     if (photoFile) formData.append('photo', photoFile)
     formData.append('name', name)
     formData.append('visibility', visibility)
+    formData.append('members', JSON.stringify(members))
     if (!photoUrl) formData.append('removePhoto', 'true')
     return formData
   },
