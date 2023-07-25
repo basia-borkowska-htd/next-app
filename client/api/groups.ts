@@ -1,4 +1,5 @@
 import { AddGroupType, GroupType, PreviewGroupType, UpdateGroupType } from '@/types/Group'
+import { BasicUserType } from '@/types/User'
 
 import { formatters } from '@/utils/formatters'
 
@@ -23,7 +24,7 @@ export const groupsApi = {
     if (!data?.group) throw new Error(data.error)
     return data.group
   },
-  getGroupMembers: async (id: string): Promise<string[]> => {
+  getGroupMembers: async (id: string): Promise<BasicUserType[]> => {
     const res = await fetch(`${apiUrl}/groups/${id}/members`)
     const data = await res.json()
     if (!data?.members) throw new Error(data.error)
@@ -61,7 +62,10 @@ export const groupsApi = {
   removeGroupMember: async (groupId: string, userId: string): Promise<boolean> => {
     const res = await fetch(`${apiUrl}/groups/${groupId}/removeMember`, {
       method: 'PUT',
-      body: JSON.stringify(userId),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ userId }),
     })
     const data = await res.json()
     if (!data?.success) throw new Error(data.error)

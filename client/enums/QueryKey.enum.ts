@@ -5,4 +5,6 @@ export enum QueryKeyEnum {
   MEASUREMENTS = 'measurements',
   MEASUREMENT = 'measurement',
   RANGES = 'ranges',
+  JOINED_GROUPS = 'joinedGroups',
+  GROUP_MEMBERS = 'groupMembers',
 }

@@ -1,7 +1,9 @@
 /* eslint-disable react/destructuring-assignment */
 import { useSession } from 'next-auth/react'
 import Router from 'next/router'
-import React from 'react'
+import React, { ReactElement } from 'react'
+
+import LayoutComponent from '@/components/layout'
 
 const login = '/auth/signIn'
 
@@ -27,8 +29,9 @@ export default (WrappedComponent) => {
     }
     return <WrappedComponent {...getProps()} />
   }
-
-  HocComponent.getInitialProps = async (context) => context
+  // TODO: fix bug with getInitialProps and no router on reload
+  // HocComponent.getInitialProps = async (context) => context
+  HocComponent.getLayout = (page: ReactElement) => <LayoutComponent>{page}</LayoutComponent>
 
   return HocComponent
 }
