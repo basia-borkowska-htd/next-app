@@ -75,7 +75,6 @@ const UserProfilePage = () => {
 
   return (
     <>
-      <NavBarComponent />
       <HeaderComponent user={user} openModal={open} />
       <RangesComponent userId={user._id} />
       <ChartSectionComponent userId={user._id} />

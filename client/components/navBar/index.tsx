@@ -36,6 +36,7 @@ export const NavBarComponent = () => {
 
   if (isLoading) return <PageLoaderComponent />
   if (error) return <ErrorComponent title={error.toString()} />
+  if (user) session.user = user
 
   return (
     <div className="flex justify-between bg-blue-300 px-16">
