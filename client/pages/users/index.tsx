@@ -19,8 +19,8 @@ import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 
 import { notify } from '@/utils/notifications'
 
-import { queryClient } from '../_app'
 import { GroupComponent } from './group'
+import { PublicGroupsBrowserComponent } from './publicGroupsBrowser'
 
 const ErrorComponent = dynamic(() => import('@/components/error').then((component) => component.ErrorComponent))
 const PageLoaderComponent = dynamic(() =>
@@ -34,12 +34,22 @@ const UsersPage = () => {
 
   const {
     data: joinedGroups,
-    error,
-    isLoading,
+    error: joinedGroupsError,
+    isLoading: joinedGroupsLoading,
   } = useQuery({
     queryKey: [QueryKeyEnum.JOINED_GROUPS],
     queryFn: () => api.group.getJoinedGroups(session.user._id),
     enabled: !!session?.user?._id,
+    retry: 1,
+  })
+
+  const {
+    data: publicGroups,
+    error: publicGroupsError,
+    isLoading: publicGroupsLoading,
+  } = useQuery({
+    queryKey: [QueryKeyEnum.PUBLIC_GROUPS],
+    queryFn: () => api.group.getPublicGroups(),
     retry: 1,
   })
 
@@ -54,11 +64,12 @@ const UsersPage = () => {
     },
   })
 
-  if (isLoading) return <PageLoaderComponent />
-  if (error) return <ErrorComponent title={error.toString()} />
+  if (joinedGroupsLoading || publicGroupsLoading) return <PageLoaderComponent />
+  if (joinedGroupsError) return <ErrorComponent title={joinedGroupsError.toString()} />
+  if (publicGroupsError) return <ErrorComponent title={publicGroupsError.toString()} />
 
   return (
-    <div className="bg-green-100/10 h-screen">
+    <div>
       <ModalComponent opened={opened} onClose={close} title={t('users.create_group.title')}>
         <GroupFormComponent
           loading={createGroupMutation.isLoading}
@@ -82,7 +93,8 @@ const UsersPage = () => {
             message={t('users.my_groups_empty_state.message')}
           />
         )}
-        <div className="mb-4 font-bold text-xl">{t('users.public_groups')}</div>
+        <div className="mb-4 font-bold text-xl">{t('users.public_groups.title')}</div>
+        <PublicGroupsBrowserComponent groups={publicGroups} />
       </ContainerComponent>
     </div>
   )

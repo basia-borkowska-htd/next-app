@@ -8,7 +8,11 @@
       "title": "Nie dołączyłeś jeszcze go żadnej grupy",
       "message": "Możesz przeglądać publiczne grupy, lub stworzyć swoją nową grupę i zaprosić znajomych!"
     },
-    "public_groups": "Przeglądaj publiczne grupy",
+    "public_groups": {
+      "title": "Przeglądaj publiczne grupy",
+      "member": "1 członek",
+      "members": "{count} członków"
+    },
     "create_group": {
       "title": "Stwórz nową grupę",
       "success": "Grupa utworzona pomyślnie",
