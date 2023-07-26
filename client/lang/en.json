@@ -26,6 +26,11 @@
       "title": "Edit group",
       "success": "Group updated successfully",
       "error": "Unable to update group"
+    },
+    "invite_members": {
+      "title": "Invite members",
+      "success": "Members invited successfully",
+      "error": "Unable to invite members"
     }
   },
   "user": {
@@ -114,7 +119,7 @@
     "name": "Name",
     "placeholders": {
       "name": "Group name",
-      "users": "Enter user's emails"
+      "users": "Enter users' emails"
     },
     "labels": {
       "users": "Invite members"
@@ -124,7 +129,12 @@
       "private": "Private",
       "public": "Public"
     },
-    "submit_button": "Submit"
+    "submit_button": "Submit",
+    "create_group_stepper": {
+      "step": "Step",
+      "create_group": "Create group",
+      "invite_members": "Invite members"
+    }
   },
   "user_modal": {
     "title_add_user": "Add new user",
@@ -204,7 +214,7 @@
     "options": {
       "settings_label": "SETTINGS",
       "danger_zone_label": "DANGER ZONE",
-      "invite_member": "Invite member",
+      "invite_members": "Invite members",
       "edit": "Edit group details",
       "leave": "Leave group",
       "leave_description": "Are you sure you want to leave this group?",

@@ -32,7 +32,7 @@ const RangesComponent = dynamic(() =>
 )
 
 const UserFormComponent = dynamic(() =>
-  import('@/components/userForm').then((component) => component.UserFormComponent),
+  import('@/components/forms/userForm').then((component) => component.UserFormComponent),
 )
 
 const SettingsComponent = dynamic(() =>

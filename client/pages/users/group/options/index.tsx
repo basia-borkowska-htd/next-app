@@ -8,8 +8,8 @@ import React from 'react'
 
 import { queryClient } from '@/pages/_app'
 
-import { ErrorComponent } from '@/components/error'
-import { GroupFormComponent } from '@/components/groupForm'
+import { GroupFormComponent } from '@/components/forms/groupForm'
+import { InviteGroupMembersFormComponent } from '@/components/forms/inviteGroupMembersForm'
 import { ConfirmationModalComponent } from '@/components/modals/confirmationModal'
 import { ModalComponent } from '@/components/modals/modal'
 
@@ -28,6 +28,7 @@ export const OptionsComponent = ({ group }: OptionsProps) => {
   const [isLeaveModalOpen, { open: openLeaveModal, close: closeLeaveModal }] = useDisclosure()
   const [isDeleteModalOpen, { open: openDeleteModal, close: closeDeleteModal }] = useDisclosure()
   const [isEditModalOpen, { open: openEditModal, close: closeEditModal }] = useDisclosure()
+  const [isInviteModalOpen, { open: openInviteModal, close: closeInviteModal }] = useDisclosure()
 
   const leaveGroupMutation = useMutation({
     mutationFn: () => api.group.removeGroupMember(group._id, session.user._id),
@@ -73,8 +74,8 @@ export const OptionsComponent = ({ group }: OptionsProps) => {
         </Menu.Target>
         <Menu.Dropdown>
           <Menu.Label>{t('group.options.settings_label')}</Menu.Label>
-          <Menu.Item icon={<IconUserPlus size={16} />} onClick={() => alert('TODO')}>
-            {t('group.options.invite_member')}
+          <Menu.Item icon={<IconUserPlus size={16} />} onClick={openInviteModal}>
+            {t('group.options.invite_members')}
           </Menu.Item>
           <Menu.Item icon={<IconPencil size={16} />} onClick={openEditModal}>
             {t('group.options.edit')}
@@ -92,6 +93,10 @@ export const OptionsComponent = ({ group }: OptionsProps) => {
 
       <ModalComponent opened={isEditModalOpen} onClose={closeEditModal} title={t('users.edit_group.title')}>
         <GroupFormComponent loading={editGroupMutation.isLoading} onSubmit={editGroupMutation.mutate} group={group} />
+      </ModalComponent>
+
+      <ModalComponent opened={isInviteModalOpen} onClose={closeInviteModal} title={t('users.invite_members.title')}>
+        <InviteGroupMembersFormComponent groupId={group._id} loading={false} onSubmit={() => alert('todo')} />
       </ModalComponent>
 
       <ConfirmationModalComponent

@@ -1,4 +1,4 @@
-import { AddGroupType, GroupType, PreviewGroupType, UpdateGroupType } from '@/types/Group'
+import { AddGroupType, GroupType, InviteMembersType, PreviewGroupType, UpdateGroupType } from '@/types/Group'
 import { BasicUserType } from '@/types/User'
 
 import { formatters } from '@/utils/formatters'
@@ -50,6 +50,9 @@ export const groupsApi = {
     if (!data?.group) throw new Error(data.error)
     return data.group
   },
+  inviteMembers: async (invitations: InviteMembersType): Promise<boolean> =>
+    // TODO: Implement
+    true,
   addGroupMember: async (groupId: string, userId: string): Promise<boolean> => {
     const res = await fetch(`${apiUrl}/groups/${groupId}/addMember`, {
       method: 'PUT',

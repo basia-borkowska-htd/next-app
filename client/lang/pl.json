@@ -26,6 +26,11 @@
       "title": "Edytuj grupę",
       "success": "Grupa zaktualizowana pomyślnie",
       "error": "Nie udało się zaktualizować grupy"
+    },
+    "invite_members": {
+      "title": "Zaproś członków",
+      "success": "Członkowie zostali dołączoni pomyślnie",
+      "error": "Nie udało się dołączyć członków"
     }
   },
   "user": {
@@ -124,7 +129,12 @@
       "private": "Prywatna",
       "public": "Publiczna"
     },
-    "submit_button": "Zatwierdź"
+    "submit_button": "Zatwierdź",
+    "create_group_stepper": {
+      "step": "Krok",
+      "create_group": "Stwórz grupę",
+      "invite_members": "Zaproś członków"
+    }
   },
   "user_modal": {
     "title_add_user": "Dodaj nowego użytkownika",
@@ -204,7 +214,7 @@
     "options": {
       "settings_label": "USTAWIENIA",
       "danger_zone_label": "NIEBEZPIECZNE AKCJE",
-      "invite_member": "Zaproś użytkownika",
+      "invite_members": "Zaproś użytkowników",
       "edit": "Edytuj szczegóły grupy",
       "leave": "Opuść grupę",
       "leave_success": "Opuszczono grupę prawidłowo",

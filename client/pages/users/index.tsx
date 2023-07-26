@@ -7,7 +7,8 @@ import dynamic from 'next/dynamic'
 import { ButtonComponent } from '@/components/button'
 import { ContainerComponent } from '@/components/container'
 import { EmptyStateComponent } from '@/components/emptyState'
-import { GroupFormComponent } from '@/components/groupForm'
+import { GroupFormComponent } from '@/components/forms/groupForm'
+import { CreateGroupModalComponent } from '@/components/modals/createGroupModal'
 import { ModalComponent } from '@/components/modals/modal'
 import withPrivateRoute from '@/components/withPrivateRoute'
 
@@ -72,17 +73,17 @@ const UsersPage = () => {
     },
   })
 
-  const createGroupMutation = useMutation({
-    mutationFn: (group: AddGroupType) => api.group.createGroup(group),
-    onSuccess: async () => {
-      await queryClient.refetchQueries({ stale: true })
-      notify({ type: 'success', message: t('users.create_group.success') })
-      close()
-    },
-    onError: () => {
-      notify({ type: 'error', message: t('users.create_group.error') })
-    },
-  })
+  // const createGroupMutation = useMutation({
+  //   mutationFn: (group: AddGroupType) => api.group.createGroup(group),
+  //   onSuccess: async () => {
+  //     await queryClient.refetchQueries({ stale: true })
+  //     notify({ type: 'success', message: t('users.create_group.success') })
+  //     close()
+  //   },
+  //   onError: () => {
+  //     notify({ type: 'error', message: t('users.create_group.error') })
+  //   },
+  // })
 
   if (joinedGroupsLoading || publicGroupsLoading) return <PageLoaderComponent />
   if (joinedGroupsError) return <ErrorComponent title={joinedGroupsError.toString()} />
@@ -90,13 +91,8 @@ const UsersPage = () => {
 
   return (
     <div>
-      <ModalComponent opened={opened} onClose={close} title={t('users.create_group.title')}>
-        <GroupFormComponent
-          loading={createGroupMutation.isLoading}
-          onSubmit={createGroupMutation.mutate}
-          creatorId={session?.user?._id}
-        />
-      </ModalComponent>
+      <CreateGroupModalComponent opened={opened} close={close} creatorId={session?.user?._id} />
+
       <ContainerComponent className="flex flex-col mt-8">
         <div className="flex justify-between items-center">
           <div className="mb-8 font-bold text-xl">{t('users.my_groups')}</div>

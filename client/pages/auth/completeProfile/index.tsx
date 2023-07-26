@@ -8,11 +8,13 @@ import { useState } from 'react'
 
 import { ButtonComponent } from '@/components/button'
 import { ErrorMessageComponent } from '@/components/errorMessage'
-import { UserFormComponent } from '@/components/userForm'
+import { UserFormComponent } from '@/components/forms/userForm'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
 import { AddUserType } from '@/types/User'
+
+import { StepEnum } from '@/enums/Step.enum'
 
 import Logo from '@/assets/graphics/logo.svg'
 
@@ -48,11 +50,12 @@ const CompleteProfilePage = () => {
           <Image src={Logo} alt="Logo" />
           <Title color="blue-300">{t('basic.title')}</Title>
         </div>
-        <RegistrationStepperComponent active={2} />
+        <RegistrationStepperComponent active={StepEnum.STEP_3} />
         {error && <ErrorMessageComponent>{error}</ErrorMessageComponent>}
         <UserFormComponent email={session?.account?.email} loading={false} onSubmit={handleSubmit} />
       </Card>
     </div>
   )
 }
+
 export default CompleteProfilePage

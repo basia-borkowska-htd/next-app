@@ -5,8 +5,6 @@ import { MutateOptions } from '@tanstack/react-query'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 
-import { CreatableSelectComponent } from '@/components/creatable'
-
 import { useTranslate } from '@/hooks/useTranslate'
 
 import { AddGroupType, GroupType } from '@/types/Group'
@@ -21,14 +19,14 @@ const FileUploaderComponent = dynamic(() =>
   import('@/components/fileUploader').then((component) => component.FileUploaderComponent),
 )
 
-interface GroupModalProps {
+interface GroupFormProps {
   group?: GroupType
   loading: boolean
   creatorId?: string
   onSubmit: (group: AddGroupType, options?: MutateOptions<GroupType, unknown, AddGroupType, unknown>) => void
 }
 
-export const GroupFormComponent = ({ group, loading, onSubmit, creatorId }: GroupModalProps) => {
+export const GroupFormComponent = ({ group, loading, onSubmit, creatorId }: GroupFormProps) => {
   const [photoFile, setPhotoFile] = useState<File>()
   const initialValues = getInitialValues(group)
   const { t } = useTranslate()
@@ -96,6 +94,7 @@ export const GroupFormComponent = ({ group, loading, onSubmit, creatorId }: Grou
       <Input.Wrapper
         label={t('group_modal.visibility.label')}
         mt="sm"
+        mb="md"
         className="flex flex-col"
         error={getInputProps('visibility').error}
         withAsterisk
@@ -111,15 +110,7 @@ export const GroupFormComponent = ({ group, loading, onSubmit, creatorId }: Grou
           {...getInputProps('visibility')}
         />
       </Input.Wrapper>
-      <CreatableSelectComponent
-        className="my-4"
-        label={t('group_modal.labels.users')}
-        placeholder={t('group_modal.placeholders.users')}
-        values={getInputProps('invitations').value}
-        setValues={(newValue: string) =>
-          setFieldValue('invitations', [...getInputProps('invitations').value, newValue])
-        }
-      />
+
       <ButtonComponent loading={loading} type="submit" variant="gradient">
         {t('group_modal.submit_button')}
       </ButtonComponent>
