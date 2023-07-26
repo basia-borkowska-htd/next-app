@@ -94,7 +94,7 @@ const UsersPage = () => {
         <GroupFormComponent
           loading={createGroupMutation.isLoading}
           onSubmit={createGroupMutation.mutate}
-          userId={session?.user?._id}
+          creatorId={session?.user?._id}
         />
       </ModalComponent>
       <ContainerComponent className="flex flex-col mt-8">
@@ -113,7 +113,7 @@ const UsersPage = () => {
             message={t('users.my_groups_empty_state.message')}
           />
         )}
-        <div className="mb-4 font-bold text-xl">{t('users.public_groups.title')}</div>
+        <div className="mb-4 font-bold text-xl mt-5">{t('users.public_groups.title')}</div>
         <PublicGroupsBrowserComponent
           groups={publicGroups}
           join={joinGroupMutation.mutate}

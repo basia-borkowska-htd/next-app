@@ -60,12 +60,12 @@ const createGroup = async (req: Request, res: Response) => {
         const group = await Group.create({
           ...req.body,
           photoUrl: data.Location,
-          members: JSON.parse(req.body.members),
+          members: [req.body.creatorId],
         })
         return res.status(200).json({ group })
       })
     } else {
-      const group = await Group.create({ ...req.body, members: JSON.parse(req.body.members) })
+      const group = await Group.create({ ...req.body, members: [req.body.creatorId] })
       return res.status(200).json({ group })
     }
   } catch (error) {

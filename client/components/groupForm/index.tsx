@@ -24,11 +24,11 @@ const FileUploaderComponent = dynamic(() =>
 interface GroupModalProps {
   group?: GroupType
   loading: boolean
-  userId: string
-  onSubmit: (group: AddGroupType, options?: MutateOptions<AddGroupType, unknown, AddGroupType, unknown>) => void
+  creatorId?: string
+  onSubmit: (group: AddGroupType, options?: MutateOptions<GroupType, unknown, AddGroupType, unknown>) => void
 }
 
-export const GroupFormComponent = ({ group, loading, onSubmit, userId }: GroupModalProps) => {
+export const GroupFormComponent = ({ group, loading, onSubmit, creatorId }: GroupModalProps) => {
   const [photoFile, setPhotoFile] = useState<File>()
   const initialValues = getInitialValues(group)
   const { t } = useTranslate()
@@ -61,7 +61,7 @@ export const GroupFormComponent = ({ group, loading, onSubmit, userId }: GroupMo
     <form
       onSubmit={onSubmitForm((values) => {
         onSubmit(
-          { _id: group?._id || '', photoFile, ...values, members: [userId] },
+          { _id: group?._id || '', photoFile, ...values, creatorId },
           {
             onSuccess: reset,
           },

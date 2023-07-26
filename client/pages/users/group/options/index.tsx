@@ -8,23 +8,29 @@ import React from 'react'
 
 import { queryClient } from '@/pages/_app'
 
+import { ErrorComponent } from '@/components/error'
+import { GroupFormComponent } from '@/components/groupForm'
 import { ConfirmationModalComponent } from '@/components/modals/confirmationModal'
+import { ModalComponent } from '@/components/modals/modal'
 
 import { useTranslate } from '@/hooks/useTranslate'
+
+import { GroupType, UpdateGroupType } from '@/types/Group'
 
 import { notify } from '@/utils/notifications'
 
 interface OptionsProps {
-  id: string
+  group: GroupType
 }
-export const OptionsComponent = ({ id }: OptionsProps) => {
+export const OptionsComponent = ({ group }: OptionsProps) => {
   const { t } = useTranslate()
   const { data: session } = useSession()
   const [isLeaveModalOpen, { open: openLeaveModal, close: closeLeaveModal }] = useDisclosure()
   const [isDeleteModalOpen, { open: openDeleteModal, close: closeDeleteModal }] = useDisclosure()
+  const [isEditModalOpen, { open: openEditModal, close: closeEditModal }] = useDisclosure()
 
   const leaveGroupMutation = useMutation({
-    mutationFn: () => api.group.removeGroupMember(id, session.user._id),
+    mutationFn: () => api.group.removeGroupMember(group._id, session.user._id),
     onSuccess: async () => {
       await queryClient.refetchQueries({ stale: true })
       closeLeaveModal()
@@ -35,8 +41,20 @@ export const OptionsComponent = ({ id }: OptionsProps) => {
     },
   })
 
+  const editGroupMutation = useMutation({
+    mutationFn: (updateGroup: UpdateGroupType) => api.group.updateGroup(updateGroup),
+    onSuccess: async () => {
+      await queryClient.refetchQueries({ stale: true })
+      closeEditModal()
+      notify({ type: 'success', message: t('users.edit_group.success') })
+    },
+    onError: () => {
+      notify({ type: 'error', message: t('users.edit_group.error') })
+    },
+  })
+
   const deleteGroupMutation = useMutation({
-    mutationFn: () => api.group.deleteGroup(id),
+    mutationFn: () => api.group.deleteGroup(group._id),
     onSuccess: async () => {
       await queryClient.refetchQueries({ stale: true })
       closeDeleteModal()
@@ -58,7 +76,7 @@ export const OptionsComponent = ({ id }: OptionsProps) => {
           <Menu.Item icon={<IconUserPlus size={16} />} onClick={() => alert('TODO')}>
             {t('group.options.invite_member')}
           </Menu.Item>
-          <Menu.Item icon={<IconPencil size={16} />} onClick={() => alert('TODO')}>
+          <Menu.Item icon={<IconPencil size={16} />} onClick={openEditModal}>
             {t('group.options.edit')}
           </Menu.Item>
           <Menu.Divider />
@@ -71,6 +89,10 @@ export const OptionsComponent = ({ id }: OptionsProps) => {
           </Menu.Item>
         </Menu.Dropdown>
       </Menu>
+
+      <ModalComponent opened={isEditModalOpen} onClose={closeEditModal} title={t('users.edit_group.title')}>
+        <GroupFormComponent loading={editGroupMutation.isLoading} onSubmit={editGroupMutation.mutate} group={group} />
+      </ModalComponent>
 
       <ConfirmationModalComponent
         opened={isLeaveModalOpen}

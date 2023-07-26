@@ -19,12 +19,12 @@ export const formatters = {
 
     return formData
   },
-  formatGroup: ({ name, photoFile, visibility, photoUrl, members, invitations }: AddGroupType) => {
+  formatGroup: ({ name, photoFile, visibility, photoUrl, creatorId, invitations }: AddGroupType) => {
     const formData = new FormData()
     if (photoFile) formData.append('photo', photoFile)
     formData.append('name', name)
     formData.append('visibility', visibility)
-    formData.append('members', JSON.stringify(members))
+    if (creatorId) formData.append('creatorId', creatorId)
     if (!photoUrl) formData.append('removePhoto', 'true')
     if (invitations.length) formData.append('invitations', JSON.stringify(invitations))
 

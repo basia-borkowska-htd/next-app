@@ -21,6 +21,11 @@
       "title": "Stwórz nową grupę",
       "success": "Grupa utworzona pomyślnie",
       "error": "Nie udało się utworzyć grupy"
+    },
+    "edit_group": {
+      "title": "Edytuj grupę",
+      "success": "Grupa zaktualizowana pomyślnie",
+      "error": "Nie udało się zaktualizować grupy"
     }
   },
   "user": {

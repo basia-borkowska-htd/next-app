@@ -21,6 +21,11 @@
       "title": "Create new group",
       "success": "Group created successfully",
       "error": "Unable to create a group"
+    },
+    "edit_group": {
+      "title": "Edit group",
+      "success": "Group updated successfully",
+      "error": "Unable to update group"
     }
   },
   "user": {
