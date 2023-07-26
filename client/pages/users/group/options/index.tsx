@@ -15,7 +15,7 @@ import { ModalComponent } from '@/components/modals/modal'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
-import { GroupType, UpdateGroupType } from '@/types/Group'
+import { GroupType, InviteMembersType, UpdateGroupType } from '@/types/Group'
 
 import { notify } from '@/utils/notifications'
 
@@ -29,6 +29,18 @@ export const OptionsComponent = ({ group }: OptionsProps) => {
   const [isDeleteModalOpen, { open: openDeleteModal, close: closeDeleteModal }] = useDisclosure()
   const [isEditModalOpen, { open: openEditModal, close: closeEditModal }] = useDisclosure()
   const [isInviteModalOpen, { open: openInviteModal, close: closeInviteModal }] = useDisclosure()
+
+  const inviteMembersMutation = useMutation({
+    mutationFn: (invitations: InviteMembersType) => api.group.inviteMembers(invitations),
+    onSuccess: async () => {
+      await queryClient.refetchQueries({ stale: true })
+      notify({ type: 'success', message: t('users.invite_members.success') })
+      closeInviteModal()
+    },
+    onError: () => {
+      notify({ type: 'error', message: t('users.invite_members.error') })
+    },
+  })
 
   const leaveGroupMutation = useMutation({
     mutationFn: () => api.group.removeGroupMember(group._id, session.user._id),
@@ -96,7 +108,11 @@ export const OptionsComponent = ({ group }: OptionsProps) => {
       </ModalComponent>
 
       <ModalComponent opened={isInviteModalOpen} onClose={closeInviteModal} title={t('users.invite_members.title')}>
-        <InviteGroupMembersFormComponent groupId={group._id} loading={false} onSubmit={() => alert('todo')} />
+        <InviteGroupMembersFormComponent
+          groupId={group._id}
+          loading={inviteMembersMutation.isLoading}
+          onSubmit={inviteMembersMutation.mutate}
+        />
       </ModalComponent>
 
       <ConfirmationModalComponent

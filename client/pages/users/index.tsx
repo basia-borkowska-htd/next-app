@@ -7,14 +7,10 @@ import dynamic from 'next/dynamic'
 import { ButtonComponent } from '@/components/button'
 import { ContainerComponent } from '@/components/container'
 import { EmptyStateComponent } from '@/components/emptyState'
-import { GroupFormComponent } from '@/components/forms/groupForm'
 import { CreateGroupModalComponent } from '@/components/modals/createGroupModal'
-import { ModalComponent } from '@/components/modals/modal'
 import withPrivateRoute from '@/components/withPrivateRoute'
 
 import { useTranslate } from '@/hooks/useTranslate'
-
-import { AddGroupType } from '@/types/Group'
 
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 
@@ -72,18 +68,6 @@ const UsersPage = () => {
       })
     },
   })
-
-  // const createGroupMutation = useMutation({
-  //   mutationFn: (group: AddGroupType) => api.group.createGroup(group),
-  //   onSuccess: async () => {
-  //     await queryClient.refetchQueries({ stale: true })
-  //     notify({ type: 'success', message: t('users.create_group.success') })
-  //     close()
-  //   },
-  //   onError: () => {
-  //     notify({ type: 'error', message: t('users.create_group.error') })
-  //   },
-  // })
 
   if (joinedGroupsLoading || publicGroupsLoading) return <PageLoaderComponent />
   if (joinedGroupsError) return <ErrorComponent title={joinedGroupsError.toString()} />

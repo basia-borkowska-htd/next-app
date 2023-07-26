@@ -1,4 +1,4 @@
-import { Divider, Stepper } from '@mantine/core'
+import { Stepper } from '@mantine/core'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
