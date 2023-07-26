@@ -11,7 +11,11 @@
     "public_groups": {
       "title": "Browse public groups",
       "member": "1 member",
-      "members": "{count} members"
+      "members": "{count} members",
+      "join_button": "Join",
+      "joined_button": "Joined",
+      "join_success": "Group joined successfully",
+      "join_error": "Unable to join group"
     },
     "create_group": {
       "title": "Create new group",

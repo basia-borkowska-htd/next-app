@@ -1,7 +1,6 @@
-import { Badge, Card, Image, Text } from '@mantine/core'
-import { IconUsersGroup } from '@tabler/icons-react'
+import { Badge, Card, Image } from '@mantine/core'
+import { IconCheck, IconUsersGroup } from '@tabler/icons-react'
 
-import { AvatarComponent } from '@/components/avatar'
 import { ButtonComponent } from '@/components/button'
 
 import { useTranslate } from '@/hooks/useTranslate'
@@ -10,13 +9,15 @@ import { PreviewGroupType } from '@/types/Group'
 
 interface PublicGroupsBrowserProps {
   groups: PreviewGroupType[]
+  loading: boolean
+  join: (id: string) => void
 }
-export const PublicGroupsBrowserComponent = ({ groups }: PublicGroupsBrowserProps) => {
+export const PublicGroupsBrowserComponent = ({ groups, join, loading }: PublicGroupsBrowserProps) => {
   const { t } = useTranslate()
 
   return (
-    <div className="grid grid-cols-4 gap-5 ">
-      {groups.map(({ _id, name, photoUrl, membersCount }) => (
+    <div className="grid grid-cols-4 gap-5 mb-5">
+      {groups.map(({ _id, name, photoUrl, membersCount, joined }) => (
         <Card key={_id} shadow="sm" padding="lg" radius="md">
           <Card.Section>
             {photoUrl ? (
@@ -35,8 +36,15 @@ export const PublicGroupsBrowserComponent = ({ groups }: PublicGroupsBrowserProp
                 : t('users.public_groups.members', { count: membersCount.toString() })}
             </Badge>
           </div>
-
-          <ButtonComponent>Join</ButtonComponent>
+          {joined ? (
+            <ButtonComponent leftIcon={<IconCheck />} disabled>
+              {t('users.public_groups.joined_button')}
+            </ButtonComponent>
+          ) : (
+            <ButtonComponent onClick={() => join(_id)} loading={loading}>
+              {t('users.public_groups.join_button')}
+            </ButtonComponent>
+          )}
         </Card>
       ))}
     </div>

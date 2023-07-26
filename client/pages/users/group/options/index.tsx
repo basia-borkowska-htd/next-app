@@ -2,9 +2,11 @@ import { api } from '@/api'
 import { Menu } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { IconDotsVertical, IconLogout, IconPencil, IconTrash, IconUserPlus } from '@tabler/icons-react'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import React from 'react'
+
+import { queryClient } from '@/pages/_app'
 
 import { ConfirmationModalComponent } from '@/components/modals/confirmationModal'
 
@@ -23,7 +25,8 @@ export const OptionsComponent = ({ id }: OptionsProps) => {
 
   const leaveGroupMutation = useMutation({
     mutationFn: () => api.group.removeGroupMember(id, session.user._id),
-    onSuccess: () => {
+    onSuccess: async () => {
+      await queryClient.refetchQueries({ stale: true })
       closeLeaveModal()
       notify({ type: 'success', message: t('group.options.leave_success') })
     },
@@ -35,6 +38,7 @@ export const OptionsComponent = ({ id }: OptionsProps) => {
   const deleteGroupMutation = useMutation({
     mutationFn: () => api.group.deleteGroup(id),
     onSuccess: async () => {
+      await queryClient.refetchQueries({ stale: true })
       closeDeleteModal()
       notify({ type: 'success', message: t('group.options.delete_success') })
     },

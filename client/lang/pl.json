@@ -11,7 +11,11 @@
     "public_groups": {
       "title": "Przeglądaj publiczne grupy",
       "member": "1 członek",
-      "members": "{count} członków"
+      "members": "{count} członków",
+      "join_button": "Dołącz",
+      "joined_button": "Dołączono",
+      "join_success": "Dołączono do grupy pomyślnie",
+      "join_error": "Nie udało się dołączyć do grupy"
     },
     "create_group": {
       "title": "Stwórz nową grupę",

@@ -9,11 +9,13 @@ import { getDeleteObjectParams, getUploadParams, s3 } from './aws'
 
 const getPublicGroups = async (req: Request, res: Response) => {
   try {
+    const userId = req.query.userId?.toString()
     const groups = (await Group.find({ visibility: Visibility.PUBLIC })).map(({ _id, name, photoUrl, members }) => ({
       _id,
       name,
       photoUrl,
       membersCount: members.length,
+      joined: userId ? members.includes(userId) : false,
     }))
     res.status(200).json({ groups })
   } catch (error) {

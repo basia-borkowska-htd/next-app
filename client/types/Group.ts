@@ -8,6 +8,7 @@ type BasicGroupType = {
 
 export interface PreviewGroupType extends BasicGroupType {
   membersCount: number
+  joined: boolean
 }
 export interface GroupType extends BasicGroupType {
   members: string[]

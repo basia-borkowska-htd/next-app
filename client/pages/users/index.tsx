@@ -19,6 +19,7 @@ import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 
 import { notify } from '@/utils/notifications'
 
+import { queryClient } from '../_app'
 import { GroupComponent } from './group'
 import { PublicGroupsBrowserComponent } from './publicGroupsBrowser'
 
@@ -49,13 +50,32 @@ const UsersPage = () => {
     isLoading: publicGroupsLoading,
   } = useQuery({
     queryKey: [QueryKeyEnum.PUBLIC_GROUPS],
-    queryFn: () => api.group.getPublicGroups(),
+    queryFn: () => api.group.getPublicGroups(session.user._id),
+    enabled: !!session?.user?._id,
     retry: 1,
+  })
+
+  const joinGroupMutation = useMutation({
+    mutationFn: (groupId: string) => api.group.addGroupMember(groupId, session.user._id),
+    onSuccess: async () => {
+      await queryClient.refetchQueries({ stale: true })
+      notify({
+        message: t('users.public_groups.join_success'),
+        type: 'success',
+      })
+    },
+    onError: () => {
+      notify({
+        message: t('users.public_groups.join_error'),
+        type: 'error',
+      })
+    },
   })
 
   const createGroupMutation = useMutation({
     mutationFn: (group: AddGroupType) => api.group.createGroup(group),
     onSuccess: async () => {
+      await queryClient.refetchQueries({ stale: true })
       notify({ type: 'success', message: t('users.create_group.success') })
       close()
     },
@@ -94,7 +114,11 @@ const UsersPage = () => {
           />
         )}
         <div className="mb-4 font-bold text-xl">{t('users.public_groups.title')}</div>
-        <PublicGroupsBrowserComponent groups={publicGroups} />
+        <PublicGroupsBrowserComponent
+          groups={publicGroups}
+          join={joinGroupMutation.mutate}
+          loading={joinGroupMutation.isLoading}
+        />
       </ContainerComponent>
     </div>
   )

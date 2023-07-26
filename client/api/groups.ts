@@ -6,8 +6,8 @@ import { formatters } from '@/utils/formatters'
 import { apiUrl } from './global'
 
 export const groupsApi = {
-  getPublicGroups: async (): Promise<PreviewGroupType[]> => {
-    const res = await fetch(`${apiUrl}/groups`)
+  getPublicGroups: async (userId: string): Promise<PreviewGroupType[]> => {
+    const res = await fetch(`${apiUrl}/groups?${new URLSearchParams({ userId })}`)
     const data = await res.json()
     if (!data?.groups) throw new Error(data.error)
     return data.groups
@@ -53,7 +53,10 @@ export const groupsApi = {
   addGroupMember: async (groupId: string, userId: string): Promise<boolean> => {
     const res = await fetch(`${apiUrl}/groups/${groupId}/addMember`, {
       method: 'PUT',
-      body: JSON.stringify(userId),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ userId }),
     })
     const data = await res.json()
     if (!data?.success) throw new Error(data.error)
