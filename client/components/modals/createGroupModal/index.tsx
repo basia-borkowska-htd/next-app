@@ -1,6 +1,6 @@
 import { api } from '@/api'
 import { useMutation } from '@tanstack/react-query'
-import React, { useState } from 'react'
+import React, { use, useState } from 'react'
 
 import { queryClient } from '@/pages/_app'
 
@@ -73,6 +73,7 @@ export const CreateGroupModalComponent = ({ opened, close, creatorId }: CreateGr
 
       {step === StepEnum.STEP_2 && (
         <InviteGroupMembersFormComponent
+          inviterId={creatorId}
           groupId={groupId}
           loading={inviteMembersMutation.isLoading}
           onSubmit={inviteMembersMutation.mutate}

@@ -50,9 +50,18 @@ export const groupsApi = {
     if (!data?.group) throw new Error(data.error)
     return data.group
   },
-  inviteMembers: async (invitations: InviteMembersType): Promise<boolean> =>
-    // TODO: Implement
-    true,
+  inviteMembers: async (invitations: InviteMembersType): Promise<boolean> => {
+    const res = await fetch(`${apiUrl}/groups/${invitations.groupId}/inviteMembers`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ emails: invitations.emails, inviterId: invitations.inviterId }),
+    })
+    const data = await res.json()
+    if (!data?.success) throw new Error(data.error)
+    return data.success
+  },
   addGroupMember: async (groupId: string, userId: string): Promise<boolean> => {
     const res = await fetch(`${apiUrl}/groups/${groupId}/addMember`, {
       method: 'PUT',

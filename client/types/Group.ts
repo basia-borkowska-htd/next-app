@@ -24,6 +24,7 @@ export interface AddGroupType extends BasicGroupType {
 export type UpdateGroupType = AddGroupType
 
 export type InviteMembersType = {
-  id: string
+  groupId: string
+  inviterId: string
   emails: string[]
 }

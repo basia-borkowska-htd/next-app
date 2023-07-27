@@ -12,6 +12,7 @@ const ButtonComponent = dynamic(() => import('@/components/button').then((compon
 
 interface InviteGroupMembersFormProps {
   groupId: string
+  inviterId: string
   loading: boolean
 
   onSubmit: (
@@ -20,7 +21,12 @@ interface InviteGroupMembersFormProps {
   ) => void
 }
 
-export const InviteGroupMembersFormComponent = ({ groupId, loading, onSubmit }: InviteGroupMembersFormProps) => {
+export const InviteGroupMembersFormComponent = ({
+  groupId,
+  inviterId,
+  loading,
+  onSubmit,
+}: InviteGroupMembersFormProps) => {
   const { t } = useTranslate()
 
   const {
@@ -36,7 +42,7 @@ export const InviteGroupMembersFormComponent = ({ groupId, loading, onSubmit }: 
     <form
       onSubmit={onSubmitForm((values) => {
         onSubmit(
-          { id: groupId, ...values },
+          { groupId, inviterId, ...values },
           {
             onSuccess: reset,
           },
