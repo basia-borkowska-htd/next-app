@@ -8,11 +8,29 @@
       "title": "You've not joined any groups yet",
       "message": "You can browse public groups or create your own and invite friends!"
     },
-    "public_groups": "Browse public groups",
+    "public_groups": {
+      "title": "Browse public groups",
+      "member": "1 member",
+      "members": "{count} members",
+      "join_button": "Join",
+      "joined_button": "Joined",
+      "join_success": "Group joined successfully",
+      "join_error": "Unable to join group"
+    },
     "create_group": {
       "title": "Create new group",
       "success": "Group created successfully",
       "error": "Unable to create a group"
+    },
+    "edit_group": {
+      "title": "Edit group",
+      "success": "Group updated successfully",
+      "error": "Unable to update group"
+    },
+    "invite_members": {
+      "title": "Invite members",
+      "success": "Members invited successfully",
+      "error": "Unable to invite members"
     }
   },
   "user": {
@@ -101,7 +119,7 @@
     "name": "Name",
     "placeholders": {
       "name": "Group name",
-      "users": "Enter user's emails"
+      "users": "Enter users' emails"
     },
     "labels": {
       "users": "Invite members"
@@ -111,7 +129,12 @@
       "private": "Private",
       "public": "Public"
     },
-    "submit_button": "Submit"
+    "submit_button": "Submit",
+    "create_group_stepper": {
+      "step": "Step",
+      "create_group": "Create group",
+      "invite_members": "Invite members"
+    }
   },
   "user_modal": {
     "title_add_user": "Add new user",
@@ -191,7 +214,7 @@
     "options": {
       "settings_label": "SETTINGS",
       "danger_zone_label": "DANGER ZONE",
-      "invite_member": "Invite member",
+      "invite_members": "Invite members",
       "edit": "Edit group details",
       "leave": "Leave group",
       "leave_description": "Are you sure you want to leave this group?",

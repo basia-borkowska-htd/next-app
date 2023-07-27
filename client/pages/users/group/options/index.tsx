@@ -2,28 +2,50 @@ import { api } from '@/api'
 import { Menu } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { IconDotsVertical, IconLogout, IconPencil, IconTrash, IconUserPlus } from '@tabler/icons-react'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import React from 'react'
 
+import { queryClient } from '@/pages/_app'
+
+import { GroupFormComponent } from '@/components/forms/groupForm'
+import { InviteGroupMembersFormComponent } from '@/components/forms/inviteGroupMembersForm'
 import { ConfirmationModalComponent } from '@/components/modals/confirmationModal'
+import { ModalComponent } from '@/components/modals/modal'
 
 import { useTranslate } from '@/hooks/useTranslate'
+
+import { GroupType, InviteMembersType, UpdateGroupType } from '@/types/Group'
 
 import { notify } from '@/utils/notifications'
 
 interface OptionsProps {
-  id: string
+  group: GroupType
 }
-export const OptionsComponent = ({ id }: OptionsProps) => {
+export const OptionsComponent = ({ group }: OptionsProps) => {
   const { t } = useTranslate()
   const { data: session } = useSession()
   const [isLeaveModalOpen, { open: openLeaveModal, close: closeLeaveModal }] = useDisclosure()
   const [isDeleteModalOpen, { open: openDeleteModal, close: closeDeleteModal }] = useDisclosure()
+  const [isEditModalOpen, { open: openEditModal, close: closeEditModal }] = useDisclosure()
+  const [isInviteModalOpen, { open: openInviteModal, close: closeInviteModal }] = useDisclosure()
+
+  const inviteMembersMutation = useMutation({
+    mutationFn: (invitations: InviteMembersType) => api.group.inviteMembers(invitations),
+    onSuccess: async () => {
+      await queryClient.refetchQueries({ stale: true })
+      notify({ type: 'success', message: t('users.invite_members.success') })
+      closeInviteModal()
+    },
+    onError: () => {
+      notify({ type: 'error', message: t('users.invite_members.error') })
+    },
+  })
 
   const leaveGroupMutation = useMutation({
-    mutationFn: () => api.group.removeGroupMember(id, session.user._id),
-    onSuccess: () => {
+    mutationFn: () => api.group.removeGroupMember(group._id, session.user._id),
+    onSuccess: async () => {
+      await queryClient.refetchQueries({ stale: true })
       closeLeaveModal()
       notify({ type: 'success', message: t('group.options.leave_success') })
     },
@@ -32,9 +54,22 @@ export const OptionsComponent = ({ id }: OptionsProps) => {
     },
   })
 
-  const deleteGroupMutation = useMutation({
-    mutationFn: () => api.group.deleteGroup(id),
+  const editGroupMutation = useMutation({
+    mutationFn: (updateGroup: UpdateGroupType) => api.group.updateGroup(updateGroup),
     onSuccess: async () => {
+      await queryClient.refetchQueries({ stale: true })
+      closeEditModal()
+      notify({ type: 'success', message: t('users.edit_group.success') })
+    },
+    onError: () => {
+      notify({ type: 'error', message: t('users.edit_group.error') })
+    },
+  })
+
+  const deleteGroupMutation = useMutation({
+    mutationFn: () => api.group.deleteGroup(group._id),
+    onSuccess: async () => {
+      await queryClient.refetchQueries({ stale: true })
       closeDeleteModal()
       notify({ type: 'success', message: t('group.options.delete_success') })
     },
@@ -51,10 +86,10 @@ export const OptionsComponent = ({ id }: OptionsProps) => {
         </Menu.Target>
         <Menu.Dropdown>
           <Menu.Label>{t('group.options.settings_label')}</Menu.Label>
-          <Menu.Item icon={<IconUserPlus size={16} />} onClick={() => alert('TODO')}>
-            {t('group.options.invite_member')}
+          <Menu.Item icon={<IconUserPlus size={16} />} onClick={openInviteModal}>
+            {t('group.options.invite_members')}
           </Menu.Item>
-          <Menu.Item icon={<IconPencil size={16} />} onClick={() => alert('TODO')}>
+          <Menu.Item icon={<IconPencil size={16} />} onClick={openEditModal}>
             {t('group.options.edit')}
           </Menu.Item>
           <Menu.Divider />
@@ -67,6 +102,18 @@ export const OptionsComponent = ({ id }: OptionsProps) => {
           </Menu.Item>
         </Menu.Dropdown>
       </Menu>
+
+      <ModalComponent opened={isEditModalOpen} onClose={closeEditModal} title={t('users.edit_group.title')}>
+        <GroupFormComponent loading={editGroupMutation.isLoading} onSubmit={editGroupMutation.mutate} group={group} />
+      </ModalComponent>
+
+      <ModalComponent opened={isInviteModalOpen} onClose={closeInviteModal} title={t('users.invite_members.title')}>
+        <InviteGroupMembersFormComponent
+          groupId={group._id}
+          loading={inviteMembersMutation.isLoading}
+          onSubmit={inviteMembersMutation.mutate}
+        />
+      </ModalComponent>
 
       <ConfirmationModalComponent
         opened={isLeaveModalOpen}

@@ -2,7 +2,7 @@ import { MultiSelect } from '@mantine/core'
 
 interface CreatableProps {
   className: string
-  label: string
+  label?: string
   placeholder: string
   values: string[]
   setValues: (newValue: string) => void

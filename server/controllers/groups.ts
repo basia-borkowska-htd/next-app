@@ -9,10 +9,13 @@ import { getDeleteObjectParams, getUploadParams, s3 } from './aws'
 
 const getPublicGroups = async (req: Request, res: Response) => {
   try {
-    const groups = (await Group.find({ visibility: Visibility.PUBLIC })).map(({ name, photoUrl, members }) => ({
+    const userId = req.query.userId?.toString()
+    const groups = (await Group.find({ visibility: Visibility.PUBLIC })).map(({ _id, name, photoUrl, members }) => ({
+      _id,
       name,
       photoUrl,
       membersCount: members.length,
+      joined: userId ? members.includes(userId) : false,
     }))
     res.status(200).json({ groups })
   } catch (error) {
@@ -54,11 +57,15 @@ const createGroup = async (req: Request, res: Response) => {
     if (!!req.file) {
       s3.upload(getUploadParams(req.file), async (error, data) => {
         if (error) throw res.status(500).send({ error })
-        const group = await Group.create({ ...req.body, photoUrl: data.Location })
+        const group = await Group.create({
+          ...req.body,
+          photoUrl: data.Location,
+          members: [req.body.creatorId],
+        })
         return res.status(200).json({ group })
       })
     } else {
-      const group = await Group.create({ ...req.body, members: JSON.parse(req.body.members) })
+      const group = await Group.create({ ...req.body, members: [req.body.creatorId] })
       return res.status(200).json({ group })
     }
   } catch (error) {

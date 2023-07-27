@@ -8,11 +8,29 @@
       "title": "Nie dołączyłeś jeszcze go żadnej grupy",
       "message": "Możesz przeglądać publiczne grupy, lub stworzyć swoją nową grupę i zaprosić znajomych!"
     },
-    "public_groups": "Przeglądaj publiczne grupy",
+    "public_groups": {
+      "title": "Przeglądaj publiczne grupy",
+      "member": "1 członek",
+      "members": "{count} członków",
+      "join_button": "Dołącz",
+      "joined_button": "Dołączono",
+      "join_success": "Dołączono do grupy pomyślnie",
+      "join_error": "Nie udało się dołączyć do grupy"
+    },
     "create_group": {
       "title": "Stwórz nową grupę",
       "success": "Grupa utworzona pomyślnie",
       "error": "Nie udało się utworzyć grupy"
+    },
+    "edit_group": {
+      "title": "Edytuj grupę",
+      "success": "Grupa zaktualizowana pomyślnie",
+      "error": "Nie udało się zaktualizować grupy"
+    },
+    "invite_members": {
+      "title": "Zaproś członków",
+      "success": "Członkowie zostali dołączoni pomyślnie",
+      "error": "Nie udało się dołączyć członków"
     }
   },
   "user": {
@@ -111,7 +129,12 @@
       "private": "Prywatna",
       "public": "Publiczna"
     },
-    "submit_button": "Zatwierdź"
+    "submit_button": "Zatwierdź",
+    "create_group_stepper": {
+      "step": "Krok",
+      "create_group": "Stwórz grupę",
+      "invite_members": "Zaproś członków"
+    }
   },
   "user_modal": {
     "title_add_user": "Dodaj nowego użytkownika",
@@ -191,7 +214,7 @@
     "options": {
       "settings_label": "USTAWIENIA",
       "danger_zone_label": "NIEBEZPIECZNE AKCJE",
-      "invite_member": "Zaproś użytkownika",
+      "invite_members": "Zaproś użytkowników",
       "edit": "Edytuj szczegóły grupy",
       "leave": "Opuść grupę",
       "leave_success": "Opuszczono grupę prawidłowo",

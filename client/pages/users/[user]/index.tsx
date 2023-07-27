@@ -10,7 +10,6 @@ import { queryClient } from '@/pages/_app'
 import { EmptyStateComponent } from '@/components/emptyState'
 import { ErrorComponent } from '@/components/error'
 import { ModalComponent } from '@/components/modals/modal'
-import { NavBarComponent } from '@/components/navBar'
 import { PageLoaderComponent } from '@/components/pageLoader'
 import withPrivateRoute from '@/components/withPrivateRoute'
 
@@ -33,7 +32,7 @@ const RangesComponent = dynamic(() =>
 )
 
 const UserFormComponent = dynamic(() =>
-  import('@/components/userForm').then((component) => component.UserFormComponent),
+  import('@/components/forms/userForm').then((component) => component.UserFormComponent),
 )
 
 const SettingsComponent = dynamic(() =>

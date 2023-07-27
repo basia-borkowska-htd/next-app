@@ -8,15 +8,22 @@ type BasicGroupType = {
 
 export interface PreviewGroupType extends BasicGroupType {
   membersCount: number
+  joined: boolean
 }
 export interface GroupType extends BasicGroupType {
   members: string[]
   visibility: VisibilityEnum
 }
 
-export interface AddGroupType extends GroupType {
+export interface AddGroupType extends BasicGroupType {
   photoFile?: File
-  invitations: string[]
+  creatorId?: string
+  visibility: VisibilityEnum
 }
 
 export type UpdateGroupType = AddGroupType
+
+export type InviteMembersType = {
+  id: string
+  emails: string[]
+}

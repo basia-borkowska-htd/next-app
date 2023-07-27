@@ -18,7 +18,8 @@ interface GroupProps {
   group: GroupType
 }
 
-export const GroupComponent = ({ group: { _id, name, photoUrl, visibility } }: GroupProps) => {
+export const GroupComponent = ({ group }: GroupProps) => {
+  const { _id, name, photoUrl, visibility } = group
   const {
     data: members,
     error,
@@ -46,7 +47,7 @@ export const GroupComponent = ({ group: { _id, name, photoUrl, visibility } }: G
           </div>
         </div>
         <div>
-          <OptionsComponent id={_id} />
+          <OptionsComponent group={group} />
         </div>
       </div>
 
