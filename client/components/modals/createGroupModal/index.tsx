@@ -28,6 +28,12 @@ export const CreateGroupModalComponent = ({ opened, close, creatorId }: CreateGr
   const [step, setStep] = useState(StepEnum.STEP_1)
   const [groupId, setGroupId] = useState('')
 
+  const onClose = () => {
+    setStep(StepEnum.STEP_1)
+    setGroupId('')
+    close()
+  }
+
   const createGroupMutation = useMutation({
     mutationFn: (group: AddGroupType) => api.group.createGroup(group),
     onSuccess: async ({ _id }) => {
@@ -46,7 +52,7 @@ export const CreateGroupModalComponent = ({ opened, close, creatorId }: CreateGr
     onSuccess: async () => {
       await queryClient.refetchQueries({ stale: true })
       notify({ type: 'success', message: t('users.invite_members.success') })
-      close()
+      onClose()
     },
     onError: () => {
       notify({ type: 'error', message: t('users.invite_members.error') })
@@ -54,7 +60,7 @@ export const CreateGroupModalComponent = ({ opened, close, creatorId }: CreateGr
   })
 
   return (
-    <ModalComponent opened={opened} onClose={close} title={t('users.create_group.title')}>
+    <ModalComponent opened={opened} onClose={onClose} title={t('users.create_group.title')}>
       <StepperComponent active={step} />
 
       {step === StepEnum.STEP_1 && (
