@@ -7,6 +7,7 @@ import dynamic from 'next/dynamic'
 import { ButtonComponent } from '@/components/button'
 import { ContainerComponent } from '@/components/container'
 import { EmptyStateComponent } from '@/components/emptyState'
+import LayoutComponent from '@/components/layout'
 import { CreateGroupModalComponent } from '@/components/modals/createGroupModal'
 import withPrivateRoute from '@/components/withPrivateRoute'
 
@@ -98,6 +99,7 @@ const UsersPage = () => {
           groups={publicGroups}
           join={joinGroupMutation.mutate}
           loading={joinGroupMutation.isLoading}
+          selectedGroupId={joinGroupMutation.variables}
         />
       </ContainerComponent>
     </div>
