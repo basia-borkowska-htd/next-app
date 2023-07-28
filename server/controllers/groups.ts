@@ -1,5 +1,6 @@
 import dotenv from 'dotenv'
 import { Request, Response } from 'express'
+import pug from 'pug'
 
 import { Group } from '../models/group'
 import { User } from '../models/user'
@@ -109,6 +110,8 @@ const inviteMembers = async (req: Request, res: Response) => {
 
     const inviter = await User.findOne({ _id: req.body.inviterId })
 
+    const getHtml = pug.compileFile('server/templates/groupInvite.pug')
+    // `<div><p>${body}</p><img src=${group.photoUrl}/><button>Join</button></div>`,
     const body = inviter
       ? `${inviter.name} has invited you to join ${group.name} group.`
       : `You have been invited to join ${group.name}`
@@ -117,8 +120,11 @@ const inviteMembers = async (req: Request, res: Response) => {
       to: req.body.emails,
       from: process.env.SENDER_EMAIL || '',
       subject: `You have been invited to join ${group.name} group!`,
-      text: body,
-      html: `<div><p>${body}</p><img src=${group.photoUrl}/><button>Join</button></div>`,
+      html: getHtml({
+        groupName: group.name,
+        groupPhoto: group.photoUrl,
+        inviterName: inviter?.name,
+      }),
     }
     await sendEmail(email)
     res.status(200).json({ success: true })

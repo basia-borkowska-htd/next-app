@@ -1,0 +1,21 @@
+.box {
+  display: flex;
+  flex-direction: column !important;
+  gap: 1rem;
+}
+
+.message {
+  font-weight: 700;
+  font-size: 24px;
+  padding: 16px;
+}
+
+img {
+  height: 280px;
+}
+
+a {
+  text-decoration: none !important;
+  background-color: teal;
+  color: white !important;
+}
