@@ -111,10 +111,6 @@ const inviteMembers = async (req: Request, res: Response) => {
     const inviter = await User.findOne({ _id: req.body.inviterId })
 
     const getHtml = pug.compileFile('server/templates/groupInvite.pug')
-    // `<div><p>${body}</p><img src=${group.photoUrl}/><button>Join</button></div>`,
-    const body = inviter
-      ? `${inviter.name} has invited you to join ${group.name} group.`
-      : `You have been invited to join ${group.name}`
 
     const email = {
       to: req.body.emails,

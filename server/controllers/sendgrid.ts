@@ -9,8 +9,7 @@ sendGridMail.setApiKey(process.env.SENDGRID_API_KEY || '')
 
 const sendEmail = async (email: Email) => {
   try {
-    const msg = await sendGridMail.send(email)
-    console.log({ msg })
+    await sendGridMail.send(email)
   } catch (error) {
     console.error({ error })
   }

@@ -1,6 +1,6 @@
 import { api } from '@/api'
 import { useMutation } from '@tanstack/react-query'
-import React, { use, useState } from 'react'
+import React, { useState } from 'react'
 
 import { queryClient } from '@/pages/_app'
 

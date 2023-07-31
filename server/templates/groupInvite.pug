@@ -1,13 +1,15 @@
 doctype html
-
 html
     head
         title="Group Invitation"
         style
              include ./style.css
+        
     body
-        div.box
-            p.message #{inviterName} has invited you to join #{groupName} group!
-            img(src=groupPhoto , alt='Group Photo') 
-            a.btn(href='#') Join
+        table(role="presentation", width="100%")
+            td(align="center")
+                p #{inviterName} has invited you to join #{groupName} group!
+                img(src=groupPhoto , alt='Group Photo') 
+                div
+                    a(type="button", href='#') Join
         

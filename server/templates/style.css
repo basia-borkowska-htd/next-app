@@ -1,21 +1,24 @@
-.box {
-  display: flex;
-  flex-direction: column !important;
-  gap: 1rem;
-}
-
-.message {
+p {
   font-weight: 700;
   font-size: 24px;
-  padding: 16px;
+  margin-bottom: 16px;
 }
 
 img {
-  height: 280px;
+  width: 450px;
+  margin-bottom: 24px;
 }
 
 a {
+  display: block;
+  width: 450px;
+  background-color: #0e2c44;
   text-decoration: none !important;
-  background-color: teal;
   color: white !important;
+  padding: 8px 0;
+  border-radius: 8px;
+}
+
+a:hover {
+  background-color: #081e2f;
 }
