@@ -112,17 +112,24 @@ const inviteMembers = async (req: Request, res: Response) => {
 
     const getHtml = pug.compileFile('server/templates/groupInvite.pug')
 
-    const email = {
-      to: req.body.emails,
-      from: process.env.SENDER_EMAIL || '',
-      subject: `You have been invited to join ${group.name} group!`,
-      html: getHtml({
-        groupName: group.name,
-        groupPhoto: group.photoUrl,
-        inviterName: inviter?.name,
-      }),
-    }
-    await sendEmail(email)
+    req.body.emails.forEach(async (address: string) => {
+      const user = await User.findOne({ email: address })
+
+      const email = {
+        to: address,
+        from: process.env.SENDER_EMAIL || '',
+        subject: `You have been invited to join ${group.name} group!`,
+        html: getHtml({
+          groupId: group.id,
+          inviteeId: user?.id,
+          groupName: group.name,
+          groupPhoto: group.photoUrl,
+          inviterName: inviter?.name,
+        }),
+      }
+      await sendEmail(email)
+    })
+
     res.status(200).json({ success: true })
   } catch (error) {
     res.status(500).json({ error })
@@ -130,7 +137,9 @@ const inviteMembers = async (req: Request, res: Response) => {
 }
 const addGroupMember = async (req: Request, res: Response) => {
   try {
-    await Group.findOneAndUpdate({ _id: req.params.id }, { $push: { members: req.body.userId } })
+    // TODO
+    await Group.findOneAndUpdate({ _id: req.params.id }, { $addToSet: { members: req.body.userId } })
+    console.log(req.body.userId, req.params.id)
     res.status(200).json({ success: true })
   } catch (error) {
     res.status(500).json({ error: 'Unable to add a member to a group' })

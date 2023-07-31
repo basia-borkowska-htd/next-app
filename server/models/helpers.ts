@@ -20,7 +20,7 @@ export const Range = new Schema({
 })
 
 export type Email = {
-  to: string[]
+  to: string[] | string
   from: string
   subject: string
   html: string
