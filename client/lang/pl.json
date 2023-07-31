@@ -262,5 +262,10 @@
       "no_email_message": "Nie otrzymałeś wiadomości email?",
       "resend_button": "Wyślij ponownie"
     }
+  },
+  "nav_bar": {
+    "log_out": "Wyloguj",
+    "my_profile": "Mój profil",
+    "next_app": "Next App"
   }
 }

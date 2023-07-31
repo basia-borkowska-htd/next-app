@@ -262,5 +262,10 @@
       "no_email_message": "Didn't receive an email?",
       "resend_button": "Resend verification email"
     }
+  },
+  "nav_bar": {
+    "log_out": "Log out",
+    "my_profile": "My profile",
+    "next_app": "Next App"
   }
 }
