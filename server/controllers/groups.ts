@@ -137,7 +137,6 @@ const inviteMembers = async (req: Request, res: Response) => {
 }
 const addGroupMember = async (req: Request, res: Response) => {
   try {
-    // TODO
     await Group.findOneAndUpdate({ _id: req.params.id }, { $addToSet: { members: req.body.userId } })
     console.log(req.body.userId, req.params.id)
     res.status(200).json({ success: true })
