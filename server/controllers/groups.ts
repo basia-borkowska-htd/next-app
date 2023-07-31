@@ -1,4 +1,6 @@
+import dotenv from 'dotenv'
 import { Request, Response } from 'express'
+import pug from 'pug'
 
 import { Group } from '../models/group'
 import { User } from '../models/user'
@@ -6,6 +8,9 @@ import { User } from '../models/user'
 import { Visibility } from '../enums/Visibility.enum'
 
 import { getDeleteObjectParams, getUploadParams, s3 } from './aws'
+import { sendEmail } from './sendgrid'
+
+dotenv.config()
 
 const getPublicGroups = async (req: Request, res: Response) => {
   try {
@@ -98,10 +103,42 @@ const updateGroup = async (req: Request, res: Response) => {
     res.status(500).json({ error })
   }
 }
+const inviteMembers = async (req: Request, res: Response) => {
+  try {
+    const group = await Group.findOne({ _id: req.params.id }).select('_id name photoUrl')
+    if (!group) return res.status(404).json({ error: 'Group not found' })
 
+    const inviter = await User.findOne({ _id: req.body.inviterId })
+
+    const getHtml = pug.compileFile('server/templates/groupInvite.pug')
+
+    req.body.emails.forEach(async (address: string) => {
+      const user = await User.findOne({ email: address })
+
+      const email = {
+        to: address,
+        from: process.env.SENDER_EMAIL || '',
+        subject: `You have been invited to join ${group.name} group!`,
+        html: getHtml({
+          groupId: group.id,
+          inviteeId: user?.id,
+          groupName: group.name,
+          groupPhoto: group.photoUrl,
+          inviterName: inviter?.name,
+        }),
+      }
+      await sendEmail(email)
+    })
+
+    res.status(200).json({ success: true })
+  } catch (error) {
+    res.status(500).json({ error })
+  }
+}
 const addGroupMember = async (req: Request, res: Response) => {
   try {
-    await Group.findOneAndUpdate({ _id: req.params.id }, { $push: { members: req.body.userId } })
+    await Group.findOneAndUpdate({ _id: req.params.id }, { $addToSet: { members: req.body.userId } })
+    console.log(req.body.userId, req.params.id)
     res.status(200).json({ success: true })
   } catch (error) {
     res.status(500).json({ error: 'Unable to add a member to a group' })
@@ -139,6 +176,7 @@ const deleteGroupPhoto = async (req: Request, res: Response) => {
 }
 
 export {
+  inviteMembers,
   addGroupMember,
   createGroup,
   deleteGroup,

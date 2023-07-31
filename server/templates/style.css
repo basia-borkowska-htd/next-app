@@ -1,0 +1,24 @@
+p {
+  font-weight: 700;
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+img {
+  width: 450px;
+  margin-bottom: 24px;
+}
+
+a {
+  display: block;
+  width: 450px;
+  background-color: #0e2c44;
+  text-decoration: none !important;
+  color: white !important;
+  padding: 8px 0;
+  border-radius: 8px;
+}
+
+a:hover {
+  background-color: #081e2f;
+}
