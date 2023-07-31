@@ -73,6 +73,7 @@ export const CreateGroupModalComponent = ({ opened, close, creatorId }: CreateGr
 
       {step === StepEnum.STEP_2 && (
         <InviteGroupMembersFormComponent
+          inviterId={creatorId}
           groupId={groupId}
           loading={inviteMembersMutation.isLoading}
           onSubmit={inviteMembersMutation.mutate}

@@ -110,6 +110,7 @@ export const OptionsComponent = ({ group }: OptionsProps) => {
       <ModalComponent opened={isInviteModalOpen} onClose={closeInviteModal} title={t('users.invite_members.title')}>
         <InviteGroupMembersFormComponent
           groupId={group._id}
+          inviterId={session.user._id}
           loading={inviteMembersMutation.isLoading}
           onSubmit={inviteMembersMutation.mutate}
         />

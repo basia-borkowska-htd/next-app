@@ -1,0 +1,15 @@
+doctype html
+html
+    head
+        title="Group Invitation"
+        style
+             include ./style.css
+        
+    body
+        table(role="presentation", width="100%")
+            td(align="center")
+                p #{inviterName} has invited you to join #{groupName} group!
+                img(src=groupPhoto , alt='Group Photo') 
+                div
+                    a(type="button", href=`http://localhost:3000/join/${groupId}?userId=${inviteeId}`) Join
+
