@@ -2,6 +2,7 @@ import { ChartDataType } from '@/types/ChartData'
 import { MeasurementType } from '@/types/Measurement'
 
 import { MeasurementEnum } from '@/enums/Measurement.enum'
+import { TimePeriodEnum } from '@/enums/TimePeriod.enum'
 
 import { apiUrl } from './global'
 
@@ -57,10 +58,15 @@ export const measurementsApi = {
     if (!data?.measurement) throw new Error(data.error)
     return data.measurement
   },
-  getChartMeasurements: async (userId: string, key: MeasurementEnum): Promise<ChartDataType[]> => {
+  getChartMeasurements: async (
+    userId: string,
+    key: MeasurementEnum,
+    period: TimePeriodEnum,
+  ): Promise<ChartDataType[]> => {
     const res = await fetch(
       `${apiUrl}/measurements/${userId}/charts?${new URLSearchParams({
         key,
+        period,
       })}`,
     )
 
