@@ -1,6 +1,7 @@
 export enum QueryKeyEnum {
   USERS = 'users',
   BASIC_USER = 'basicUser',
+  SESSION_USER = 'sessionUser',
   USER = 'user',
   MEASUREMENTS = 'measurements',
   MEASUREMENT = 'measurement',

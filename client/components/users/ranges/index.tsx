@@ -27,9 +27,10 @@ import { units } from '@/utils/units'
 
 interface RangesProps {
   userId: string
+  editable: boolean
 }
 
-export const RangesComponent = ({ userId }: RangesProps) => {
+export const RangesComponent = ({ userId, editable }: RangesProps) => {
   const { t } = useTranslate()
   const { data, error, isLoading, isFetching } = useQuery({
     queryKey: [QueryKeyEnum.RANGES, userId],
@@ -67,9 +68,11 @@ export const RangesComponent = ({ userId }: RangesProps) => {
           <ButtonComponent variant="outline" onClick={redirectToMeasurementHistory}>
             {t('user.ranges.history_button')}
           </ButtonComponent>
-          <ButtonComponent variant="outline" onClick={open}>
-            {t('add_measurement.button')}
-          </ButtonComponent>
+          {editable && (
+            <ButtonComponent variant="outline" onClick={open}>
+              {t('add_measurement.button')}
+            </ButtonComponent>
+          )}
         </div>
       </div>
 
