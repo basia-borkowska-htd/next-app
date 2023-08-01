@@ -21,7 +21,7 @@ export const authApi = {
 
     return data.account
   },
-  createAccount: async (account: CreateAccountType): Promise<AccountType> => {
+  createAccount: async (account: CreateAccountType): Promise<boolean> => {
     const res = await fetch(`${apiUrl}/auth/accounts`, {
       method: 'POST',
       headers: {
@@ -31,16 +31,30 @@ export const authApi = {
     })
     const data = await res.json()
 
-    if (!data?.account) throw new Error(data.error)
+    if (!data?.success) throw new Error(data.error)
 
-    return data.account
+    return data.success
   },
-  verifyEmail: async (id: string): Promise<AccountType> => {
-    const res = await fetch(`${apiUrl}/auth/accounts/${id}/verifyEmail`, {
+  sendVerificationEmail: async (email: string): Promise<boolean> => {
+    const res = await fetch(`${apiUrl}/auth/accounts/sendVerificationEmail`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
+    })
+    const data = await res.json()
+
+    if (!data?.success) throw new Error(data.error)
+    return data.success
+  },
+  verifyEmail: async (email: string): Promise<AccountType> => {
+    const res = await fetch(`${apiUrl}/auth/accounts/verifyEmail`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify({ email }),
     })
     const data = await res.json()
 
