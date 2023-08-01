@@ -10,6 +10,11 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
+import { ErrorComponent } from '@/components/error'
+import { PageLoaderComponent } from '@/components/pageLoader'
+
+import { useTranslate } from '@/hooks/useTranslate'
+
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 
 import Logo from '@/assets/graphics/logo.svg'
@@ -17,11 +22,10 @@ import Logo from '@/assets/graphics/logo.svg'
 import { customSignOut } from '@/utils/customSignOut'
 import { Pathnames } from '@/utils/pathnames'
 
-import { ErrorComponent } from '../error'
-import { PageLoaderComponent } from '../pageLoader'
 import UserButtonComponent from './userButton'
 
 export const NavBarComponent = () => {
+  const { t } = useTranslate()
   const { data: session } = useSession()
   const router = useRouter()
   const {
@@ -47,7 +51,7 @@ export const NavBarComponent = () => {
       <div className="flex items-center gap-4 cursor-pointer" onClick={() => router.push(Pathnames.home)}>
         <Image src={Logo} alt="Logo" />
         <Text color="green-100" size={28}>
-          Next App
+          {t('nav_bar.next_app')}
         </Text>
       </div>
       <Group position="center">
@@ -60,11 +64,11 @@ export const NavBarComponent = () => {
               icon={<IconUser size={16} />}
               onClick={() => router.push(Pathnames.userProfile.replace(':id', user._id))}
             >
-              My profile
+              {t('nav_bar.my_profile')}
             </Menu.Item>
             <Menu.Divider />
             <Menu.Item color="red" icon={<IconLogout size={16} />} onClick={customSignOut}>
-              Log out
+              {t('nav_bar.log_out')}
             </Menu.Item>
           </Menu.Dropdown>
         </Menu>
