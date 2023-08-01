@@ -11,5 +11,5 @@ html
                 p #{inviterName} has invited you to join #{groupName} group!
                 img(src=groupPhoto , alt='Group Photo') 
                 div
-                    a(type="button", href=`http://localhost:3000/join/${groupHash}/${userHash}`) Join
+                    a(type="button", href=`http://localhost:3000/join?group=${groupHash}&user=${userHash}`) Join
 
