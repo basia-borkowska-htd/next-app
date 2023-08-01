@@ -116,7 +116,8 @@ const inviteMembers = async (req: Request, res: Response) => {
     req.body.emails.forEach(async (address: string) => {
       const user = await User.findOne({ email: address })
 
-      const hash = encrypt(`${group.id}/id:${user?.id}`)
+      const groupHash = encrypt(group.id)
+      const userHash = encrypt(user?.id)
 
       const email = {
         to: address,
@@ -126,7 +127,8 @@ const inviteMembers = async (req: Request, res: Response) => {
           groupName: group.name,
           groupPhoto: group.photoUrl,
           inviterName: inviter?.name,
-          hash,
+          groupHash,
+          userHash,
         }),
       }
       await sendEmail(email)
@@ -137,15 +139,23 @@ const inviteMembers = async (req: Request, res: Response) => {
     res.status(500).json({ error })
   }
 }
+
 const addGroupMember = async (req: Request, res: Response) => {
   try {
-    // TODO: how to handle this better
-    const hash = decrypt(req.params.id)
-    const divider = hash.indexOf('/id:')
-    const groupId = hash.slice(0, divider)
-    const userId = hash.slice(divider + '/id:'.length)
+    const groupId = decrypt(req.params.hash)
+    const userId = decrypt(req.body.user)
 
     await Group.findOneAndUpdate({ _id: groupId }, { $addToSet: { members: userId } })
+
+    res.status(200).json({ success: true })
+  } catch (error) {
+    res.status(500).json({ error: 'Unable to add a member to a group' })
+  }
+}
+
+const joinPublicGroup = async (req: Request, res: Response) => {
+  try {
+    await Group.findOneAndUpdate({ _id: req.params.id }, { $addToSet: { members: req.body.userId } })
 
     res.status(200).json({ success: true })
   } catch (error) {
@@ -185,6 +195,7 @@ const deleteGroupPhoto = async (req: Request, res: Response) => {
 
 export {
   inviteMembers,
+  joinPublicGroup,
   addGroupMember,
   createGroup,
   deleteGroup,

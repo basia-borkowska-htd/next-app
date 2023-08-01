@@ -62,15 +62,28 @@ export const groupsApi = {
     if (!data?.success) throw new Error(data.error)
     return data.success
   },
-  // TODO: decide if we want to pass hash with params or body
-  addGroupMember: async (hash: string): Promise<boolean> => {
-    const res = await fetch(`${apiUrl}/groups/${hash}/addMember`, {
+  addGroupMember: async (group: string, user: string): Promise<boolean> => {
+    const res = await fetch(`${apiUrl}/groups/${group}/addMember`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ hash }),
+      body: JSON.stringify({ user }),
     })
+
+    const data = await res.json()
+    if (!data?.success) throw new Error(data.error)
+    return data.success
+  },
+  joinPublicGroup: async (groupId: string, userId: string): Promise<boolean> => {
+    const res = await fetch(`${apiUrl}/groups/${groupId}/joinPublicGroup`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ userId }),
+    })
+
     const data = await res.json()
     if (!data?.success) throw new Error(data.error)
     return data.success

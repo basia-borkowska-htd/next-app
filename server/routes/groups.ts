@@ -10,6 +10,7 @@ import {
   getJoinedGroups,
   getPublicGroups,
   inviteMembers,
+  joinPublicGroup,
   removeGroupMember,
   updateGroup,
 } from '../controllers/groups'
@@ -23,6 +24,7 @@ router.get('/:id/members', getGroupMembers)
 router.post('/', upload.single('photo'), createGroup)
 router.put('/:id', upload.single('photo'), updateGroup)
 router.post('/:id/inviteMembers', inviteMembers)
-router.put('/:id/addMember', addGroupMember)
+router.put('/:hash/addMember', addGroupMember)
+router.put('/:id/joinPublicGroup', joinPublicGroup)
 router.put('/:id/removeMember', removeGroupMember)
 router.delete('/:id', deleteGroup)
