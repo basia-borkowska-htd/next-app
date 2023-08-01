@@ -14,10 +14,11 @@ import { units } from '@/utils/units'
 
 interface HeaderProps {
   user: UserType
+  editable: boolean
 
   openModal: () => void
 }
-export const HeaderComponent = ({ user, openModal }: HeaderProps) => {
+export const HeaderComponent = ({ user, editable, openModal }: HeaderProps) => {
   const { t } = useTranslate()
   const { name, age, sex, height, weight, avatarUrl } = user
 
@@ -43,7 +44,7 @@ export const HeaderComponent = ({ user, openModal }: HeaderProps) => {
             </div>
           </div>
           <div className="basis-1/4">
-            <ButtonComponent onClick={openModal}>{t('user.header.edit_button')}</ButtonComponent>
+            {editable && <ButtonComponent onClick={openModal}>{t('user.header.edit_button')}</ButtonComponent>}
           </div>
         </div>
       </ContainerComponent>

@@ -2,8 +2,10 @@ import { api } from '@/api'
 import { Divider } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useMutation, useQuery } from '@tanstack/react-query'
+import { useSession } from 'next-auth/react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
+import { useMemo } from 'react'
 
 import { queryClient } from '@/pages/_app'
 
@@ -42,7 +44,9 @@ const SettingsComponent = dynamic(() =>
 const UserProfilePage = () => {
   const router = useRouter()
   const { user: userId } = router.query
+  const { data: session } = useSession()
   const { t } = useTranslate()
+  const editable = useMemo(() => session?.user?._id === userId, [session?.user?._id, userId])
 
   const {
     data: user,
@@ -74,11 +78,15 @@ const UserProfilePage = () => {
 
   return (
     <>
-      <HeaderComponent user={user} openModal={open} />
-      <RangesComponent userId={user._id} />
+      <HeaderComponent user={user} openModal={open} editable={editable} />
+      <RangesComponent userId={user._id} editable={editable} />
       <ChartSectionComponent userId={user._id} />
-      <Divider py="md" mx="md" />
-      <SettingsComponent userId={user._id} />
+      {editable && (
+        <>
+          <Divider py="md" mx="md" />
+          <SettingsComponent userId={user._id} />
+        </>
+      )}
 
       <ModalComponent opened={opened} onClose={close} title={t('user_modal.title_edit_user')}>
         <UserFormComponent
