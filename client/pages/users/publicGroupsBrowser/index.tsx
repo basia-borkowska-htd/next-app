@@ -11,8 +11,9 @@ interface PublicGroupsBrowserProps {
   groups: PreviewGroupType[]
   loading: boolean
   join: (id: string) => void
+  selectedGroupId: string
 }
-export const PublicGroupsBrowserComponent = ({ groups, join, loading }: PublicGroupsBrowserProps) => {
+export const PublicGroupsBrowserComponent = ({ groups, join, loading, selectedGroupId }: PublicGroupsBrowserProps) => {
   const { t } = useTranslate()
 
   return (
@@ -41,7 +42,7 @@ export const PublicGroupsBrowserComponent = ({ groups, join, loading }: PublicGr
               {t('users.public_groups.joined_button')}
             </ButtonComponent>
           ) : (
-            <ButtonComponent onClick={() => join(_id)} loading={loading}>
+            <ButtonComponent onClick={() => join(_id)} loading={loading && selectedGroupId === _id}>
               {t('users.public_groups.join_button')}
             </ButtonComponent>
           )}

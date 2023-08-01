@@ -30,14 +30,24 @@ const UsersPage = () => {
   const { data: session } = useSession()
   const [opened, { open, close }] = useDisclosure(false)
 
+  const { data: user } = useQuery({
+    queryKey: [QueryKeyEnum.USER],
+    queryFn: () => api.user.getUserByEmail(session?.user?.email),
+    enabled: !!session,
+    retry: 1,
+  })
+
+  const enabled = !!user
+  const userId = user?._id
+
   const {
     data: joinedGroups,
     error: joinedGroupsError,
     isLoading: joinedGroupsLoading,
   } = useQuery({
     queryKey: [QueryKeyEnum.JOINED_GROUPS],
-    queryFn: () => api.group.getJoinedGroups(session.user._id),
-    enabled: !!session?.user?._id,
+    queryFn: () => api.group.getJoinedGroups(userId),
+    enabled,
     retry: 1,
   })
 
@@ -47,13 +57,13 @@ const UsersPage = () => {
     isLoading: publicGroupsLoading,
   } = useQuery({
     queryKey: [QueryKeyEnum.PUBLIC_GROUPS],
-    queryFn: () => api.group.getPublicGroups(session.user._id),
-    enabled: !!session?.user?._id,
+    queryFn: () => api.group.getPublicGroups(userId),
+    enabled,
     retry: 1,
   })
 
   const joinGroupMutation = useMutation({
-    mutationFn: (groupId: string) => api.group.addGroupMember(groupId, session.user._id),
+    mutationFn: (groupId: string) => api.group.addGroupMember(groupId, userId),
     onSuccess: async () => {
       await queryClient.refetchQueries({ stale: true })
       notify({
@@ -98,6 +108,7 @@ const UsersPage = () => {
           groups={publicGroups}
           join={joinGroupMutation.mutate}
           loading={joinGroupMutation.isLoading}
+          selectedGroupId={joinGroupMutation.variables}
         />
       </ContainerComponent>
     </div>
