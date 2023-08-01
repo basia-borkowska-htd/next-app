@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 import { ErrorComponent } from '@/components/error'
 import { PageLoaderComponent } from '@/components/pageLoader'
@@ -32,15 +33,18 @@ export const NavBarComponent = () => {
     error,
     isLoading,
   } = useQuery({
-    queryKey: [QueryKeyEnum.USER],
+    queryKey: [QueryKeyEnum.SESSION_USER],
     queryFn: () => api.user.getUserByEmail(session?.user?.email),
     enabled: !!session,
     retry: 1,
   })
 
+  useEffect(() => {
+    if (user) session.user = user
+  }, [user])
+
   if (isLoading) return <PageLoaderComponent />
   if (error) return <ErrorComponent title={error.toString()} />
-  if (user) session.user = user
 
   return (
     <div className="flex justify-between bg-blue-300 px-16">
