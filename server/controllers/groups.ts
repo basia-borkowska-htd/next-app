@@ -8,6 +8,7 @@ import { User } from '../models/user'
 import { Visibility } from '../enums/Visibility.enum'
 
 import { getDeleteObjectParams, getUploadParams, s3 } from './aws'
+import { decrypt, encrypt } from './hash'
 import { sendEmail } from './sendgrid'
 
 dotenv.config()
@@ -115,16 +116,17 @@ const inviteMembers = async (req: Request, res: Response) => {
     req.body.emails.forEach(async (address: string) => {
       const user = await User.findOne({ email: address })
 
+      const hash = encrypt(`${group.id}/id:${user?.id}`)
+
       const email = {
         to: address,
         from: process.env.SENDER_EMAIL || '',
         subject: `You have been invited to join ${group.name} group!`,
         html: getHtml({
-          groupId: group.id,
-          inviteeId: user?.id,
           groupName: group.name,
           groupPhoto: group.photoUrl,
           inviterName: inviter?.name,
+          hash,
         }),
       }
       await sendEmail(email)
@@ -137,8 +139,14 @@ const inviteMembers = async (req: Request, res: Response) => {
 }
 const addGroupMember = async (req: Request, res: Response) => {
   try {
-    await Group.findOneAndUpdate({ _id: req.params.id }, { $addToSet: { members: req.body.userId } })
-    console.log(req.body.userId, req.params.id)
+    // TODO: how to handle this better
+    const hash = decrypt(req.params.id)
+    const divider = hash.indexOf('/id:')
+    const groupId = hash.slice(0, divider)
+    const userId = hash.slice(divider + '/id:'.length)
+
+    await Group.findOneAndUpdate({ _id: groupId }, { $addToSet: { members: userId } })
+
     res.status(200).json({ success: true })
   } catch (error) {
     res.status(500).json({ error: 'Unable to add a member to a group' })

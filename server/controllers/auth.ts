@@ -1,4 +1,3 @@
-import { PutObjectRequest } from 'aws-sdk/clients/s3'
 import bcrypt from 'bcrypt'
 import dotenv from 'dotenv'
 import { Request, Response } from 'express'

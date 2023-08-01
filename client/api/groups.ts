@@ -62,13 +62,14 @@ export const groupsApi = {
     if (!data?.success) throw new Error(data.error)
     return data.success
   },
-  addGroupMember: async (groupId: string, userId: string): Promise<boolean> => {
-    const res = await fetch(`${apiUrl}/groups/${groupId}/addMember`, {
+  // TODO: decide if we want to pass hash with params or body
+  addGroupMember: async (hash: string): Promise<boolean> => {
+    const res = await fetch(`${apiUrl}/groups/${hash}/addMember`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ userId }),
+      body: JSON.stringify({ hash }),
     })
     const data = await res.json()
     if (!data?.success) throw new Error(data.error)

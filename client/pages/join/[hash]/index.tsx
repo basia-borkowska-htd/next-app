@@ -20,10 +20,10 @@ import { Pathnames } from '@/utils/pathnames'
 const JoinGroupPage = () => {
   const { t } = useTranslate()
   const router = useRouter()
-  const { group: groupId, userId } = router.query
+  const { hash } = router.query
 
   const addMemberMutation = useMutation({
-    mutationFn: () => api.group.addGroupMember(groupId.toString(), userId.toString()),
+    mutationFn: () => api.group.addGroupMember(hash.toString()),
     onSuccess: () => {
       router.push(Pathnames.home)
       notify({ type: 'success', message: t('users.public_groups.join_success') })
@@ -31,10 +31,10 @@ const JoinGroupPage = () => {
   })
 
   useEffect(() => {
-    if (groupId && userId) {
+    if (hash) {
       addMemberMutation.mutate()
     }
-  }, [groupId, userId])
+  }, [hash])
 
   if (addMemberMutation.isLoading) return <PageLoaderComponent />
   if (addMemberMutation.error) return <ErrorComponent title={addMemberMutation.error.toString()} />
