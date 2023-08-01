@@ -31,7 +31,7 @@ const UsersPage = () => {
   const [opened, { open, close }] = useDisclosure(false)
 
   const { data: user } = useQuery({
-    queryKey: [QueryKeyEnum.USER],
+    queryKey: [QueryKeyEnum.SESSION_USER],
     queryFn: () => api.user.getUserByEmail(session?.user?.email),
     enabled: !!session,
     retry: 1,

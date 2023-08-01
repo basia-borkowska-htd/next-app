@@ -53,7 +53,7 @@ const UserProfilePage = () => {
     error,
     isLoading,
   } = useQuery({
-    queryKey: [QueryKeyEnum.SESSION_USER],
+    queryKey: [QueryKeyEnum.USER],
     queryFn: () => api.user.getUser(userId.toString()),
     enabled: router.isReady,
   })
