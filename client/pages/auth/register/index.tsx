@@ -13,6 +13,7 @@ import { ErrorMessageComponent } from '@/components/errorMessage'
 import { useTranslate } from '@/hooks/useTranslate'
 
 import { ProviderEnum } from '@/enums/Provider.enum'
+import { StepEnum } from '@/enums/Step.enum'
 
 import Logo from '@/assets/graphics/logo.svg'
 
@@ -56,7 +57,7 @@ const RegisterPage = () => {
           <Image src={Logo} alt="Logo" />
           <Title color="blue-300">{t('basic.title')}</Title>
         </div>
-        <RegistrationStepperComponent active={0} />
+        <RegistrationStepperComponent active={StepEnum.STEP_1} />
         <form
           className="flex flex-col gap-2"
           onSubmit={onSubmit((values) => {

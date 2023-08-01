@@ -2,10 +2,15 @@ import { api } from '@/api'
 import { Accordion } from '@mantine/core'
 import { useQuery } from '@tanstack/react-query'
 import dynamic from 'next/dynamic'
+import { useState } from 'react'
+import { ResponsiveContainer } from 'recharts'
+
+import { TimePeriodSelectorComponent } from '@/components/chart/timePeriodSelector'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
 import { MeasurementEnum, getMeasurementLabel } from '@/enums/Measurement.enum'
+import { TimePeriodEnum } from '@/enums/TimePeriod.enum'
 
 const ErrorComponent = dynamic(() => import('@/components/error').then((component) => component.ErrorComponent))
 const PageLoaderComponent = dynamic(() =>
@@ -23,21 +28,28 @@ interface ChartItemProps {
 export const ChartItemComponent = ({ userId, itemKey }: ChartItemProps) => {
   const { t } = useTranslate()
   const title = getMeasurementLabel(itemKey, t)
+
+  const [period, setPeriod] = useState(TimePeriodEnum.LAST_30_DAYS)
   const {
     data: chart,
     isLoading,
     isFetching,
     isError,
   } = useQuery({
-    queryKey: [itemKey, userId],
-    queryFn: () => api.measurement.getChartMeasurements(userId, itemKey),
+    queryKey: [itemKey, userId, period],
+    queryFn: () => api.measurement.getChartMeasurements(userId, itemKey, period),
   })
 
   const getPanelComponent = () => {
-    if (isLoading || isFetching) return <PageLoaderComponent compact />
+    if (isLoading || isFetching)
+      return (
+        <ResponsiveContainer className="flex items-center justify-center" width="60%" height={400}>
+          <PageLoaderComponent compact />
+        </ResponsiveContainer>
+      )
+
     if (isError) return <ErrorComponent compact />
     if (!chart.length) return <EmptyStateComponent compact />
-
     return <ChartComponent data={chart} />
   }
 
@@ -47,7 +59,10 @@ export const ChartItemComponent = ({ userId, itemKey }: ChartItemProps) => {
         <div className="font-bold">{title}</div>
       </Accordion.Control>
       <Accordion.Panel>
-        <div className="flex justify-center">{getPanelComponent()}</div>
+        <div className="flex justify-around items-center">
+          {getPanelComponent()}
+          <TimePeriodSelectorComponent period={period} setPeriod={setPeriod} />
+        </div>
       </Accordion.Panel>
     </Accordion.Item>
   )

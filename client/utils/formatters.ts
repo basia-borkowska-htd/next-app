@@ -1,3 +1,4 @@
+import { AddGroupType } from '@/types/Group'
 import { UpdateUserType } from '@/types/User'
 
 export const formatters = {
@@ -15,6 +16,17 @@ export const formatters = {
       formData.append('weight[value]', weight.value?.toString() || '')
     }
     if (!avatarUrl) formData.append('removeAvatar', 'true')
+
+    return formData
+  },
+  formatGroup: ({ name, photoFile, visibility, photoUrl, creatorId }: AddGroupType) => {
+    const formData = new FormData()
+    if (photoFile) formData.append('photo', photoFile)
+    formData.append('name', name)
+    formData.append('visibility', visibility)
+    if (creatorId) formData.append('creatorId', creatorId)
+    if (!photoUrl) formData.append('removePhoto', 'true')
+
     return formData
   },
 }

@@ -2,11 +2,14 @@ import { ChartDataType } from '@/types/ChartData'
 import { MeasurementType } from '@/types/Measurement'
 
 import { MeasurementEnum } from '@/enums/Measurement.enum'
+import { TimePeriodEnum } from '@/enums/TimePeriod.enum'
+
+import { apiUrl } from './global'
 
 export const measurementsApi = {
   getMeasurements: async (userId: string): Promise<MeasurementType[]> => {
     const res = await fetch(
-      `http://localhost:3001/api/measurements?${new URLSearchParams({
+      `${apiUrl}/measurements?${new URLSearchParams({
         userId,
       })}`,
     )
@@ -16,7 +19,7 @@ export const measurementsApi = {
   },
   addMeasurement: async (measurement: MeasurementType): Promise<MeasurementType> => {
     const newMeasurement = { ...measurement, _id: undefined }
-    const res = await fetch('http://localhost:3001/api/measurements', {
+    const res = await fetch(`${apiUrl}/measurements`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -31,7 +34,7 @@ export const measurementsApi = {
   },
   deleteMeasurement: async (id: string): Promise<boolean> => {
     if (!id) throw new Error('Measurement does not exist')
-    const res = await fetch(`http://localhost:3001/api/measurements/${id}`, {
+    const res = await fetch(`${apiUrl}/measurements/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -43,7 +46,7 @@ export const measurementsApi = {
     return data.success
   },
   updateMeasurement: async (measurement: MeasurementType): Promise<MeasurementType> => {
-    const res = await fetch(`http://localhost:3001/api/measurements/${measurement._id}`, {
+    const res = await fetch(`${apiUrl}/measurements/${measurement._id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -55,10 +58,15 @@ export const measurementsApi = {
     if (!data?.measurement) throw new Error(data.error)
     return data.measurement
   },
-  getChartMeasurements: async (userId: string, key: MeasurementEnum): Promise<ChartDataType[]> => {
+  getChartMeasurements: async (
+    userId: string,
+    key: MeasurementEnum,
+    period: TimePeriodEnum,
+  ): Promise<ChartDataType[]> => {
     const res = await fetch(
-      `http://localhost:3001/api/measurements/${userId}/charts?${new URLSearchParams({
+      `${apiUrl}/measurements/${userId}/charts?${new URLSearchParams({
         key,
+        period,
       })}`,
     )
 

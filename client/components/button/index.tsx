@@ -13,6 +13,7 @@ interface ButtonProps {
   color?: string
   leftIcon?: ReactNode
   fullWidth?: boolean
+  disabled?: boolean
 
   onClick?: (e?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => void
 }
@@ -25,6 +26,7 @@ export const ButtonComponent = ({
   fullWidth = true,
   color = 'blue-200',
   leftIcon,
+  disabled = false,
   onClick,
 }: ButtonProps) => (
   <Button
@@ -37,6 +39,7 @@ export const ButtonComponent = ({
     onClick={onClick}
     leftIcon={leftIcon}
     fullWidth={fullWidth}
+    disabled={disabled}
   >
     {children}
   </Button>

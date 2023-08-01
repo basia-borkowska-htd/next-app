@@ -1,4 +1,3 @@
-import { PutObjectRequest } from 'aws-sdk/clients/s3'
 import bcrypt from 'bcrypt'
 import dotenv from 'dotenv'
 import { Request, Response } from 'express'
@@ -8,7 +7,7 @@ import { User } from '../models/user'
 
 import { AccountStatus } from '../enums/AccountStatus.enum'
 
-import { s3 } from './aws'
+import { getUploadParams, s3 } from './aws'
 
 const createAccount = async (req: Request, res: Response) => {
   try {
@@ -75,15 +74,7 @@ const completeProfile = async (req: Request, res: Response) => {
     // TODO: polish signs are not being handled properly
 
     if (!!req.file) {
-      const params: PutObjectRequest = {
-        Bucket: process.env.AWS_BUCKET_NAME || '',
-        Key: req.file.originalname,
-        Body: req.file.buffer,
-        ACL: 'public-read-write',
-        ContentType: 'image/jpeg',
-      }
-
-      s3.upload(params, async (error, data) => {
+      s3.upload(getUploadParams(req.file), async (error, data) => {
         if (error) throw res.status(500).send({ error })
         const user = await User.create({ ...req.body, avatarUrl: data.Location })
 

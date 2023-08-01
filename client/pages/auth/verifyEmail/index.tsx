@@ -11,6 +11,8 @@ import { ErrorMessageComponent } from '@/components/errorMessage'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
+import { StepEnum } from '@/enums/Step.enum'
+
 import Logo from '@/assets/graphics/logo.svg'
 
 import { customSignOut } from '@/utils/customSignOut'
@@ -44,7 +46,7 @@ const VerifyEmailPage = () => {
           <Image src={Logo} alt="Logo" />
           <Title color="blue-300">{t('basic.title')}</Title>
         </div>
-        <RegistrationStepperComponent active={1} />
+        <RegistrationStepperComponent active={StepEnum.STEP_2} />
         {error && <ErrorMessageComponent>{error}</ErrorMessageComponent>}
         <div className="flex flex-col items-center gap-4">
           <div className="text-lg text-center font-bold">{t('auth.verify_email.title')}</div>

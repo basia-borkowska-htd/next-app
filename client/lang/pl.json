@@ -2,7 +2,37 @@
   "basic": {
     "title": "Next App"
   },
-  "users": {},
+  "users": {
+    "my_groups": "Moje grupy",
+    "my_groups_empty_state": {
+      "title": "Nie dołączyłeś jeszcze go żadnej grupy",
+      "message": "Możesz przeglądać publiczne grupy, lub stworzyć swoją nową grupę i zaprosić znajomych!"
+    },
+    "public_groups": {
+      "title": "Przeglądaj publiczne grupy",
+      "member": "1 członek",
+      "members": "{count} członków",
+      "join_button": "Dołącz",
+      "joined_button": "Dołączono",
+      "join_success": "Dołączono do grupy pomyślnie",
+      "join_error": "Nie udało się dołączyć do grupy"
+    },
+    "create_group": {
+      "title": "Stwórz nową grupę",
+      "success": "Grupa utworzona pomyślnie",
+      "error": "Nie udało się utworzyć grupy"
+    },
+    "edit_group": {
+      "title": "Edytuj grupę",
+      "success": "Grupa zaktualizowana pomyślnie",
+      "error": "Nie udało się zaktualizować grupy"
+    },
+    "invite_members": {
+      "title": "Zaproś członków",
+      "success": "Członkowie zostali dołączoni pomyślnie",
+      "error": "Nie udało się dołączyć członków"
+    }
+  },
   "user": {
     "header": {
       "age": "Wiek",
@@ -84,6 +114,28 @@
     "toast_error": "Nie udało się dodać pomiaru",
     "button": "Dodaj nowy pomiar"
   },
+  "group_modal": {
+    "remove_button": "Usuń zdjęcie",
+    "name": "Nazwa",
+    "placeholders": {
+      "name": "Nazwa grupa",
+      "users": "Wprowadź maile użytkowników"
+    },
+    "labels": {
+      "users": "Zaproś członków"
+    },
+    "visibility": {
+      "label": "Widoczność",
+      "private": "Prywatna",
+      "public": "Publiczna"
+    },
+    "submit_button": "Zatwierdź",
+    "create_group_stepper": {
+      "step": "Krok",
+      "create_group": "Stwórz grupę",
+      "invite_members": "Zaproś członków"
+    }
+  },
   "user_modal": {
     "title_add_user": "Dodaj nowego użytkownika",
     "title_edit_user": "Edytuj użytkownika",
@@ -132,7 +184,13 @@
   },
   "chart": {
     "title": "Brak pomiarów",
-    "message": "Dodaj pomiary, aby zobaczyć je wyświetlone na wykresie"
+    "message": "Dodaj pomiary, aby zobaczyć je wyświetlone na wykresie",
+    "time_period": {
+      "last_7_days": "Ostatnie 7 dni",
+      "last_30_days": "Ostatnie 30 dni",
+      "last_90_days": "Ostatnie 90 dni",
+      "all": "Wszystko"
+    }
   },
   "empty_state": {
     "title": "Brak danych",
@@ -153,6 +211,26 @@
     "bmr": "BMR",
     "metabolic_age": "Wiek metaboliczny",
     "body_rating": "Ocena sylwetki"
+  },
+  "visibility_badge": {
+    "public": "Publiczna",
+    "private": "Prywatna"
+  },
+  "group": {
+    "options": {
+      "settings_label": "USTAWIENIA",
+      "danger_zone_label": "NIEBEZPIECZNE AKCJE",
+      "invite_members": "Zaproś użytkowników",
+      "edit": "Edytuj szczegóły grupy",
+      "leave": "Opuść grupę",
+      "leave_success": "Opuszczono grupę prawidłowo",
+      "leave_error": "Nie udało się opuścić grupę",
+      "leave_description": "Czy na pewno chcesz opuść grupę?",
+      "delete": "Usuń grupę",
+      "delete_description": "Czy na pewno chcesz usunąć grupę? Ta akcja jest nieodwracalna!",
+      "delete_success": "Usunięto grupę prawidłowo",
+      "delete_error": "Nie udało się usunąć grupy"
+    }
   },
   "auth": {
     "sign_in": {
@@ -190,5 +268,10 @@
       "no_email_message": "Nie otrzymałeś wiadomości email?",
       "resend_button": "Wyślij ponownie"
     }
+  },
+  "nav_bar": {
+    "log_out": "Wyloguj",
+    "my_profile": "Mój profil",
+    "next_app": "Next App"
   }
 }

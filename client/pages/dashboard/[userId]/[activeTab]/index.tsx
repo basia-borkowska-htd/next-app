@@ -2,8 +2,10 @@ import { api } from '@/api'
 import { Tabs } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useMutation, useQuery } from '@tanstack/react-query'
+import { useSession } from 'next-auth/react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
+import { useMemo } from 'react'
 
 import { queryClient } from '@/pages/_app'
 
@@ -41,9 +43,13 @@ const HistoryTabComponent = dynamic(() =>
 
 const DashboardPage = () => {
   const router = useRouter()
+  const { data: session } = useSession()
+
   const { userId, activeTab } = router.query
   const [opened, { open, close }] = useDisclosure(false)
   const { t } = useTranslate()
+
+  const editable = useMemo(() => session?.user?._id === userId, [session?.user?._id, userId])
 
   const {
     data: user,
@@ -71,7 +77,13 @@ const DashboardPage = () => {
 
   return (
     <ContainerComponent className="flex flex-col justify-between py-8">
-      <HeaderComponent userId={user._id} userName={user.name} userAvatar={user.avatarUrl} openModal={open} />
+      <HeaderComponent
+        userId={user._id}
+        userName={user.name}
+        userAvatar={user.avatarUrl}
+        openModal={open}
+        editable={editable}
+      />
       <MeasurementModalComponent
         opened={opened}
         userId={userId.toString()}
@@ -91,7 +103,7 @@ const DashboardPage = () => {
         }
         defaultValue={DashboardTabEnum.HISTORY}
         orientation="horizontal"
-        color="blue-100"
+        color="blue-300"
       >
         <Tabs.List grow>
           <Tabs.Tab value={DashboardTabEnum.HISTORY}>{t('dashboard.tabs.history')}</Tabs.Tab>

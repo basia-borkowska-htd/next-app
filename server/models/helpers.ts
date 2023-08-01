@@ -18,3 +18,10 @@ export const Range = new Schema({
     enum: Unit,
   },
 })
+
+export type Email = {
+  to: string[] | string
+  from: string
+  subject: string
+  html: string
+}
