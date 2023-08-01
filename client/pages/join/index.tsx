@@ -12,18 +12,13 @@ import { useTranslate } from '@/hooks/useTranslate'
 import { notify } from '@/utils/notifications'
 import { Pathnames } from '@/utils/pathnames'
 
-// TODO add safety features
-// - check if user is logged in
-// - check if userId is same as logged in user
-// - send groupId hashed
-
 const JoinGroupPage = () => {
   const { t } = useTranslate()
   const router = useRouter()
-  const { group: groupId, userId } = router.query
+  const { group, user } = router.query
 
   const addMemberMutation = useMutation({
-    mutationFn: () => api.group.addGroupMember(groupId.toString(), userId.toString()),
+    mutationFn: () => api.group.addGroupMember(group.toString(), user.toString()),
     onSuccess: () => {
       router.push(Pathnames.home)
       notify({ type: 'success', message: t('users.public_groups.join_success') })
@@ -31,10 +26,10 @@ const JoinGroupPage = () => {
   })
 
   useEffect(() => {
-    if (groupId && userId) {
+    if (group && user) {
       addMemberMutation.mutate()
     }
-  }, [groupId, userId])
+  }, [group, user])
 
   if (addMemberMutation.isLoading) return <PageLoaderComponent />
   if (addMemberMutation.error) return <ErrorComponent title={addMemberMutation.error.toString()} />

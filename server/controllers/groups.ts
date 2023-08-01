@@ -8,6 +8,7 @@ import { User } from '../models/user'
 import { Visibility } from '../enums/Visibility.enum'
 
 import { getDeleteObjectParams, getUploadParams, s3 } from './aws'
+import { decrypt, encrypt } from './hash'
 import { sendEmail } from './sendgrid'
 
 dotenv.config()
@@ -115,16 +116,19 @@ const inviteMembers = async (req: Request, res: Response) => {
     req.body.emails.forEach(async (address: string) => {
       const user = await User.findOne({ email: address })
 
+      const groupHash = encrypt(group.id)
+      const userHash = encrypt(user?.id)
+
       const email = {
         to: address,
         from: process.env.SENDER_EMAIL || '',
         subject: `You have been invited to join ${group.name} group!`,
         html: getHtml({
-          groupId: group.id,
-          inviteeId: user?.id,
           groupName: group.name,
           groupPhoto: group.photoUrl,
           inviterName: inviter?.name,
+          groupHash,
+          userHash,
         }),
       }
       await sendEmail(email)
@@ -135,10 +139,24 @@ const inviteMembers = async (req: Request, res: Response) => {
     res.status(500).json({ error })
   }
 }
+
 const addGroupMember = async (req: Request, res: Response) => {
   try {
+    const groupId = decrypt(req.params.hash)
+    const userId = decrypt(req.body.user)
+
+    await Group.findOneAndUpdate({ _id: groupId }, { $addToSet: { members: userId } })
+
+    res.status(200).json({ success: true })
+  } catch (error) {
+    res.status(500).json({ error: 'Unable to add a member to a group' })
+  }
+}
+
+const joinPublicGroup = async (req: Request, res: Response) => {
+  try {
     await Group.findOneAndUpdate({ _id: req.params.id }, { $addToSet: { members: req.body.userId } })
-    console.log(req.body.userId, req.params.id)
+
     res.status(200).json({ success: true })
   } catch (error) {
     res.status(500).json({ error: 'Unable to add a member to a group' })
@@ -177,6 +195,7 @@ const deleteGroupPhoto = async (req: Request, res: Response) => {
 
 export {
   inviteMembers,
+  joinPublicGroup,
   addGroupMember,
   createGroup,
   deleteGroup,

@@ -63,7 +63,7 @@ const UsersPage = () => {
   })
 
   const joinGroupMutation = useMutation({
-    mutationFn: (groupId: string) => api.group.addGroupMember(groupId, userId),
+    mutationFn: (groupId: string) => api.group.joinPublicGroup(groupId, session.user._id),
     onSuccess: async () => {
       await queryClient.refetchQueries({ stale: true })
       notify({
