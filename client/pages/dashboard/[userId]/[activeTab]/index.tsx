@@ -103,7 +103,7 @@ const DashboardPage = () => {
         }
         defaultValue={DashboardTabEnum.HISTORY}
         orientation="horizontal"
-        color="blue-100"
+        color="blue-300"
       >
         <Tabs.List grow>
           <Tabs.Tab value={DashboardTabEnum.HISTORY}>{t('dashboard.tabs.history')}</Tabs.Tab>

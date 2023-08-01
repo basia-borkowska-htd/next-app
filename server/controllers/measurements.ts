@@ -58,12 +58,33 @@ const deleteMeasurement = async (req: Request, res: Response) => {
 const getChartMeasurements = async (req: Request, res: Response) => {
   try {
     const key = req.query.key
-    const chart = (
-      await Measurement.find({ userId: req.params.id }).sort({ date: 'asc' }).select(`${key}.value ${key}.unit date`)
-    ).map((res) => ({
-      xAxis: dayjs(res.get('date')).format('MMM DD'),
-      yAxis: res.get(key?.toString() || ''),
-    }))
+    const period = req.query.period
+
+    let params
+
+    if (!period || period === 'all') {
+      params = {
+        userId: req.params.id,
+      }
+    } else {
+      const today = new Date()
+      const start = new Date(today.getFullYear(), today.getMonth(), today.getDate() - Number(period))
+      params = {
+        userId: req.params.id,
+        date: {
+          $gte: start.toISOString(),
+          $lte: today.toISOString(),
+        },
+      }
+    }
+
+    const chart = (await Measurement.find(params).sort({ date: 'asc' }).select(`${key}.value ${key}.unit date`)).map(
+      (res) => ({
+        xAxis: dayjs(res.get('date')).format('MMM DD'),
+        yAxis: res.get(key?.toString() || ''),
+      }),
+    )
+
     res.status(200).json({ chart })
   } catch (error) {
     res.status(500).json({ msg: error })
