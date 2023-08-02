@@ -1,9 +1,9 @@
 import { api } from '@/api'
 import { Card, Title } from '@mantine/core'
 import { IconArrowNarrowLeft } from '@tabler/icons-react'
+import { useMutation } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
 import { useState } from 'react'
 
 import { ButtonComponent } from '@/components/common/button'
@@ -16,25 +16,24 @@ import { StepEnum } from '@/enums/Step.enum'
 import Logo from '@/assets/graphics/logo.svg'
 
 import { customSignOut } from '@/utils/customSignOut'
-import { Pathnames } from '@/utils/pathnames'
+import { notify } from '@/utils/notifications'
 
 import RegistrationStepperComponent from '../RegistrationStepper'
 
 const VerifyEmailPage = () => {
   const { t } = useTranslate()
   const { data: session } = useSession()
-  const router = useRouter()
   const [error, setError] = useState('')
 
-  const handleClick = async () => {
-    try {
-      const account = await api.auth.verifyEmail(session.account._id)
-      session.account = account
-      router.push(Pathnames.auth.completeProfile)
-    } catch (e) {
-      setError(e.message.toString())
-    }
-  }
+  const sendVerificationEmail = useMutation({
+    mutationFn: () => api.auth.sendVerificationEmail(session.account.email),
+    onSuccess: () => {
+      notify({ type: 'success', message: t('auth.verify_email.resend_success') })
+    },
+    onError: () => {
+      setError(t('auth.verify_email.resend_error'))
+    },
+  })
 
   return (
     <div className="bg-green-100/10 flex items-center justify-center h-screen">
@@ -52,7 +51,12 @@ const VerifyEmailPage = () => {
           <div className="text-lg text-center font-bold">{t('auth.verify_email.title')}</div>
           <div className="text-center">{t('auth.verify_email.message', { email: session?.account?.email })}</div>
           <div className="mt-3">{t('auth.verify_email.no_email_message')}</div>
-          <ButtonComponent fullWidth={false} variant="outline" onClick={handleClick}>
+          <ButtonComponent
+            fullWidth={false}
+            variant="outline"
+            onClick={() => sendVerificationEmail.mutate()}
+            loading={sendVerificationEmail.isLoading}
+          >
             {t('auth.verify_email.resend_button')}
           </ButtonComponent>
         </div>

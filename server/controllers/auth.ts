@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt'
 import dotenv from 'dotenv'
 import { Request, Response } from 'express'
+import pug from 'pug'
 
 import { Account } from '../models/account'
 import { User } from '../models/user'
@@ -8,6 +9,10 @@ import { User } from '../models/user'
 import { AccountStatus } from '../enums/AccountStatus.enum'
 
 import { getUploadParams, s3 } from './aws'
+import { decrypt, encrypt } from './hash'
+import { sendEmail } from './sendgrid'
+
+dotenv.config()
 
 const createAccount = async (req: Request, res: Response) => {
   try {
@@ -23,14 +28,45 @@ const createAccount = async (req: Request, res: Response) => {
       password: hashedPassword,
       status: AccountStatus.PENDING,
     })
-    res.status(200).json({ account })
+
+    return await sendVerificationEmail(req, res)
   } catch (error) {
     res.status(500).json({ msg: error })
   }
 }
-const authenticate = async (req: Request, res: Response) => {
-  dotenv.config()
 
+const sendVerificationEmail = async (req: Request, res: Response) => {
+  try {
+    const getHtml = pug.compileFile('server/templates/emailVerification.pug')
+    const hash = encrypt(req.body.email)
+
+    const email = {
+      to: req.body.email,
+      from: process.env.SENDER_EMAIL || '',
+      subject: 'Verify your email address',
+      html: getHtml({ hash, url: process.env.FRONTEND_URL }),
+    }
+    await sendEmail(email)
+
+    res.status(200).json({ success: true })
+  } catch (error) {
+    res.status(500).json({ error })
+  }
+}
+
+const verifyEmail = async (req: Request, res: Response) => {
+  try {
+    const email = decrypt(req.body.email)
+
+    const account = await Account.findOneAndUpdate({ email }, { status: AccountStatus.VERIFIED }, { new: true })
+
+    res.status(200).json({ account })
+  } catch (error) {
+    res.status(500).json({ error })
+  }
+}
+
+const authenticate = async (req: Request, res: Response) => {
   try {
     const account = await Account.findOne({ email: req.body.email })
     if (!account) {
@@ -45,20 +81,6 @@ const authenticate = async (req: Request, res: Response) => {
     const { _id, email, provider, status } = account
 
     res.status(200).json({ account: { _id, email, provider, status } })
-  } catch (error) {
-    res.status(500).json({ error })
-  }
-}
-
-const verifyEmail = async (req: Request, res: Response) => {
-  try {
-    const account = await Account.findOneAndUpdate(
-      { _id: req.params.id },
-      { status: AccountStatus.VERIFIED },
-      { new: true },
-    )
-
-    res.status(200).json({ account })
   } catch (error) {
     res.status(500).json({ error })
   }
@@ -103,4 +125,4 @@ const updateAccountStatusAfterProfileCompletion = async (req: Request, res: Resp
   return account.status
 }
 
-export { createAccount, authenticate, completeProfile, verifyEmail }
+export { createAccount, authenticate, completeProfile, sendVerificationEmail, verifyEmail }

@@ -266,7 +266,11 @@
       "title": "We're happy you decided to join Next App!",
       "message": "We've sent an email to {email} to verify your email address and activate your account.",
       "no_email_message": "Didn't receive an email?",
-      "resend_button": "Resend verification email"
+      "resend_button": "Resend verification email",
+      "resend_success": "Verification email sent successfully",
+      "resend_error": "Unable to send verification email. Try again later",
+      "verify_success": "Email verified successfully",
+      "verify_error": "Unable to verify email"
     }
   },
   "nav_bar": {
