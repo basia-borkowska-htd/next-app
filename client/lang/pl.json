@@ -266,7 +266,11 @@
       "title": "Miło nam, że postanowiłeś dołączyć do Next App!",
       "message": "Wysłaliśmy Ci wiadomość email na adres {email}, aby go potwierdzić i aktywować Twoje konto.",
       "no_email_message": "Nie otrzymałeś wiadomości email?",
-      "resend_button": "Wyślij ponownie"
+      "resend_button": "Wyślij ponownie",
+      "resend_success": "Wiadomość email została wysłana",
+      "resend_error": "Nie udało się wysłać wiadomości email. Spróbuj ponownie później",
+      "verify_success": "Adres email został zweryfikowany poprawnie",
+      "verify_error": "Nie udało się zweryfikować adresu email"
     }
   },
   "nav_bar": {
