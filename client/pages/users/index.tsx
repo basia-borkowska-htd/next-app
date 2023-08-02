@@ -4,11 +4,13 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import dynamic from 'next/dynamic'
 
-import { ButtonComponent } from '@/components/button'
-import { ContainerComponent } from '@/components/container'
-import { EmptyStateComponent } from '@/components/emptyState'
-import { CreateGroupModalComponent } from '@/components/modals/createGroupModal'
-import withPrivateRoute from '@/components/withPrivateRoute'
+import { ButtonComponent } from '@/components/common/button'
+import { ContainerComponent } from '@/components/common/container'
+import { EmptyStateComponent } from '@/components/common/emptyState'
+import { CreateGroupModalComponent } from '@/components/common/modals/createGroupModal'
+import withPrivateRoute from '@/components/common/withPrivateRoute'
+import { GroupComponent } from '@/components/users/group'
+import { PublicGroupsBrowserComponent } from '@/components/users/publicGroupsBrowser'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
@@ -17,12 +19,10 @@ import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 import { notify } from '@/utils/notifications'
 
 import { queryClient } from '../_app'
-import { GroupComponent } from './group'
-import { PublicGroupsBrowserComponent } from './publicGroupsBrowser'
 
-const ErrorComponent = dynamic(() => import('@/components/error').then((component) => component.ErrorComponent))
+const ErrorComponent = dynamic(() => import('@/components/common/error').then((component) => component.ErrorComponent))
 const PageLoaderComponent = dynamic(() =>
-  import('@/components/pageLoader').then((component) => component.PageLoaderComponent),
+  import('@/components/common/pageLoader').then((component) => component.PageLoaderComponent),
 )
 
 const UsersPage = () => {
@@ -105,7 +105,7 @@ const UsersPage = () => {
         )}
         <div className="mb-4 font-bold text-xl mt-5">{t('users.public_groups.title')}</div>
         <PublicGroupsBrowserComponent
-          groups={publicGroups}
+          groups={publicGroups || []}
           join={joinGroupMutation.mutate}
           loading={joinGroupMutation.isLoading}
           selectedGroupId={joinGroupMutation.variables}
