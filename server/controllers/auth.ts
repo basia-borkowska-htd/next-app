@@ -44,7 +44,7 @@ const sendVerificationEmail = async (req: Request, res: Response) => {
       to: req.body.email,
       from: process.env.SENDER_EMAIL || '',
       subject: 'Verify your email address',
-      html: getHtml({ hash }),
+      html: getHtml({ hash, url: process.env.FRONTEND_URL }),
     }
     await sendEmail(email)
 

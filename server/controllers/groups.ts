@@ -129,6 +129,7 @@ const inviteMembers = async (req: Request, res: Response) => {
           inviterName: inviter?.name,
           groupHash,
           userHash,
+          url: process.env.FRONTEND_URL,
         }),
       }
       await sendEmail(email)
