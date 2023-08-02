@@ -105,7 +105,7 @@ const UsersPage = () => {
         )}
         <div className="mb-4 font-bold text-xl mt-5">{t('users.public_groups.title')}</div>
         <PublicGroupsBrowserComponent
-          groups={publicGroups || []}
+          groups={publicGroups}
           join={joinGroupMutation.mutate}
           loading={joinGroupMutation.isLoading}
           selectedGroupId={joinGroupMutation.variables}

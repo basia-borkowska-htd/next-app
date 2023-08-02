@@ -12,7 +12,7 @@ interface MembersPreviewProps {
   members: BasicUserType[]
 }
 
-const MembersPreviewComponent = ({ members }: MembersPreviewProps) => {
+export const MembersPreviewComponent = ({ members }: MembersPreviewProps) => {
   const preview = members.slice(0, PREVIEW_LIMIT)
   const rest = members.slice(PREVIEW_LIMIT)
   const router = useRouter()
@@ -43,5 +43,3 @@ const MembersPreviewComponent = ({ members }: MembersPreviewProps) => {
     </Tooltip.Group>
   )
 }
-
-export default MembersPreviewComponent

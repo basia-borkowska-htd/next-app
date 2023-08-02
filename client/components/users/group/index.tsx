@@ -11,7 +11,7 @@ import { GroupType } from '@/types/Group'
 
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 
-import MembersPreviewComponent from './membersPreview'
+import { MembersPreviewComponent } from './membersPreview'
 import { OptionsComponent } from './options'
 
 interface GroupProps {
@@ -19,13 +19,14 @@ interface GroupProps {
 }
 
 export const GroupComponent = ({ group }: GroupProps) => {
+  const { _id, name, photoUrl, visibility } = group
   const {
     data: members,
     error,
     isLoading,
   } = useQuery({
-    queryKey: [QueryKeyEnum.GROUP_MEMBERS, group?._id],
-    queryFn: () => api.group.getGroupMembers(group?._id),
+    queryKey: [QueryKeyEnum.GROUP_MEMBERS, _id],
+    queryFn: () => api.group.getGroupMembers(_id),
     retry: 1,
   })
 
@@ -36,12 +37,12 @@ export const GroupComponent = ({ group }: GroupProps) => {
     <div>
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-3 mb-3">
-          <AvatarComponent src={group?.photoUrl} isGroup compact />
+          <AvatarComponent src={photoUrl} isGroup compact />
           <div className="flex flex-col">
-            <div className="font-bold text-lg">{group?.name}</div>
+            <div className="font-bold text-lg">{name}</div>
             <div className="flex items-center gap-2">
               <MembersPreviewComponent members={members} />
-              <VisibilityBadgeComponent visibility={group?.visibility} />
+              <VisibilityBadgeComponent visibility={visibility} />
             </div>
           </div>
         </div>
