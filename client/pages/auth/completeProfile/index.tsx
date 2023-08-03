@@ -6,9 +6,9 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
-import { ButtonComponent } from '@/components/button'
-import { ErrorMessageComponent } from '@/components/errorMessage'
-import { UserFormComponent } from '@/components/forms/userForm'
+import { ButtonComponent } from '@/components/common/button'
+import { ErrorMessageComponent } from '@/components/common/errorMessage'
+import { UserFormComponent } from '@/components/common/forms/userForm'
 
 import { useTranslate } from '@/hooks/useTranslate'
 

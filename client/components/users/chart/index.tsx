@@ -3,12 +3,12 @@ import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { ResponsiveContainer } from 'recharts'
 
-import { ChartComponent } from '@/components/chart'
-import { TimePeriodSelectorComponent } from '@/components/chart/timePeriodSelector'
-import { ContainerComponent } from '@/components/container'
-import { EmptyStateComponent } from '@/components/emptyState'
-import { ErrorComponent } from '@/components/error'
-import { PageLoaderComponent } from '@/components/pageLoader'
+import { ChartComponent } from '@/components/common/chart'
+import { TimePeriodSelectorComponent } from '@/components/common/chart/timePeriodSelector'
+import { ContainerComponent } from '@/components/common/container'
+import { EmptyStateComponent } from '@/components/common/emptyState'
+import { ErrorComponent } from '@/components/common/error'
+import { PageLoaderComponent } from '@/components/common/pageLoader'
 
 import { useTranslate } from '@/hooks/useTranslate'
 

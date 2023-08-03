@@ -10,8 +10,8 @@ import { useEffect, useState } from 'react'
 
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
 
-import { ButtonComponent } from '@/components/button'
-import { ErrorMessageComponent } from '@/components/errorMessage'
+import { ButtonComponent } from '@/components/common/button'
+import { ErrorMessageComponent } from '@/components/common/errorMessage'
 
 import { useTranslate } from '@/hooks/useTranslate'
 

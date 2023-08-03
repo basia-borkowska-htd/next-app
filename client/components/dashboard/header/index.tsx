@@ -1,6 +1,6 @@
-import { AvatarComponent } from '@/components/avatar'
-import { ButtonComponent } from '@/components/button'
-import { GoBackComponent } from '@/components/goBack'
+import { AvatarComponent } from '@/components/common/avatar'
+import { ButtonComponent } from '@/components/common/button'
+import { GoBackComponent } from '@/components/common/goBack'
 
 import { useTranslate } from '@/hooks/useTranslate'
 

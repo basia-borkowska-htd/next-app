@@ -10,7 +10,7 @@ import { useLocale } from '@/hooks/useLocale'
 
 import { AppPropsWithLayout } from '@/types/Layout'
 
-import { theme } from './helpers'
+import { theme } from '@/utils/theme'
 
 export const queryClient = new QueryClient()
 

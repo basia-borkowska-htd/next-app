@@ -1,5 +1,5 @@
-import { CardComponent } from '@/components/card'
-import { ContainerComponent } from '@/components/container'
+import { CardComponent } from '@/components/common/card'
+import { ContainerComponent } from '@/components/common/container'
 
 interface UsersCardsProps {
   users: JSX.Element[]
