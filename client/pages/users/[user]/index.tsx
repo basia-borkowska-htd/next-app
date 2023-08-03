@@ -5,7 +5,7 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 
 import { queryClient } from '@/pages/_app'
 
@@ -46,17 +46,23 @@ const UserProfilePage = () => {
   const { user: userId } = router.query
   const { data: session } = useSession()
   const { t } = useTranslate()
-  const editable = useMemo(() => session?.user?._id === userId, [session?.user?._id, userId])
 
   const {
     data: user,
     error,
     isLoading,
+    refetch,
   } = useQuery({
     queryKey: [QueryKeyEnum.USER],
     queryFn: () => api.user.getUser(userId.toString()),
     enabled: router.isReady,
   })
+
+  useEffect(() => {
+    refetch()
+  }, [userId])
+
+  const editable = useMemo(() => session?.user?._id === user?._id, [session?.user?._id, user?._id])
 
   const [opened, { open, close }] = useDisclosure(false)
 
