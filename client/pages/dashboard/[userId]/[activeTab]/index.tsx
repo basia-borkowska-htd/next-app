@@ -9,8 +9,8 @@ import { useMemo } from 'react'
 
 import { queryClient } from '@/pages/_app'
 
-import { ContainerComponent } from '@/components/container'
-import withPrivateRoute from '@/components/withPrivateRoute'
+import { ContainerComponent } from '@/components/common/container'
+import withPrivateRoute from '@/components/common/withPrivateRoute'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
@@ -22,12 +22,12 @@ import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 import { notify } from '@/utils/notifications'
 import { Pathnames } from '@/utils/pathnames'
 
-const ErrorComponent = dynamic(() => import('@/components/error').then((component) => component.ErrorComponent))
+const ErrorComponent = dynamic(() => import('@/components/common/error').then((component) => component.ErrorComponent))
 const PageLoaderComponent = dynamic(() =>
-  import('@/components/pageLoader').then((component) => component.PageLoaderComponent),
+  import('@/components/common/pageLoader').then((component) => component.PageLoaderComponent),
 )
 const MeasurementModalComponent = dynamic(() =>
-  import('@/components/modals/measurementModal').then((component) => component.MeasurementModalComponent),
+  import('@/components/common/modals/measurementModal').then((component) => component.MeasurementModalComponent),
 )
 
 const HeaderComponent = dynamic(() =>

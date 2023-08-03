@@ -2,7 +2,7 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
-import { PageLoaderComponent } from '@/components/pageLoader'
+import { PageLoaderComponent } from '@/components/common/pageLoader'
 
 import { AccountStatusEnum } from '@/enums/AccountStatus.enum'
 

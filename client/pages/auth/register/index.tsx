@@ -7,8 +7,8 @@ import Link from 'next/link'
 import { useState } from 'react'
 import * as Yup from 'yup'
 
-import { ButtonComponent } from '@/components/button'
-import { ErrorMessageComponent } from '@/components/errorMessage'
+import { ButtonComponent } from '@/components/common/button'
+import { ErrorMessageComponent } from '@/components/common/errorMessage'
 
 import { useTranslate } from '@/hooks/useTranslate'
 

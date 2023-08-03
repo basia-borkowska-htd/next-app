@@ -1,9 +1,9 @@
 import { Divider } from '@mantine/core'
 
-import { AvatarComponent } from '@/components/avatar'
-import { ButtonComponent } from '@/components/button'
-import { ContainerComponent } from '@/components/container'
-import { GoBackComponent } from '@/components/goBack'
+import { AvatarComponent } from '@/components/common/avatar'
+import { ButtonComponent } from '@/components/common/button'
+import { ContainerComponent } from '@/components/common/container'
+import { GoBackComponent } from '@/components/common/goBack'
 
 import { useTranslate } from '@/hooks/useTranslate'
 

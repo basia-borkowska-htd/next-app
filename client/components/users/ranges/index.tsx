@@ -5,13 +5,13 @@ import { useRouter } from 'next/router'
 
 import { queryClient } from '@/pages/_app'
 
-import { ButtonComponent } from '@/components/button'
-import { ContainerComponent } from '@/components/container'
-import { EmptyStateComponent } from '@/components/emptyState'
-import { ErrorComponent } from '@/components/error'
-import { MeasurementModalComponent } from '@/components/modals/measurementModal'
-import { PageLoaderComponent } from '@/components/pageLoader'
-import { TableComponent } from '@/components/table'
+import { ButtonComponent } from '@/components/common/button'
+import { ContainerComponent } from '@/components/common/container'
+import { EmptyStateComponent } from '@/components/common/emptyState'
+import { ErrorComponent } from '@/components/common/error'
+import { MeasurementModalComponent } from '@/components/common/modals/measurementModal'
+import { PageLoaderComponent } from '@/components/common/pageLoader'
+import { TableComponent } from '@/components/common/table'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
