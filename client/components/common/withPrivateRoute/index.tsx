@@ -25,6 +25,7 @@ export default (WrappedComponent) => {
       const doesExist = storage.getSession()
       // TODO: maybe check if user is localStorage is current user
       if (!doesExist && user) {
+        storage.removeSession()
         storage.saveSession(JSON.stringify(user))
       }
     }, [user])
