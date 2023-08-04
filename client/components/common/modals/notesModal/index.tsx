@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react'
 
-import { ButtonComponent } from '@/components/button'
-import { ModalComponent } from '@/components/modals/modal'
-
 import { useTranslate } from '@/hooks/useTranslate'
 
 import { MeasurementsNoteEnum, getNoteLabel } from '@/enums/MeasurementNote.enum'
 
+import { ButtonComponent } from '../../button'
 import { IconBadgeComponent } from '../../iconBadge'
+import { ModalComponent } from '../modal'
 
 interface NotesModalProps {
   opened: boolean
@@ -63,6 +62,11 @@ export const NotesModalComponent = ({ opened, loading, notes: initialNotes, onCl
     onClose()
   }
 
+  const handleSubmit = () => {
+    onSubmit(notes)
+    onClose()
+  }
+
   return (
     <ModalComponent opened={opened} onClose={handleClose} title={t('notes_modal.title')}>
       <div className="flex flex-wrap gap-3 mt-5 pb-5">
@@ -80,7 +84,7 @@ export const NotesModalComponent = ({ opened, loading, notes: initialNotes, onCl
         <ButtonComponent variant="outline" onClick={handleClose}>
           {t('notes_modal.cancel_button')}
         </ButtonComponent>
-        <ButtonComponent variant="gradient" loading={loading} onClick={() => onSubmit(notes)}>
+        <ButtonComponent variant="gradient" loading={loading} onClick={handleSubmit}>
           {t('notes_modal.save_button')}
         </ButtonComponent>
       </div>

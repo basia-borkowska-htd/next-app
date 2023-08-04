@@ -70,7 +70,7 @@ export const MeasurementModalComponent = ({
       <form
         onSubmit={onSubmitForm((values) => {
           onSubmit(
-            { _id: measurement?._id || '', userId, ...values },
+            { _id: measurement?._id || '', userId, notes: measurement.notes, ...values },
             {
               onSuccess: resetAndClose,
             },

@@ -3,20 +3,18 @@ import { ActionIcon, Group } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { IconNote, IconPencil, IconTrash } from '@tabler/icons-react'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import get from 'lodash/get'
 import dynamic from 'next/dynamic'
 import React, { useState } from 'react'
 
 import { queryClient } from '@/pages/_app'
 
-import { NotesModalComponent } from '@/components/common/modals/NotesModal'
+import { NotesModalComponent } from '@/components/common/modals/notesModal'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
 import { MeasurementType } from '@/types/Measurement'
 
 import { MeasurementEnum, getMeasurementLabel } from '@/enums/Measurement.enum'
-import { MeasurementsNoteEnum } from '@/enums/MeasurementNote.enum'
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 
 import { dates } from '@/utils/dates'

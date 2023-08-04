@@ -6,7 +6,7 @@ export type MeasurementType = {
   _id: string
   userId: string
   date: string
-  notes: MeasurementsNoteEnum[]
+  notes?: MeasurementsNoteEnum[]
   weight: RecordType
   bodyFat: RecordType
   visceralFat: RecordType
