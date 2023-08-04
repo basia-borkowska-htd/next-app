@@ -3,10 +3,10 @@ import { useDisclosure } from '@mantine/hooks'
 import { IconSettings, IconTrash } from '@tabler/icons-react'
 import { useMutation } from '@tanstack/react-query'
 
-import { ButtonComponent } from '@/components/button'
-import { ContainerComponent } from '@/components/container'
-import { ConfirmationModalComponent } from '@/components/modals/confirmationModal'
-import { SettingsModalComponent } from '@/components/modals/settingsModal'
+import { ButtonComponent } from '@/components/common/button'
+import { ContainerComponent } from '@/components/common/container'
+import { ConfirmationModalComponent } from '@/components/common/modals/confirmationModal'
+import { SettingsModalComponent } from '@/components/common/modals/settingsModal'
 
 import { useTranslate } from '@/hooks/useTranslate'
 

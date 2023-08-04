@@ -5,21 +5,21 @@ import dynamic from 'next/dynamic'
 import { useState } from 'react'
 import { ResponsiveContainer } from 'recharts'
 
-import { TimePeriodSelectorComponent } from '@/components/chart/timePeriodSelector'
+import { TimePeriodSelectorComponent } from '@/components/common/chart/timePeriodSelector'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
 import { MeasurementEnum, getMeasurementLabel } from '@/enums/Measurement.enum'
 import { TimePeriodEnum } from '@/enums/TimePeriod.enum'
 
-const ErrorComponent = dynamic(() => import('@/components/error').then((component) => component.ErrorComponent))
+const ErrorComponent = dynamic(() => import('@/components/common/error').then((component) => component.ErrorComponent))
 const PageLoaderComponent = dynamic(() =>
-  import('@/components/pageLoader').then((component) => component.PageLoaderComponent),
+  import('@/components/common/pageLoader').then((component) => component.PageLoaderComponent),
 )
 const EmptyStateComponent = dynamic(() =>
-  import('@/components/emptyState').then((component) => component.EmptyStateComponent),
+  import('@/components/common/emptyState').then((component) => component.EmptyStateComponent),
 )
-const ChartComponent = dynamic(() => import('@/components/chart').then((component) => component.ChartComponent))
+const ChartComponent = dynamic(() => import('@/components/common/chart').then((component) => component.ChartComponent))
 
 interface ChartItemProps {
   userId: string

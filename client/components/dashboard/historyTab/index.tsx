@@ -23,20 +23,20 @@ import { dates } from '@/utils/dates'
 import { notify } from '@/utils/notifications'
 import { units } from '@/utils/units'
 
-const ErrorComponent = dynamic(() => import('@/components/error').then((component) => component.ErrorComponent))
+const ErrorComponent = dynamic(() => import('@/components/common/error').then((component) => component.ErrorComponent))
 const PageLoaderComponent = dynamic(() =>
-  import('@/components/pageLoader').then((component) => component.PageLoaderComponent),
+  import('@/components/common/pageLoader').then((component) => component.PageLoaderComponent),
 )
 const MeasurementModalComponent = dynamic(() =>
-  import('@/components/modals/measurementModal').then((component) => component.MeasurementModalComponent),
+  import('@/components/common/modals/measurementModal').then((component) => component.MeasurementModalComponent),
 )
 const ConfirmationModalComponent = dynamic(() =>
-  import('@/components/modals/confirmationModal').then((component) => component.ConfirmationModalComponent),
+  import('@/components/common/modals/confirmationModal').then((component) => component.ConfirmationModalComponent),
 )
 const EmptyStateComponent = dynamic(() =>
-  import('@/components/emptyState').then((component) => component.EmptyStateComponent),
+  import('@/components/common/emptyState').then((component) => component.EmptyStateComponent),
 )
-const TableComponent = dynamic(() => import('@/components/table').then((component) => component.TableComponent))
+const TableComponent = dynamic(() => import('@/components/common/table').then((component) => component.TableComponent))
 
 interface HistoryTabProps {
   userId: string

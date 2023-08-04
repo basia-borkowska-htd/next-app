@@ -3,10 +3,10 @@ import dynamic from 'next/dynamic'
 import { MeasurementEnum } from '@/enums/Measurement.enum'
 
 const AccordionComponent = dynamic(() =>
-  import('@/components/accordion').then((components) => components.AccordionComponent),
+  import('@/components/common/accordion').then((components) => components.AccordionComponent),
 )
 const ContainerComponent = dynamic(() =>
-  import('@/components/container').then((components) => components.ContainerComponent),
+  import('@/components/common/container').then((components) => components.ContainerComponent),
 )
 
 const ChartItemComponent = dynamic(() => import('./chartItem').then((components) => components.ChartItemComponent))

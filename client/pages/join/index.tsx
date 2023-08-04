@@ -3,9 +3,9 @@ import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 
-import { ErrorComponent } from '@/components/error'
-import { PageLoaderComponent } from '@/components/pageLoader'
-import withPrivateRoute from '@/components/withPrivateRoute'
+import { ErrorComponent } from '@/components/common/error'
+import { PageLoaderComponent } from '@/components/common/pageLoader'
+import withPrivateRoute from '@/components/common/withPrivateRoute'
 
 import { useTranslate } from '@/hooks/useTranslate'
 

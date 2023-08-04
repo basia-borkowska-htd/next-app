@@ -9,11 +9,11 @@ import { useMemo } from 'react'
 
 import { queryClient } from '@/pages/_app'
 
-import { EmptyStateComponent } from '@/components/emptyState'
-import { ErrorComponent } from '@/components/error'
-import { ModalComponent } from '@/components/modals/modal'
-import { PageLoaderComponent } from '@/components/pageLoader'
-import withPrivateRoute from '@/components/withPrivateRoute'
+import { EmptyStateComponent } from '@/components/common/emptyState'
+import { ErrorComponent } from '@/components/common/error'
+import { ModalComponent } from '@/components/common/modals/modal'
+import { PageLoaderComponent } from '@/components/common/pageLoader'
+import withPrivateRoute from '@/components/common/withPrivateRoute'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
@@ -34,7 +34,7 @@ const RangesComponent = dynamic(() =>
 )
 
 const UserFormComponent = dynamic(() =>
-  import('@/components/forms/userForm').then((component) => component.UserFormComponent),
+  import('@/components/common/forms/userForm').then((component) => component.UserFormComponent),
 )
 
 const SettingsComponent = dynamic(() =>
