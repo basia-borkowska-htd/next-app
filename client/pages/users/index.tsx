@@ -14,6 +14,8 @@ import { PublicGroupsBrowserComponent } from '@/components/users/publicGroupsBro
 
 import { useTranslate } from '@/hooks/useTranslate'
 
+import { UserType } from '@/types/User'
+
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 
 import { notify } from '@/utils/notifications'
@@ -25,17 +27,13 @@ const PageLoaderComponent = dynamic(() =>
   import('@/components/common/pageLoader').then((component) => component.PageLoaderComponent),
 )
 
-const UsersPage = () => {
-  const { t } = useTranslate()
-  const { data: session } = useSession()
-  const [opened, { open, close }] = useDisclosure(false)
+interface UsersPageProps {
+  user: UserType
+}
 
-  const { data: user } = useQuery({
-    queryKey: [QueryKeyEnum.SESSION_USER],
-    queryFn: () => api.user.getUserByEmail(session?.user?.email),
-    enabled: !!session,
-    retry: 1,
-  })
+const UsersPage = ({ user }: UsersPageProps) => {
+  const { t } = useTranslate()
+  const [opened, { open, close }] = useDisclosure(false)
 
   const enabled = !!user
   const userId = user?._id
@@ -63,7 +61,7 @@ const UsersPage = () => {
   })
 
   const joinGroupMutation = useMutation({
-    mutationFn: (groupId: string) => api.group.joinPublicGroup(groupId, session.user._id),
+    mutationFn: (groupId: string) => api.group.joinPublicGroup(groupId, user._id),
     onSuccess: async () => {
       await queryClient.refetchQueries({ stale: true })
       notify({
@@ -85,7 +83,7 @@ const UsersPage = () => {
 
   return (
     <div>
-      <CreateGroupModalComponent opened={opened} close={close} creatorId={session?.user?._id} />
+      <CreateGroupModalComponent opened={opened} close={close} creatorId={user?._id} />
 
       <ContainerComponent className="flex flex-col mt-8">
         <div className="flex justify-between items-center">

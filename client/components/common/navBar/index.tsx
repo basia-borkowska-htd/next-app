@@ -39,10 +39,6 @@ export const NavBarComponent = () => {
     retry: 1,
   })
 
-  useEffect(() => {
-    if (user) session.user = user
-  }, [user])
-
   if (isLoading) return <PageLoaderComponent />
   if (error) return <ErrorComponent title={error.toString()} />
 

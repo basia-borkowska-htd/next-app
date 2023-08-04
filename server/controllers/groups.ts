@@ -116,6 +116,7 @@ const inviteMembers = async (req: Request, res: Response) => {
     req.body.emails.forEach(async (address: string) => {
       const user = await User.findOne({ email: address })
 
+      // TODO: handle the case when invited email is not an user of our app
       const groupHash = encrypt(group.id)
       const userHash = encrypt(user?.id)
 

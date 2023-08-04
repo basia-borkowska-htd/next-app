@@ -3,7 +3,6 @@ import { Menu } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { IconDotsVertical, IconLogout, IconPencil, IconTrash, IconUserPlus } from '@tabler/icons-react'
 import { useMutation } from '@tanstack/react-query'
-import { useSession } from 'next-auth/react'
 import React from 'react'
 
 import { queryClient } from '@/pages/_app'
@@ -18,13 +17,14 @@ import { useTranslate } from '@/hooks/useTranslate'
 import { GroupType, InviteMembersType, UpdateGroupType } from '@/types/Group'
 
 import { notify } from '@/utils/notifications'
+import { customStorage } from '@/utils/storage'
 
 interface OptionsProps {
   group: GroupType
 }
 export const OptionsComponent = ({ group }: OptionsProps) => {
   const { t } = useTranslate()
-  const { data: session } = useSession()
+  const user = customStorage().getSession()
   const [isLeaveModalOpen, { open: openLeaveModal, close: closeLeaveModal }] = useDisclosure()
   const [isDeleteModalOpen, { open: openDeleteModal, close: closeDeleteModal }] = useDisclosure()
   const [isEditModalOpen, { open: openEditModal, close: closeEditModal }] = useDisclosure()
@@ -43,7 +43,7 @@ export const OptionsComponent = ({ group }: OptionsProps) => {
   })
 
   const leaveGroupMutation = useMutation({
-    mutationFn: () => api.group.removeGroupMember(group._id, session.user._id),
+    mutationFn: () => api.group.removeGroupMember(group._id, user._id),
     onSuccess: async () => {
       await queryClient.refetchQueries({ stale: true })
       closeLeaveModal()
@@ -110,7 +110,7 @@ export const OptionsComponent = ({ group }: OptionsProps) => {
       <ModalComponent opened={isInviteModalOpen} onClose={closeInviteModal} title={t('users.invite_members.title')}>
         <InviteGroupMembersFormComponent
           groupId={group._id}
-          inviterId={session.user._id}
+          inviterId={user._id}
           loading={inviteMembersMutation.isLoading}
           onSubmit={inviteMembersMutation.mutate}
         />
