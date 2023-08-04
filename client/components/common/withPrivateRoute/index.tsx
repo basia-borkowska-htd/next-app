@@ -29,7 +29,7 @@ export default (WrappedComponent) => {
       }
     }, [user])
 
-    return <WrappedComponent user={user} {...context} />
+    return <WrappedComponent sessionUser={user} {...context} />
   }
 
   HocComponent.getLayout = (page: ReactElement) => <LayoutComponent>{page}</LayoutComponent>

@@ -28,15 +28,15 @@ const PageLoaderComponent = dynamic(() =>
 )
 
 interface UsersPageProps {
-  user: UserType
+  sessionUser: UserType
 }
 
-const UsersPage = ({ user }: UsersPageProps) => {
+const UsersPage = ({ sessionUser }: UsersPageProps) => {
   const { t } = useTranslate()
   const [opened, { open, close }] = useDisclosure(false)
 
-  const enabled = !!user
-  const userId = user?._id
+  const enabled = !!sessionUser
+  const userId = sessionUser?._id
 
   const {
     data: joinedGroups,
@@ -61,7 +61,7 @@ const UsersPage = ({ user }: UsersPageProps) => {
   })
 
   const joinGroupMutation = useMutation({
-    mutationFn: (groupId: string) => api.group.joinPublicGroup(groupId, user._id),
+    mutationFn: (groupId: string) => api.group.joinPublicGroup(groupId, sessionUser._id),
     onSuccess: async () => {
       await queryClient.refetchQueries({ stale: true })
       notify({
@@ -83,7 +83,7 @@ const UsersPage = ({ user }: UsersPageProps) => {
 
   return (
     <div>
-      <CreateGroupModalComponent opened={opened} close={close} creatorId={user?._id} />
+      <CreateGroupModalComponent opened={opened} close={close} creatorId={sessionUser?._id} />
 
       <ContainerComponent className="flex flex-col mt-8">
         <div className="flex justify-between items-center">

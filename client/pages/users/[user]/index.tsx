@@ -2,7 +2,6 @@ import { api } from '@/api'
 import { Divider } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { useSession } from 'next-auth/react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useEffect, useMemo } from 'react'
@@ -17,7 +16,7 @@ import withPrivateRoute from '@/components/common/withPrivateRoute'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
-import { UpdateUserType } from '@/types/User'
+import { UpdateUserType, UserType } from '@/types/User'
 
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 
@@ -41,10 +40,13 @@ const SettingsComponent = dynamic(() =>
   import('@/components/users/settings').then((component) => component.SettingsComponent),
 )
 
-const UserProfilePage = () => {
+interface UserProfileProps {
+  sessionUser: UserType
+}
+
+const UserProfilePage = ({ sessionUser }: UserProfileProps) => {
   const router = useRouter()
   const { user: userId } = router.query
-  const { data: session } = useSession()
   const { t } = useTranslate()
 
   const {
@@ -54,7 +56,7 @@ const UserProfilePage = () => {
     refetch,
   } = useQuery({
     queryKey: [QueryKeyEnum.USER],
-    queryFn: () => api.user.getUser(userId.toString()),
+    queryFn: () => api.user.getUser(userId?.toString()),
     enabled: router.isReady,
   })
 
@@ -62,7 +64,7 @@ const UserProfilePage = () => {
     refetch()
   }, [userId])
 
-  const editable = useMemo(() => session?.user?._id === user?._id, [session?.user?._id, user?._id])
+  const editable = useMemo(() => userId === sessionUser?._id, [userId, sessionUser?._id])
 
   const [opened, { open, close }] = useDisclosure(false)
 
