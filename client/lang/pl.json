@@ -177,6 +177,18 @@
     "yes_button": "Tak",
     "no_button": "Nie"
   },
+  "notes_modal": {
+    "title": "Dodatkowe informacje",
+    "save_button": "Zapisz",
+    "cancel_button": "Anuluj",
+    "alcohol": "Alkohol",
+    "stress": "Stres",
+    "sickness": "Choroba",
+    "travel": "Podróż",
+    "menstruation": "Menstruacja",
+    "sleep_deprivation": "Niedobór snu",
+    "water_depletion": "Odwodnienie"
+  },
   "error": {
     "title": "Błąd",
     "message": "O nie! Coś poszło nie tak.",

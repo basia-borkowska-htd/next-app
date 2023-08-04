@@ -1,9 +1,12 @@
+import { MeasurementsNoteEnum } from '@/enums/MeasurementNote.enum'
+
 import { RecordType } from './helpers'
 
 export type MeasurementType = {
   _id: string
   userId: string
   date: string
+  notes: MeasurementsNoteEnum[]
   weight: RecordType
   bodyFat: RecordType
   visceralFat: RecordType
