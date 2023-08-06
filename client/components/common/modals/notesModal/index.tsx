@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
-import { MeasurementsNoteEnum, getNoteLabel } from '@/enums/MeasurementNote.enum'
+import { MeasurementsNoteEnum } from '@/enums/MeasurementNote.enum'
+
+import { icons } from '@/utils/icons'
 
 import { ButtonComponent } from '../../button'
 import { IconBadgeComponent } from '../../iconBadge'
@@ -36,27 +38,6 @@ export const NotesModalComponent = ({ opened, loading, notes: initialNotes, onCl
     }
   }
 
-  const getIconName = (note: MeasurementsNoteEnum) => {
-    switch (note) {
-      case MeasurementsNoteEnum.ALCOHOL:
-        return 'glass'
-      case MeasurementsNoteEnum.SICKNESS:
-        return 'vaccine'
-      case MeasurementsNoteEnum.SLEEP_DEPRIVATION:
-        return 'zzz'
-      case MeasurementsNoteEnum.STRESS:
-        return 'activity-heartbeat'
-      case MeasurementsNoteEnum.WATER_DEPLETION:
-        return 'droplet-half-2-filled'
-      case MeasurementsNoteEnum.MENSTRUATION:
-        return 'gender-female'
-      case MeasurementsNoteEnum.TRAVEL:
-        return 'plane-tilt'
-      default:
-        return ''
-    }
-  }
-
   const handleClose = () => {
     setNotes([])
     onClose()
@@ -74,8 +55,8 @@ export const NotesModalComponent = ({ opened, loading, notes: initialNotes, onCl
           <IconBadgeComponent
             key={key}
             clicked={notes.includes(key)}
-            title={getNoteLabel(key, t)}
-            iconName={getIconName(key)}
+            title={icons.getNotesIconLabel(key, t)}
+            iconName={icons.getNotesIconName(key)}
             onClick={(clicked) => updateNotesList(key, clicked)}
           />
         ))}
