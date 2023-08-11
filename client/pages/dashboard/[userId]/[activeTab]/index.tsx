@@ -2,7 +2,6 @@ import { api } from '@/api'
 import { Tabs } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { useSession } from 'next-auth/react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
@@ -15,6 +14,7 @@ import withPrivateRoute from '@/components/common/withPrivateRoute'
 import { useTranslate } from '@/hooks/useTranslate'
 
 import { MeasurementType } from '@/types/Measurement'
+import { UserType } from '@/types/User'
 
 import { DashboardTabEnum } from '@/enums/DashboardTab.enum'
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
@@ -41,15 +41,18 @@ const HistoryTabComponent = dynamic(() =>
   import('@/components/dashboard/historyTab').then((component) => component.HistoryTabComponent),
 )
 
-const DashboardPage = () => {
+interface DashboardProps {
+  sessionUser: UserType
+}
+
+const DashboardPage = ({ sessionUser }: DashboardProps) => {
   const router = useRouter()
-  const { data: session } = useSession()
 
   const { userId, activeTab } = router.query
   const [opened, { open, close }] = useDisclosure(false)
   const { t } = useTranslate()
 
-  const editable = useMemo(() => session?.user?._id === userId, [session?.user?._id, userId])
+  const editable = useMemo(() => sessionUser?._id === userId, [sessionUser?._id, userId])
 
   const {
     data: user,

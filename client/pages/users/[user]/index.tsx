@@ -2,10 +2,9 @@ import { api } from '@/api'
 import { Divider } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { useSession } from 'next-auth/react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 
 import { queryClient } from '@/pages/_app'
 
@@ -17,7 +16,7 @@ import withPrivateRoute from '@/components/common/withPrivateRoute'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
-import { UpdateUserType } from '@/types/User'
+import { UpdateUserType, UserType } from '@/types/User'
 
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 
@@ -41,22 +40,31 @@ const SettingsComponent = dynamic(() =>
   import('@/components/users/settings').then((component) => component.SettingsComponent),
 )
 
-const UserProfilePage = () => {
+interface UserProfileProps {
+  sessionUser: UserType
+}
+
+const UserProfilePage = ({ sessionUser }: UserProfileProps) => {
   const router = useRouter()
   const { user: userId } = router.query
-  const { data: session } = useSession()
   const { t } = useTranslate()
-  const editable = useMemo(() => session?.user?._id === userId, [session?.user?._id, userId])
 
   const {
     data: user,
     error,
     isLoading,
+    refetch,
   } = useQuery({
     queryKey: [QueryKeyEnum.USER],
-    queryFn: () => api.user.getUser(userId.toString()),
+    queryFn: () => api.user.getUser(userId?.toString()),
     enabled: router.isReady,
   })
+
+  useEffect(() => {
+    refetch()
+  }, [userId])
+
+  const editable = useMemo(() => userId === sessionUser?._id, [userId, sessionUser?._id])
 
   const [opened, { open, close }] = useDisclosure(false)
 
