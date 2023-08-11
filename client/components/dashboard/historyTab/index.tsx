@@ -1,13 +1,15 @@
 import { api } from '@/api'
-import { ActionIcon, Group } from '@mantine/core'
+import { ActionIcon } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { IconPencil, IconTrash } from '@tabler/icons-react'
+import { IconNote, IconPencil, IconTrash } from '@tabler/icons-react'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import get from 'lodash/get'
 import dynamic from 'next/dynamic'
 import React, { useState } from 'react'
 
 import { queryClient } from '@/pages/_app'
+
+import { IconComponent } from '@/components/common/iconBadge/icon'
+import { NotesModalComponent } from '@/components/common/modals/notesModal'
 
 import { useTranslate } from '@/hooks/useTranslate'
 
@@ -17,6 +19,7 @@ import { MeasurementEnum, getMeasurementLabel } from '@/enums/Measurement.enum'
 import { QueryKeyEnum } from '@/enums/QueryKey.enum'
 
 import { dates } from '@/utils/dates'
+import { icons } from '@/utils/icons'
 import { notify } from '@/utils/notifications'
 import { units } from '@/utils/units'
 
@@ -42,6 +45,7 @@ export const HistoryTabComponent = ({ userId }: HistoryTabProps) => {
   const { t } = useTranslate()
   const [openedDeleteModal, { open: openDeleteModal, close: closeDeleteModal }] = useDisclosure(false)
   const [openedEditModal, { open: openEditModal, close: closeEditModal }] = useDisclosure(false)
+  const [openedNotesModal, { open: openNotesModal, close: closeNotesModal }] = useDisclosure(false)
   const [currentMeasurement, setCurrentMeasurement] = useState<MeasurementType | undefined>(undefined)
   const {
     data: measurements,
@@ -89,18 +93,18 @@ export const HistoryTabComponent = ({ userId }: HistoryTabProps) => {
   if (error) return <ErrorComponent />
   if (!measurements?.length) return <EmptyStateComponent compact />
 
-  const handleActionClick = (value: React.MouseEvent<HTMLButtonElement, MouseEvent>, action: 'edit' | 'delete') => {
-    const measurementId = get(value, 'target.parentElement.id', '')
-    setCurrentMeasurement(measurements.find(({ _id }) => _id === measurementId))
+  const handleActionClick = (id: string, action: 'edit' | 'delete' | 'notes') => {
+    setCurrentMeasurement(measurements.find(({ _id }) => _id === id))
     if (action === 'delete') openDeleteModal()
     if (action === 'edit') openEditModal()
+    if (action === 'notes') openNotesModal()
   }
 
   const headers = Object.values(MeasurementEnum).map((key) => getMeasurementLabel(key, t))
 
   return (
     <>
-      <TableComponent headers={[t('dashboard.date_header'), ...headers]}>
+      <TableComponent headers={[t('dashboard.date_header'), ...headers, t('notes_modal.title'), '']}>
         {measurements.map(
           ({
             _id,
@@ -116,38 +120,63 @@ export const HistoryTabComponent = ({ userId }: HistoryTabProps) => {
             BMR,
             metabolicAge,
             bodyRating,
+            notes,
           }) => (
             <tr key={`table-row-${_id}`}>
               <th>{dates.format(date)}</th>
-              <th>{units.display(weight.unit, weight.value)}</th>
-              <th>{units.display(bodyFat.unit, bodyFat.value)}</th>
+              <th className="whitespace-nowrap">{units.display(weight.unit, weight.value)}</th>
+              <th className="whitespace-nowrap">{units.display(bodyFat.unit, bodyFat.value)}</th>
               <th>{units.display(visceralFat.unit, visceralFat.value)}</th>
-              <th>{units.display(muscles.unit, muscles.value)}</th>
-              <th>{units.display(protein.unit, protein.value)}</th>
-              <th>{units.display(water.unit, water.value)}</th>
-              <th>{units.display(boneTissue.unit, boneTissue.value)}</th>
+              <th className="whitespace-nowrap">{units.display(muscles.unit, muscles.value)}</th>
+              <th className="whitespace-nowrap">{units.display(protein.unit, protein.value)}</th>
+              <th className="whitespace-nowrap">{units.display(water.unit, water.value)}</th>
+              <th className="whitespace-nowrap">{units.display(boneTissue.unit, boneTissue.value)}</th>
               <th>{units.display(BMI.unit, BMI.value)}</th>
-              <th>{units.display(BMR.unit, BMR.value)}</th>
+              <th className="whitespace-nowrap">{units.display(BMR.unit, BMR.value)}</th>
               <th>{units.display(metabolicAge.unit, metabolicAge.value)}</th>
               <th>{units.display(bodyRating.unit, bodyRating.value)}</th>
-              <td key={`table-cell-row-${_id}`}>
-                <Group spacing={0} position="right">
-                  <ActionIcon id={_id} onClick={(value) => handleActionClick(value, 'edit')}>
+              <th>
+                <div className="flex flex-wrap gap-1">
+                  {notes.map((note) => (
+                    <IconComponent
+                      key={note}
+                      name={icons.getNotesIconName(note)}
+                      color={icons.getNotesIconColor(note)}
+                      compact
+                    />
+                  ))}
+                </div>
+              </th>
+              <td key={`table-cell-row-${_id}`} className="whitespace-nowrap">
+                <div className="flex justify-end">
+                  <ActionIcon id={_id} onClick={() => handleActionClick(_id, 'notes')}>
+                    <IconNote size="1rem" stroke={1.5} />
+                  </ActionIcon>
+                  <ActionIcon id={_id} onClick={() => handleActionClick(_id, 'edit')}>
                     <IconPencil size="1rem" stroke={1.5} />
                   </ActionIcon>
-                  <ActionIcon color="red" id={_id} onClick={(value) => handleActionClick(value, 'delete')}>
+                  <ActionIcon color="red" id={_id} onClick={() => handleActionClick(_id, 'delete')}>
                     <IconTrash size="1rem" stroke={1.5} />
                   </ActionIcon>
-                </Group>
+                </div>
               </td>
             </tr>
           ),
         )}
       </TableComponent>
+
+      <NotesModalComponent
+        notes={currentMeasurement?.notes}
+        opened={openedNotesModal}
+        onClose={closeNotesModal}
+        loading={editMeasurementMutation.isLoading}
+        onSubmit={(notes) => editMeasurementMutation.mutate({ ...currentMeasurement, notes })}
+      />
+
       <ConfirmationModalComponent
         opened={openedDeleteModal}
         onClose={closeDeleteModal}
-        loading={false}
+        loading={deleteMeasurementMutation.isLoading}
         onSubmit={deleteMeasurementMutation.mutate}
         description={t('dashboard.delete_measurement_description')}
       />

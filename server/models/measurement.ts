@@ -1,5 +1,7 @@
 import mongoose from 'mongoose'
 
+import { MeasurementsNote } from '../enums/MeasurementsNote.enum'
+
 import { Record } from './helpers'
 
 const MeasurementSchema = new mongoose.Schema({
@@ -21,6 +23,10 @@ const MeasurementSchema = new mongoose.Schema({
   date: {
     type: String,
     required: true,
+  },
+  notes: {
+    type: [String],
+    enum: MeasurementsNote,
   },
 })
 
